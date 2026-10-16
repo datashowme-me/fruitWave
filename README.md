@@ -7,7 +7,7 @@ FruitWave 是一个面向 tvOS 17+ 的单人单手体感切水果技术原型。
 ## 已实现
 
 - SwiftUI 的连接、取景、左右手选择、双点校准、五点复核、准备、游戏、暂停、恢复、结算流程。
-- `continuityDevicePicker` 设备选择和 `AVCaptureSession` 720p 优先采集；配置和帧回调使用独立串行队列。
+- `continuityDevicePicker` 设备选择和 `AVCaptureSession` 系统协商采集格式；配置和帧回调使用独立串行队列。
 - Vision 人体姿态推理；最多一个推理在途和一个最新待处理帧，避免无限排队。
 - 会话内单人锁定；以躯干中心和肩宽连续性关联候选人，不使用 `observations.first` 接管玩家。
 - 校准窗口有效率、中位数与稳定度判断；映射版本变化会断开动作轨迹。

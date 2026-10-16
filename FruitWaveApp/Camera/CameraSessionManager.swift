@@ -45,12 +45,6 @@ final class CameraSessionManager {
             captureSession.beginConfiguration()
             captureSession.inputs.forEach(captureSession.removeInput)
             captureSession.outputs.forEach(captureSession.removeOutput)
-            guard captureSession.canSetSessionPreset(.hd1280x720) else {
-                captureSession.commitConfiguration()
-                Task { @MainActor in self?.state = .failed("设备不支持 720p 采集") }
-                return
-            }
-            captureSession.sessionPreset = .hd1280x720
             do {
                 let input = try AVCaptureDeviceInput(device: camera)
                 guard captureSession.canAddInput(input) else { throw CameraError.cannotAddInput }
