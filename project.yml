@@ -1,0 +1,61 @@
+name: FruitWave
+options:
+  bundleIdPrefix: com.example
+  deploymentTarget:
+    tvOS: "17.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: 6.0
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+targets:
+  FruitWave:
+    type: application
+    platform: tvOS
+    sources:
+      - path: FruitWaveApp
+        excludes:
+          - Resources/Preview Content
+          - Resources/Assets.xcassets/AppIcon.brandassets
+    dependencies:
+      - target: FruitWaveCore
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.FruitWave
+        PRODUCT_NAME: FruitWave
+        INFOPLIST_FILE: FruitWaveApp/Resources/Info.plist
+        GENERATE_INFOPLIST_FILE: NO
+    scheme:
+      testTargets:
+        - FruitWaveCoreTests
+  FruitWaveCoreTests:
+    type: bundle.unit-test
+    platform: tvOS
+    sources:
+      - path: Tests/FruitWaveCoreTests
+    dependencies:
+      - target: FruitWaveCore
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.FruitWaveCoreTests
+        GENERATE_INFOPLIST_FILE: YES
+  FruitWaveCore:
+    type: framework
+    platform: tvOS
+    sources:
+      - path: Sources/FruitWaveCore
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.FruitWaveCore
+        GENERATE_INFOPLIST_FILE: YES
+schemes:
+  FruitWave:
+    build:
+      targets:
+        FruitWave: all
+        FruitWaveCore: all
+        FruitWaveCoreTests: [test]
+    test:
+      targets:
+        - FruitWaveCoreTests
