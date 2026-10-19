@@ -6,18 +6,37 @@ import OSLog
 final class SoundEffects {
     private static let logger = Logger(subsystem: "com.example.FruitWave", category: "Audio")
     private let engine = AVAudioEngine()
+    /// 切中主体(真实采样或程序合成兜底)
     private let player = AVAudioPlayerNode()
-    /// Pitch-ordered slice variants; higher indexes sound brighter and are
-    /// picked as the combo grows, with the fruit kind shifting the starting
-    /// point so consecutive slices don't sound like one looped clip.
-    private let sliceBuffers: [AVAudioPCMBuffer]
+    /// 程序合成的短促噪声撕裂层,模拟刀刃划过果肉的"湿"声
+    private let ripPlayer = AVAudioPlayerNode()
+    /// 连击彩头:玻璃脆响/钟声
+    private let chimePlayer = AVAudioPlayerNode()
+
+    /// Kenney CC0 采样,按文件名前缀分组(impactSoft_medium = 轻果多汁
+    /// 软撞击,impactSoft_heavy = 西瓜/菠萝等大果,玻璃/钟 = 连击彩头)。
+    private var bodyBanks: [String: [AVAudioPCMBuffer]] = [:]
+    private var chimeBanks: [String: [AVAudioPCMBuffer]] = [:]
+    /// 采样缺失时的程序合成兜底(与旧版一致的完整切音)
+    private let proceduralBuffers: [AVAudioPCMBuffer]
+    private let ripBuffers: [AVAudioPCMBuffer]
 
     init() {
         let format = AVAudioFormat(standardFormatWithSampleRate: 48_000, channels: 2)
-        sliceBuffers = Self.makeSliceBuffers(format: format, variantCount: 6)
+        proceduralBuffers = Self.makeSliceBuffers(format: format, variantCount: 6)
+        ripBuffers = Self.makeRipBuffers(format: format, variantCount: 3)
         engine.attach(player)
-        if let format { engine.connect(player, to: engine.mainMixerNode, format: format) }
-        player.volume = 0.85
+        engine.attach(ripPlayer)
+        engine.attach(chimePlayer)
+        if let format {
+            engine.connect(player, to: engine.mainMixerNode, format: format)
+            engine.connect(ripPlayer, to: engine.mainMixerNode, format: format)
+            engine.connect(chimePlayer, to: engine.mainMixerNode, format: format)
+        }
+        player.volume = 0.9
+        ripPlayer.volume = 0.35
+        chimePlayer.volume = 0.55
+        loadSamples()
         engine.prepare()
         // When the Apple TV's audio route appears or changes (TV/AVR waking
         // up), an engine that failed to start earlier gets another chance
@@ -34,19 +53,52 @@ final class SoundEffects {
         _ = ensureAudioReady()
     }
 
+    /// 大果用重采样(低频更沉),小果用轻采样
+    private static let heavyKinds: Set<FruitKind> = [
+        .watermelon, .pineapple, .coconut, .pomegranate, .cantaloupe
+    ]
+
     func playSlice(kind: FruitKind, combo: Int) {
-        guard !sliceBuffers.isEmpty, ensureAudioReady() else { return }
-        let kindOffset = abs(kind.hashValue % 2)
-        let index = min(sliceBuffers.count - 1, kindOffset + max(0, combo - 1))
-        player.scheduleBuffer(sliceBuffers[index], at: nil, options: .interrupts)
-        player.play()
+        guard ensureAudioReady() else { return }
+        let kindOffset = Self.kindIndex(kind) % 2
+        let bankName = Self.heavyKinds.contains(kind) ? "impactSoft_heavy" : "impactSoft_medium"
+        if let bank = bodyBanks[bankName], !bank.isEmpty {
+            // 连击越高音调越高,营造爬升感;上限防卡通化
+            let buffer = bank[(kindOffset + max(0, combo - 1)) % bank.count]
+            player.rate = Float(min(1.35, 1.0 + 0.06 * Double(min(combo, 6))))
+            player.scheduleBuffer(buffer, at: nil, options: .interrupts)
+            player.play()
+        } else {
+            guard !proceduralBuffers.isEmpty else { return }
+            let index = min(proceduralBuffers.count - 1, kindOffset + max(0, combo - 1))
+            player.rate = 1
+            player.scheduleBuffer(proceduralBuffers[index], at: nil, options: .interrupts)
+            player.play()
+        }
+        // 撕裂层与主体同发:纯合成,音调随水果种微调防重复感
+        if !ripBuffers.isEmpty {
+            let rip = ripBuffers[Self.kindIndex(kind) % ripBuffers.count]
+            ripPlayer.rate = Float(0.92 + 0.16 * Double(Self.kindIndex(kind) % 7) / 7.0)
+            ripPlayer.scheduleBuffer(rip, at: nil, options: .interrupts)
+            ripPlayer.play()
+        }
+        // 连击彩头:3+ 玻璃脆响,5+ 换低频钟声,音高随连击爬升
+        if combo >= 3 {
+            let bankName = combo >= 5 ? "impactBell_heavy" : "impactGlass_light"
+            if let bank = chimeBanks[bankName], !bank.isEmpty {
+                let buffer = bank[min(combo - 3, bank.count - 1)]
+                chimePlayer.rate = Float(min(1.4, 1.0 + 0.05 * Double(min(combo, 10))))
+                chimePlayer.scheduleBuffer(buffer, at: nil, options: [])
+                chimePlayer.play()
+            }
+        }
     }
 
     /// Soft pop as a fruit spawns; the pitch varies by kind so a mixed wave
     /// of fruit sounds like a little arpeggio instead of one repeated beep.
     func playSpawn(kind: FruitKind) {
-        guard !sliceBuffers.isEmpty, ensureAudioReady() else { return }
-        let base = Double(abs(kind.hashValue % 6))
+        guard !sliceBuffersEmpty(), ensureAudioReady() else { return }
+        let base = Double(Self.kindIndex(kind) % 6)
         if let buffer = spawnBuffer(for: base) {
             player.scheduleBuffer(buffer, at: nil, options: [])
             player.play()
@@ -55,10 +107,58 @@ final class SoundEffects {
 
     /// Preview blip when the player toggles sound on.
     func playPreview() {
-        guard !sliceBuffers.isEmpty, ensureAudioReady() else { return }
-        player.scheduleBuffer(sliceBuffers[sliceBuffers.count / 2], at: nil, options: .interrupts)
-        player.play()
+        guard ensureAudioReady() else { return }
+        if let bank = bodyBanks["impactSoft_medium"], !bank.isEmpty {
+            player.rate = 1
+            player.scheduleBuffer(bank[0], at: nil, options: .interrupts)
+            player.play()
+        } else if !proceduralBuffers.isEmpty {
+            player.rate = 1
+            player.scheduleBuffer(proceduralBuffers[proceduralBuffers.count / 2], at: nil, options: .interrupts)
+            player.play()
+        }
     }
+
+    private func sliceBuffersEmpty() -> Bool {
+        let body = bodyBanks["impactSoft_medium"] ?? []
+        let heavy = bodyBanks["impactSoft_heavy"] ?? []
+        return body.isEmpty && heavy.isEmpty && proceduralBuffers.isEmpty
+    }
+
+    // MARK: - Sample loading
+
+    /// 从 Bundle 的 Audio/ 子目录加载 Kenney CC0 采样。任一缺失只降级到
+    /// 程序合成,不影响引擎生命周期。
+    private func loadSamples() {
+        let bundle = Bundle.main
+        for prefix in ["impactSoft_medium", "impactSoft_heavy"] {
+            let bank = Self.loadBank(bundle, prefix: prefix, count: 5)
+            if !bank.isEmpty { bodyBanks[prefix] = bank }
+        }
+        for prefix in ["impactGlass_light", "impactBell_heavy"] {
+            let count = prefix == "impactGlass_light" ? 3 : 2
+            let bank = Self.loadBank(bundle, prefix: prefix, count: count)
+            if !bank.isEmpty { chimeBanks[prefix] = bank }
+        }
+        logAudio("samples loaded -> body:\(bodyBanks.mapValues(\.count)), chime:\(chimeBanks.mapValues(\.count))")
+    }
+
+    private static func loadBank(_ bundle: Bundle, prefix: String, count: Int) -> [AVAudioPCMBuffer] {
+        var bank: [AVAudioPCMBuffer] = []
+        for index in 0..<count {
+            let name = String(format: "%@_%03d", prefix, index)
+            // XcodeGen 目录式源会把资源平铺到 bundle 根目录(无 Audio/ 子目录)
+            guard let url = bundle.url(forResource: name, withExtension: "caf"),
+                  let file = try? AVAudioFile(forReading: url) else { continue }
+            let capacity = AVAudioFrameCount(file.length)
+            guard let buffer = AVAudioPCMBuffer(pcmFormat: file.processingFormat, frameCapacity: capacity),
+                  (try? file.read(into: buffer)) != nil else { continue }
+            bank.append(buffer)
+        }
+        return bank
+    }
+
+    // MARK: - Procedural buffers
 
     // Spawn pops are quiet; they queue behind slice sounds instead of
     // interrupting them.
@@ -83,6 +183,34 @@ final class SoundEffects {
         }
         spawnBuffers[pitchOffset] = buffer
         return buffer
+    }
+
+    /// 撕裂层:0.08s 噪声扫频(3k→1k),独立于主体音量,只提供"湿"的质感
+    private static func makeRipBuffers(format: AVAudioFormat?, variantCount: Int) -> [AVAudioPCMBuffer] {
+        guard let format else { return [] }
+        let frameCount = AVAudioFrameCount(format.sampleRate * 0.08)
+        var buffers: [AVAudioPCMBuffer] = []
+        for variant in 0..<variantCount {
+            guard let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: frameCount),
+                  let channels = buffer.floatChannelData else { continue }
+            buffer.frameLength = frameCount
+            var sweepPhase = 0.0
+            var noiseState: UInt64 = 0xC0FF_EE01 &+ UInt64(variant) &* 0x9E37_79B9
+            for index in 0..<Int(frameCount) {
+                let progress = Double(index) / Double(frameCount)
+                let sweepFrequency = (3_100 - 2_100 * progress) * (0.9 + 0.08 * Double(variant))
+                sweepPhase += 2 * .pi * sweepFrequency / format.sampleRate
+                noiseState = noiseState &* 6_364_136_223_846_793_005 &+ 1
+                let noise = Double(Int64(bitPattern: noiseState) >> 40) / Double(1 << 23)
+                let envelope = sin(.pi * progress)
+                let sample = Float((sin(sweepPhase) * 0.35 + noise * 0.5) * envelope)
+                for channel in 0..<Int(format.channelCount) {
+                    channels[channel][index] = sample
+                }
+            }
+            buffers.append(buffer)
+        }
+        return buffers
     }
 
     // MARK: - Engine lifecycle
@@ -168,6 +296,11 @@ final class SoundEffects {
             try? data.write(to: url, options: .atomic)
         }
         #endif
+    }
+
+    /// FruitKind → 稳定索引(hashValue 每次启动随机,音效要跨启动一致)
+    private static func kindIndex(_ kind: FruitKind) -> Int {
+        Int(kind.rawValue.unicodeScalars.reduce(0) { $0 &+ $1.value } % 64)
     }
 
     private static func makeSliceBuffers(format: AVAudioFormat?, variantCount: Int) -> [AVAudioPCMBuffer] {
