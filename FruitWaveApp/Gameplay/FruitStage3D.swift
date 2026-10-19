@@ -121,7 +121,7 @@ final class FruitStage3D: NSObject {
 
         let keyLight = SCNLight()
         keyLight.type = .directional
-        keyLight.intensity = 900
+        keyLight.intensity = 950
         keyLight.castsShadow = false
         let keyLightNode = SCNNode()
         keyLightNode.light = keyLight
@@ -130,7 +130,7 @@ final class FruitStage3D: NSObject {
 
         let ambient = SCNLight()
         ambient.type = .ambient
-        ambient.intensity = 280
+        ambient.intensity = 240
         let ambientNode = SCNNode()
         ambientNode.light = ambient
         scene.rootNode.addChildNode(ambientNode)
@@ -140,7 +140,7 @@ final class FruitStage3D: NSObject {
         // flat look of pure analytic lights. Kept below 1 so reflections
         // read as sheen, not a wet/oily film.
         scene.lightingEnvironment.contents = Self.studioFaces
-        scene.lightingEnvironment.intensity = 0.7
+        scene.lightingEnvironment.intensity = 0.5
     }
 
     /// Bright ceiling, dark floor, neutral walls. Built once.
@@ -195,7 +195,7 @@ final class FruitStage3D: NSObject {
     @objc private func frameTick(_ link: CADisplayLink) {
         tickCount += 1
         if tickCount % 300 == 0 {
-            Self.logger.debug("stage heartbeat alive (\(self.tickCount))")
+            Self.logger.info("stage heartbeat alive (\(self.tickCount))")
         }
         let now = ProcessInfo.processInfo.systemUptime
         hud.updateCursor(at: now)
@@ -486,7 +486,7 @@ final class FruitStage3D: NSObject {
         spawnImpactEffects(at: position, kind: kind, radius: radius, gameTime: gameTime)
         // Played after spawnImpactEffects so comboCount reflects this hit.
         if soundEnabled { soundEffects.playSlice(kind: kind, combo: comboCount) }
-        Self.logger.debug("slice spawned kind=\(kind.rawValue, privacy: .public) combo=\(self.comboCount)")
+        Self.logger.info("slice spawned kind=\(kind.rawValue, privacy: .public) combo=\(self.comboCount)")
     }
 
     private func sliceAction(direction: Double) -> SCNAction {
@@ -557,7 +557,7 @@ final class FruitStage3D: NSObject {
         piece.removeAllActions()
         piece.removeFromParentNode()
         if slicePool.count < 16 { slicePool.append(piece) }
-        Self.logger.debug("slice piece recycled via \(path, privacy: .public)")
+        Self.logger.info("slice piece recycled via \(path, privacy: .public)")
     }
 
     private func spawnImpactEffects(
