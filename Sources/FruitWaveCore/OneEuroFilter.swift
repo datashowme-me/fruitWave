@@ -6,7 +6,7 @@ public struct OneEuroFilter2D: Sendable {
         public var beta: Double
         public var derivativeCutoff: Double
 
-        public init(minCutoff: Double = 1, beta: Double = 0, derivativeCutoff: Double = 1) {
+        public init(minCutoff: Double = 1, beta: Double = 0.5, derivativeCutoff: Double = 1) {
             self.minCutoff = minCutoff
             self.beta = beta
             self.derivativeCutoff = derivativeCutoff

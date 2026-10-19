@@ -1,6 +1,12 @@
 import Foundation
 
-public enum FruitKind: String, Sendable, Codable, CaseIterable { case watermelon, strawberry, pineapple }
+public enum FruitKind: String, Sendable, Codable, CaseIterable {
+    case watermelon, strawberry, pineapple
+    case apple, orange, banana, kiwi, peach
+    case mango, lemon, grape, dragonFruit
+    case pear, cherry, blueberry, plum
+    case pomegranate, coconut, cantaloupe, persimmon
+}
 public enum FruitState: String, Sendable, Codable { case active, sliced, expired }
 
 public struct Fruit: Identifiable, Sendable, Equatable {
@@ -40,6 +46,7 @@ public struct GameplayEngine: Sendable {
         public var pointsPerFruit = 10
         public var bladeRadius = 0.005
         public var maximumSubstep: TimeInterval = 1.0 / 120.0
+        public var expirationY = 0.64
         public init() {}
     }
 
@@ -49,10 +56,12 @@ public struct GameplayEngine: Sendable {
     public var configuration: Configuration
     private var lastTick: TimeInterval?
     private var nextSpawnTime: TimeInterval = 0
+    public private(set) var roundID = UUID()
 
     public init(configuration: Configuration = .init()) { self.configuration = configuration }
 
-    public mutating func start(at monotonicTime: TimeInterval) {
+    public mutating func start(at monotonicTime: TimeInterval, roundID: UUID = UUID()) {
+        self.roundID = roundID
         score = 0; gameTime = 0; fruits.removeAll(); lastTick = monotonicTime; nextSpawnTime = 0
     }
 
@@ -61,6 +70,9 @@ public struct GameplayEngine: Sendable {
 
     public mutating func tick(at monotonicTime: TimeInterval, spawn: ((TimeInterval) -> Fruit)? = nil) {
         guard let lastTick else { return }
+        // Keep the hot rendering/collision collection bounded. Sliced fruit
+        // has already been handed to the scene as a hit event before this tick.
+        fruits.removeAll { $0.state != .active }
         let dt = max(0, monotonicTime - lastTick)
         self.lastTick = monotonicTime
         gameTime = min(configuration.duration, gameTime + dt)
@@ -70,7 +82,7 @@ public struct GameplayEngine: Sendable {
         }
         // Fruit positions are derived from spawn time so collision and rendering share one timeline.
         for index in fruits.indices where fruits[index].state == .active {
-            if fruits[index].position(at: gameTime).y > 0.72 {
+            if fruits[index].position(at: gameTime).y > configuration.expirationY {
                 fruits[index].state = .expired
             }
         }
@@ -78,7 +90,8 @@ public struct GameplayEngine: Sendable {
 
     @discardableResult
     public mutating func apply(_ slash: SlashSegment, gameTimeRange: ClosedRange<TimeInterval>) -> [HitEvent] {
-        guard gameTimeRange.upperBound >= gameTimeRange.lowerBound else { return [] }
+        guard slash.roundID == roundID,
+              gameTimeRange.upperBound >= gameTimeRange.lowerBound else { return [] }
         var hits: [HitEvent] = []
         for index in fruits.indices where fruits[index].state == .active {
             if let contact = contactTime(slash: slash, fruit: fruits[index], gameTimeRange: gameTimeRange) {
@@ -107,5 +120,59 @@ public struct GameplayEngine: Sendable {
             }
         }
         return nil
+    }
+}
+
+public struct GameClockHistory: Sendable {
+    public struct Sample: Sendable, Equatable {
+        public let monotonicTime: TimeInterval
+        public let gameTime: TimeInterval
+        public init(monotonicTime: TimeInterval, gameTime: TimeInterval) {
+            self.monotonicTime = monotonicTime
+            self.gameTime = gameTime
+        }
+    }
+
+    public var retention: TimeInterval
+    public private(set) var samples: [Sample] = []
+
+    public init(retention: TimeInterval = 0.6) { self.retention = retention }
+
+    public mutating func reset(monotonicTime: TimeInterval, gameTime: TimeInterval = 0) {
+        samples = [.init(monotonicTime: monotonicTime, gameTime: gameTime)]
+    }
+
+    public mutating func record(monotonicTime: TimeInterval, gameTime: TimeInterval) {
+        guard monotonicTime.isFinite, gameTime.isFinite,
+              samples.last.map({ monotonicTime >= $0.monotonicTime }) ?? true else { return }
+        if samples.last?.monotonicTime == monotonicTime {
+            samples[samples.count - 1] = .init(monotonicTime: monotonicTime, gameTime: gameTime)
+        } else {
+            samples.append(.init(monotonicTime: monotonicTime, gameTime: gameTime))
+        }
+        let cutoff = monotonicTime - retention
+        while samples.count > 2, samples[1].monotonicTime < cutoff { samples.removeFirst() }
+    }
+
+    public func gameTime(at monotonicTime: TimeInterval) -> TimeInterval? {
+        guard let first = samples.first, let last = samples.last,
+              monotonicTime >= first.monotonicTime, monotonicTime <= last.monotonicTime else { return nil }
+        if monotonicTime == last.monotonicTime { return last.gameTime }
+        for index in 1..<samples.count {
+            let upper = samples[index]
+            guard monotonicTime <= upper.monotonicTime else { continue }
+            let lower = samples[index - 1]
+            let duration = upper.monotonicTime - lower.monotonicTime
+            guard duration > 0 else { return upper.gameTime }
+            let fraction = (monotonicTime - lower.monotonicTime) / duration
+            return lower.gameTime + (upper.gameTime - lower.gameTime) * fraction
+        }
+        return nil
+    }
+
+    public func gameTimeRange(from start: TimeInterval, to end: TimeInterval) -> ClosedRange<TimeInterval>? {
+        guard let mappedStart = gameTime(at: start), let mappedEnd = gameTime(at: end),
+              mappedEnd >= mappedStart else { return nil }
+        return mappedStart...mappedEnd
     }
 }

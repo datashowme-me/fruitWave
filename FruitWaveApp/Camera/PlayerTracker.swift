@@ -2,34 +2,22 @@ import Foundation
 import FruitWaveCore
 
 struct PlayerTracker {
-    private(set) var playerSessionID: UUID?
-    private var lastCenter: Vector2?
-    private var lastScale: Double?
+    private var tracker = SinglePlayerIdentityTracker()
+    var playerSessionID: UUID? { tracker.playerSessionID }
 
     mutating func lock(candidates: [PoseCandidate]) -> PoseCandidate? {
-        guard candidates.count == 1, let candidate = candidates.first else { return nil }
-        playerSessionID = UUID()
-        lastCenter = candidate.torsoCenter
-        lastScale = candidate.torsoScale
-        return candidate
+        let identities = candidates.map { PlayerIdentityCandidate(torsoCenter: $0.torsoCenter, torsoScale: $0.torsoScale) }
+        guard let index = tracker.lock(candidates: identities) else { return nil }
+        return candidates[index]
     }
 
     mutating func track(candidates: [PoseCandidate]) -> PoseCandidate? {
-        guard let lastCenter, let lastScale, playerSessionID != nil else { return nil }
-        let matches = candidates.filter {
-            ($0.torsoCenter - lastCenter).length <= 0.15 &&
-            $0.torsoScale / max(lastScale, 0.0001) >= 0.7 &&
-            $0.torsoScale / max(lastScale, 0.0001) <= 1.4
-        }
-        guard matches.count == 1, let candidate = matches.first else { return nil }
-        self.lastCenter = candidate.torsoCenter
-        self.lastScale = candidate.torsoScale
-        return candidate
+        let identities = candidates.map { PlayerIdentityCandidate(torsoCenter: $0.torsoCenter, torsoScale: $0.torsoScale) }
+        guard let index = tracker.track(candidates: identities) else { return nil }
+        return candidates[index]
     }
 
     mutating func reset() {
-        playerSessionID = nil
-        lastCenter = nil
-        lastScale = nil
+        tracker.reset()
     }
 }

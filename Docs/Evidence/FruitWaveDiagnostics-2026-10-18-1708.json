@@ -1,0 +1,19 @@
+{
+  "resultAgeP50Milliseconds": 16.613249999977597,
+  "inferenceP95Milliseconds": 17.768124999975043,
+  "frameIntervalP99Milliseconds": 43.90070833323989,
+  "generatedAtUptime": 578.5271207916667,
+  "frameIntervalP50Milliseconds": 33.32633333343438,
+  "queueP95Milliseconds": 0.16529166668988182,
+  "queueP50Milliseconds": 0.13154166663298383,
+  "frameIntervalsAbove33MillisecondsRatio": 0.5,
+  "inferenceP50Milliseconds": 16.479750000030435,
+  "droppedFrames": {
+    "frameWasLate": 1
+  },
+  "sampleCount": 900,
+  "pixelWidth": 1280,
+  "frameIntervalP95Milliseconds": 39.853208333283874,
+  "pixelHeight": 720,
+  "resultAgeP95Milliseconds": 17.90554166666425
+}
