@@ -1,6 +1,7 @@
 import CoreGraphics
 import FruitWaveCore
 import Metal
+import OSLog
 import SceneKit
 import UIKit
 
@@ -25,6 +26,7 @@ private extension SCNVector3 {
 /// `GameHUDScene`, layered over this view via a transparent SKView.
 @MainActor
 final class FruitStage3D: NSObject {
+    private static let logger = Logger(subsystem: "com.example.FruitWave", category: "Stage")
     let scene = SCNScene()
     let cameraNode = SCNNode()
     let size: CGSize
@@ -55,9 +57,15 @@ final class FruitStage3D: NSObject {
         var radius: CGFloat = 24
     }
 
+    /// Slice half container. `recycled` guards against double-pooling when
+    /// both the SCNAction completion and the watchdog fire.
+    private final class SlicePieceNode: SCNNode {
+        var recycled = false
+    }
+
     private var fruitNodes: [UUID: FruitNode3D] = [:]
     private var fruitPool: [FruitNode3D] = []
-    private var slicePool: [SCNNode] = []
+    private var slicePool: [SlicePieceNode] = []
     private var juiceNodePool: [SCNNode] = []
 
     private let soundEffects = SoundEffects()
@@ -113,7 +121,7 @@ final class FruitStage3D: NSObject {
 
         let keyLight = SCNLight()
         keyLight.type = .directional
-        keyLight.intensity = 1000
+        keyLight.intensity = 900
         keyLight.castsShadow = false
         let keyLightNode = SCNNode()
         keyLightNode.light = keyLight
@@ -122,16 +130,17 @@ final class FruitStage3D: NSObject {
 
         let ambient = SCNLight()
         ambient.type = .ambient
-        ambient.intensity = 240
+        ambient.intensity = 280
         let ambientNode = SCNNode()
         ambientNode.light = ambient
         scene.rootNode.addChildNode(ambientNode)
 
         // Image-based lighting: a procedural studio cube map gives glossy
         // rinds (apple, grape, lemon) photographic reflections instead of the
-        // flat look of pure analytic lights.
+        // flat look of pure analytic lights. Kept below 1 so reflections
+        // read as sheen, not a wet/oily film.
         scene.lightingEnvironment.contents = Self.studioFaces
-        scene.lightingEnvironment.intensity = 1.1
+        scene.lightingEnvironment.intensity = 0.7
     }
 
     /// Bright ceiling, dark floor, neutral walls. Built once.
@@ -181,7 +190,13 @@ final class FruitStage3D: NSObject {
         displayLink = nil
     }
 
+    private var tickCount = 0
+
     @objc private func frameTick(_ link: CADisplayLink) {
+        tickCount += 1
+        if tickCount % 300 == 0 {
+            Self.logger.debug("stage heartbeat alive (\(self.tickCount))")
+        }
         let now = ProcessInfo.processInfo.systemUptime
         hud.updateCursor(at: now)
         onTick?(now)
@@ -263,8 +278,9 @@ final class FruitStage3D: NSObject {
                 if fruitPool.count < 8 { fruitPool.append(fruit) }
             } else if hadParticles {
                 if juiceNodePool.count < 18 { juiceNodePool.append(node) }
-            } else if slicePool.count < 16 {
-                slicePool.append(node)
+            } else if let slice = node as? SlicePieceNode, slicePool.count < 16 {
+                slice.recycled = true
+                slicePool.append(slice)
             }
         }
     }
@@ -299,14 +315,21 @@ final class FruitStage3D: NSObject {
             .sequence([.scale(to: 1.0, duration: 0.18)]),
             .repeatForever(.rotate(by: direction * .pi * 2, around: spinAxis, duration: .pi * 2 / spinSpeed))
         ]))
+        // If the scale action never ticks (stalled render loop), don't leave
+        // the fruit stuck at 55% size.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak node] in
+            guard let node, node.parent != nil, node.scale.x < 0.99 else { return }
+            node.scale = SCNVector3(1, 1, 1)
+        }
         if soundEnabled { soundEffects.playSpawn(kind: fruit.kind) }
         return node
     }
 
     private func recycleFruit(_ node: FruitNode3D) {
+        guard node.parent != nil || !fruitPool.contains(where: { $0 === node }) else { return }
         node.removeAllActions()
         node.removeFromParentNode()
-        if fruitPool.count < 8 { fruitPool.append(node) }
+        if fruitPool.count < 8, !fruitPool.contains(where: { $0 === node }) { fruitPool.append(node) }
     }
 
     /// Builds the per-kind body under `scaleNode` (which carries the radius
@@ -412,6 +435,10 @@ final class FruitStage3D: NSObject {
                 guard let self, let original else { return }
                 self.recycleFruit(original)
             }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self, weak original] in
+                guard let self, let original, original.parent != nil else { return }
+                self.recycleFruit(original)
+            }
         case .grape:
             // The cluster bursts into a few loose berry halves.
             recycleFruit(original)
@@ -459,6 +486,7 @@ final class FruitStage3D: NSObject {
         spawnImpactEffects(at: position, kind: kind, radius: radius, gameTime: gameTime)
         // Played after spawnImpactEffects so comboCount reflects this hit.
         if soundEnabled { soundEffects.playSlice(kind: kind, combo: comboCount) }
+        Self.logger.debug("slice spawned kind=\(kind.rawValue, privacy: .public) combo=\(self.comboCount)")
     }
 
     private func sliceAction(direction: Double) -> SCNAction {
@@ -486,11 +514,12 @@ final class FruitStage3D: NSObject {
         flip: Bool,
         scaleFactor: CGFloat,
         attachments: [AttachmentSpec]
-    ) -> SCNNode {
-        let piece = slicePool.popLast() ?? SCNNode()
+    ) -> SlicePieceNode {
+        let piece = slicePool.popLast() ?? SlicePieceNode()
         piece.removeAllActions()
         piece.removeFromParentNode()
         piece.opacity = 1
+        piece.recycled = false
         for child in piece.childNodes { child.removeFromParentNode() }
         let rimNode = SCNNode(geometry: sweep.rim)
         rimNode.geometry?.materials = [rindMaterial(for: kind)]
@@ -508,12 +537,27 @@ final class FruitStage3D: NSObject {
         return piece
     }
 
-    private func finishSlicePiece(_ piece: SCNNode, action: SCNAction) {
+    private func finishSlicePiece(_ piece: SlicePieceNode, action: SCNAction) {
         piece.runAction(action) { [weak self, weak piece] in
             guard let self, let piece else { return }
-            piece.removeFromParentNode()
-            if self.slicePool.count < 16 { self.slicePool.append(piece) }
+            self.recycleSlicePiece(piece, path: "action")
         }
+        // Watchdog: even if the render loop stalls or the action completion
+        // never fires on device, the piece is guaranteed to leave the screen
+        // shortly after its animation window ends.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) { [weak self, weak piece] in
+            guard let self, let piece else { return }
+            self.recycleSlicePiece(piece, path: "watchdog")
+        }
+    }
+
+    private func recycleSlicePiece(_ piece: SlicePieceNode, path: String) {
+        guard !piece.recycled else { return }
+        piece.recycled = true
+        piece.removeAllActions()
+        piece.removeFromParentNode()
+        if slicePool.count < 16 { slicePool.append(piece) }
+        Self.logger.debug("slice piece recycled via \(path, privacy: .public)")
     }
 
     private func spawnImpactEffects(
@@ -561,9 +605,21 @@ final class FruitStage3D: NSObject {
         node.addParticleSystem(systems[index])
         node.runAction(.wait(duration: 0.7)) { [weak self, weak node] in
             guard let self, let node else { return }
-            node.removeFromParentNode()
-            node.removeAllParticleSystems()
-            if self.juiceNodePool.count < 18 { self.juiceNodePool.append(node) }
+            self.recycleJuiceNode(node)
+        }
+        // Watchdog, same rationale as the slice pieces.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) { [weak self, weak node] in
+            guard let self, let node, node.parent != nil else { return }
+            self.recycleJuiceNode(node)
+        }
+    }
+
+    private func recycleJuiceNode(_ node: SCNNode) {
+        node.removeAllActions()
+        node.removeFromParentNode()
+        node.removeAllParticleSystems()
+        if juiceNodePool.count < 18, !juiceNodePool.contains(where: { $0 === node }) {
+            juiceNodePool.append(node)
         }
     }
 
@@ -669,7 +725,7 @@ final class FruitStage3D: NSObject {
         material.diffuse.wrapS = .repeat
         material.diffuse.wrapT = .clamp
         material.diffuse.maxAnisotropy = 4
-        material.roughness.contents = 0.5
+        material.roughness.contents = 0.6
         material.metalness.contents = 0
         material.isDoubleSided = true
         material.blendMode = .alpha

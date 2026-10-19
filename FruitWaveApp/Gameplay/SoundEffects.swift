@@ -19,6 +19,18 @@ final class SoundEffects {
         if let format { engine.connect(player, to: engine.mainMixerNode, format: format) }
         player.volume = 0.85
         engine.prepare()
+        // When the Apple TV's audio route appears or changes (TV/AVR waking
+        // up), an engine that failed to start earlier gets another chance
+        // immediately instead of waiting for the next retry tick.
+        NotificationCenter.default.addObserver(
+            forName: AVAudioSession.routeChangeNotification, object: nil, queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor [weak self] in
+                guard let self else { return }
+                self.logAudio("route change -> \(self.routeDescription())")
+                if !self.engine.isRunning { _ = self.ensureAudioReady() }
+            }
+        }
         _ = ensureAudioReady()
     }
 
@@ -73,8 +85,10 @@ final class SoundEffects {
         return buffer
     }
 
-    private var startAttempts = 0
+    // MARK: - Engine lifecycle
+
     private var sessionConfigured = false
+    private var retryScheduled = false
 
     /// AVAudioSession setup is done at most once per launch — repeating it on
     /// every play call can block the main thread (and with it SceneKit's
@@ -83,46 +97,65 @@ final class SoundEffects {
         if sessionConfigured { return true }
         do {
             let session = AVAudioSession.sharedInstance()
-            try session.setCategory(.ambient, mode: .default)
+            try session.setCategory(.playback, mode: .default)
             try session.setActive(true)
             sessionConfigured = true
+            logAudio("session configured (.playback) -> \(routeDescription())")
         } catch {
-            Self.logger.error("Audio session setup failed: \(error.localizedDescription, privacy: .public)")
+            Self.logger.error("session setup failed: \(error.localizedDescription, privacy: .public)")
+            logAudio("session setup failed: \(error.localizedDescription)")
             return false
         }
         return true
     }
 
+    /// Starts the engine if it isn't running. Failures keep retrying every
+    /// 4 s for the whole session: at launch the Apple TV may have no live
+    /// audio route (TV asleep / receiver off), and the engine typically
+    /// starts fine once the route appears.
     @discardableResult
     private func ensureAudioReady() -> Bool {
         if engine.isRunning { return true }
-        guard configureSessionOnce() else { return false }
+        guard configureSessionOnce() else {
+            scheduleRetry()
+            return false
+        }
         do {
             try engine.start()
-            startAttempts = 0
-            logAudio("engine started (attempts reset)")
+            logAudio("engine started -> \(routeDescription())")
         } catch {
-            // The engine sometimes can't start during app launch on tvOS;
-            // retry lazily instead of blocking. Spaced widely so repeated
-            // failures can't stall the main thread.
-            startAttempts += 1
-            Self.logger.error("Engine start attempt \(self.startAttempts) failed: \(error.localizedDescription, privacy: .public)")
+            Self.logger.error("engine start failed: \(error.localizedDescription, privacy: .public)")
             logAudio("engine start failed: \(error.localizedDescription)")
-            if startAttempts <= 6 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 4) { [weak self] in
-                    guard let self, !self.engine.isRunning else { return }
-                    _ = self.ensureAudioReady()
-                }
-            }
+            scheduleRetry()
             return false
         }
         return engine.isRunning
     }
 
+    private func scheduleRetry() {
+        guard !retryScheduled else { return }
+        retryScheduled = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) { [weak self] in
+            guard let self else { return }
+            self.retryScheduled = false
+            if !self.engine.isRunning { _ = self.ensureAudioReady() }
+        }
+    }
+
+    /// Output port types only — never port names (device names stay out of
+    /// the logs).
+    private func routeDescription() -> String {
+        let outputs = AVAudioSession.sharedInstance().currentRoute.outputs
+        guard !outputs.isEmpty else { return "no outputs" }
+        return outputs.map(\.portType.rawValue).joined(separator: ",")
+    }
+
     /// Appends one line to Library/Caches/fruitwave-audio-log.txt (DEBUG only)
-    /// so the on-device audio state can be pulled after a session. Caches is
-    /// used because Documents writes fail silently on tvOS.
+    /// and mirrors it to the unified log so it can be captured from the
+    /// console. Caches is used because Documents writes fail silently on
+    /// tvOS.
     private func logAudio(_ message: String) {
+        Self.logger.debug("\(message, privacy: .public)")
         #if DEBUG
         let url = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
             .appendingPathComponent("fruitwave-audio-log.txt")
