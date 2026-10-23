@@ -99,6 +99,56 @@ final class FruitStage3D: NSObject {
     /// exhausted system restarts emission.
     private var sliceTrailSystems: [FruitKind: SCNParticleSystem] = [:]
 
+    // MARK: - Authored 3D USDZ Asset Cache (RealityKit/SceneKit Bridge)
+    private var usdzWholeCache: [FruitKind: SCNNode] = [:]
+    private var usdzSlicedCache: [FruitKind: SCNNode] = [:]
+
+    private func usdzFolderName(for kind: FruitKind) -> String? {
+        switch kind {
+        case .apple: return "Apple"
+        case .banana: return "Banana"
+        case .blueberry: return "Blueberry"
+        case .cantaloupe: return "Cantaloupe"
+        case .cherry: return "Cherry"
+        case .coconut: return "Coconut"
+        case .dragonFruit: return "DragonFruit"
+        case .grape: return "Grape"
+        case .kiwi: return "Kiwi"
+        case .lemon: return "Lemon"
+        case .mango: return "Mango"
+        case .orange: return "Orange"
+        case .peach: return "Peach"
+        case .pear: return "Pear"
+        case .persimmon: return "Persimmon"
+        case .pineapple: return "Pineapple"
+        case .plum: return "Plum"
+        case .pomegranate: return "Pomegranate"
+        case .strawberry: return "Strawberry"
+        case .watermelon: return "Watermelon"
+        case .bomb: return nil
+        }
+    }
+
+    private func usdzFileSlug(for kind: FruitKind) -> String? {
+        switch kind {
+        case .dragonFruit: return "dragon_fruit"
+        case .bomb: return nil
+        default: return kind.rawValue
+        }
+    }
+
+    private func loadUSDZNode(kind: FruitKind, isSliced: Bool) -> SCNNode? {
+        guard let folder = usdzFolderName(for: kind),
+              let slug = usdzFileSlug(for: kind) else { return nil }
+        let name = isSliced ? "\(slug)_sliced" : "\(slug)_whole"
+        guard let url = Bundle.main.url(forResource: name, withExtension: "usdz", subdirectory: "Models/\(folder)")
+                ?? Bundle.main.url(forResource: name, withExtension: "usdz") else {
+            return nil
+        }
+        guard let scene = try? SCNScene(url: url, options: nil) else { return nil }
+        return scene.rootNode.clone()
+    }
+
     // Shared attachment geometries; per-node scale/rotation/color via
     // materials. Sizes are in profile units (fruit body radius ≈ 1).
     private let leafGeometry = SCNSphere(radius: 1)
@@ -480,9 +530,19 @@ final class FruitStage3D: NSObject {
     }
 
     /// Builds the per-kind body under `scaleNode` (which carries the radius
-    /// scale). Banana and grape cluster are special-cased; everything else is
-    /// a lathe solid plus attachments.
+    /// scale). Checks for authored 3D USDZ asset in Models/<Fruit>/ first,
+    /// falling back to lathe procedural geometry.
     private func assembleBody(kind: FruitKind, spec: FruitVisualSpec, scaleNode: SCNNode) {
+        if kind != .bomb {
+            if let cached = usdzWholeCache[kind] {
+                scaleNode.addChildNode(cached.clone())
+                return
+            } else if let loaded = loadUSDZNode(kind: kind, isSliced: false) {
+                usdzWholeCache[kind] = loaded
+                scaleNode.addChildNode(loaded.clone())
+                return
+            }
+        }
         switch kind {
         case .bomb:
             // Glossy black sphere, tilted gray fuse, spark fizzling at the tip.
@@ -646,25 +706,44 @@ final class FruitStage3D: NSObject {
             }
         default:
             recycleFruit(original)
-            guard let sweep = splitSweep(for: kind) else { break }
             let spec = FruitVisualData.spec(for: kind)
-            // Both halves reuse the cached equator-cut dome; the lower half
-            // flips (eulerAngles.x = π) so its face mirrors the photo texture
-            // the way a real cut would.
-            for side in [-1.0, 1.0] {
-                let isUpper = side > 0
-                let half = spawnSlicePiece(
-                    sweep: sweep, kind: kind,
-                    at: SCNVector3(
-                        CGFloat(position.x) + radius * 0.3 * CGFloat(cut.x) * side,
-                        CGFloat(position.y) + radius * 0.3 * CGFloat(cut.y) * side
-                            + radius * 0.5 * (isUpper ? -1 : 1),
-                        CGFloat(position.z)
-                    ),
-                    radius: radius, flip: !isUpper, scaleFactor: 1,
-                    attachments: isUpper ? spec.attachments : []
-                )
-                finishSlicePiece(half, action: sliceAction(pushX: pushX, pushY: pushY, side: side))
+            // Check for authored 3D USDZ sliced halves first
+            if let usdzSliced = usdzSlicedCache[kind] ?? loadUSDZNode(kind: kind, isSliced: true) {
+                usdzSlicedCache[kind] = usdzSliced
+                let slicedClone = usdzSliced.clone()
+                slicedClone.position = position
+                slicedClone.scale = SCNVector3(radius, radius, radius)
+                scene.rootNode.addChildNode(slicedClone)
+
+                let children = slicedClone.childNodes
+                if children.count >= 2 {
+                    for (index, child) in children.enumerated() {
+                        let side = index == 0 ? -1.0 : 1.0
+                        child.runAction(sliceAction(pushX: pushX, pushY: pushY, side: side))
+                    }
+                } else {
+                    slicedClone.runAction(sliceAction(pushX: pushX, pushY: pushY, side: 1.0))
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.55) {
+                    slicedClone.removeFromParentNode()
+                }
+            } else if let sweep = splitSweep(for: kind) {
+                // Procedural lathe split fallback
+                for side in [-1.0, 1.0] {
+                    let isUpper = side > 0
+                    let half = spawnSlicePiece(
+                        sweep: sweep, kind: kind,
+                        at: SCNVector3(
+                            CGFloat(position.x) + radius * 0.3 * CGFloat(cut.x) * side,
+                            CGFloat(position.y) + radius * 0.3 * CGFloat(cut.y) * side
+                                + radius * 0.5 * (isUpper ? -1 : 1),
+                            CGFloat(position.z)
+                        ),
+                        radius: radius, flip: !isUpper, scaleFactor: 1,
+                        attachments: isUpper ? spec.attachments : []
+                    )
+                    finishSlicePiece(half, action: sliceAction(pushX: pushX, pushY: pushY, side: side))
+                }
             }
         }
         spawnImpactEffects(at: contactPoint, kind: kind, radius: radius, gameTime: gameTime)
@@ -672,9 +751,24 @@ final class FruitStage3D: NSObject {
             at: CGPoint(x: CGFloat(contactPoint.x), y: CGFloat(contactPoint.y)),
             direction: CGPoint(x: CGFloat(cut.x), y: CGFloat(cut.y))
         )
+        // Bullet time slow-motion trigger on 5+ combo streak
+        if comboCount >= 5 {
+            triggerBulletTime()
+        }
         // Played after spawnImpactEffects so comboCount reflects this hit.
         if soundEnabled { soundEffects.playSlice(kind: kind, combo: comboCount) }
         Self.logger.info("slice spawned kind=\(kind.rawValue, privacy: .public) combo=\(self.comboCount)")
+    }
+
+    private var isBulletTimeActive = false
+
+    private func triggerBulletTime() {
+        guard !isBulletTimeActive else { return }
+        isBulletTimeActive = true
+        hud.spawnFloatingText("5x 慢动作暴击!", at: CGPoint(x: size.width / 2, y: size.height * 0.35), color: .yellow)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
+            self?.isBulletTimeActive = false
+        }
     }
 
     private func sliceAction(pushX: CGFloat, pushY: CGFloat, side: Double) -> SCNAction {

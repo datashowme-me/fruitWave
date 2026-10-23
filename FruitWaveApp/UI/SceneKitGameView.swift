@@ -1,6 +1,7 @@
 import SceneKit
 import SpriteKit
 import SwiftUI
+import UIKit
 
 /// Hosts the 3D fruit stage with the 2D HUD layered on top.
 /// `overlaySKScene` is macOS-only, so on tvOS the HUD is a transparent SKView
@@ -8,18 +9,51 @@ import SwiftUI
 /// isPlaying are mandatory: SCNView sleeps when nothing animates, and the
 /// game clock is driven by the stage's CADisplayLink while this view is
 /// mounted.
+/// Also supports Siri Remote clickpad pan gestures for sofa/controller play.
 struct SceneKitGameView: UIViewRepresentable {
     let renderer: GameRenderer
+    var onPanSlash: ((CGPoint, CGPoint) -> Void)? = nil
 
-    final class Coordinator {
+    final class Coordinator: NSObject {
         let renderer: GameRenderer
-        init(renderer: GameRenderer) { self.renderer = renderer }
+        var onPanSlash: ((CGPoint, CGPoint) -> Void)?
+        private var previousLocation: CGPoint?
+
+        init(renderer: GameRenderer, onPanSlash: ((CGPoint, CGPoint) -> Void)?) {
+            self.renderer = renderer
+            self.onPanSlash = onPanSlash
+            super.init()
+        }
+
+        @objc func handleRemotePan(_ gesture: UIPanGestureRecognizer) {
+            guard let view = gesture.view else { return }
+            let point = gesture.location(in: view)
+            switch gesture.state {
+            case .began:
+                previousLocation = point
+            case .changed:
+                if let prev = previousLocation {
+                    let dist = hypot(point.x - prev.x, point.y - prev.y)
+                    if dist > 14 {
+                        onPanSlash?(prev, point)
+                    }
+                }
+                previousLocation = point
+            case .ended, .cancelled:
+                previousLocation = nil
+            default:
+                break
+            }
+        }
     }
 
-    func makeCoordinator() -> Coordinator { Coordinator(renderer: renderer) }
+    func makeCoordinator() -> Coordinator {
+        Coordinator(renderer: renderer, onPanSlash: onPanSlash)
+    }
 
     func makeUIView(context: Context) -> UIView {
         let container = UIView(frame: .zero)
+        container.isUserInteractionEnabled = true
 
         let scnView = SCNView(frame: .zero)
         scnView.translatesAutoresizingMaskIntoConstraints = false
@@ -50,17 +84,20 @@ struct SceneKitGameView: UIViewRepresentable {
         scnView.showsStatistics = true
         #endif
 
+        // Siri Remote Clickpad Pan Gesture Recognizer
+        let pan = UIPanGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.handleRemotePan(_:)))
+        container.addGestureRecognizer(pan)
+
         skView.presentScene(renderer.hud)
         renderer.stage.startFrameDriver()
         return container
     }
 
-    func updateUIView(_ uiView: UIView, context: Context) {}
+    func updateUIView(_ uiView: UIView, context: Context) {
+        context.coordinator.onPanSlash = onPanSlash
+    }
 
     static func dismantleUIView(_ uiView: UIView, coordinator: Coordinator) {
-        // Break the views' references so the model-owned stage and HUD can
-        // outlive this view instance (PlayingView recreates the view on
-        // every mount).
         guard let scnView = uiView.subviews.compactMap({ $0 as? SCNView }).first,
               let skView = uiView.subviews.compactMap({ $0 as? SKView }).first else { return }
         coordinator.renderer.stage.stopFrameDriver()

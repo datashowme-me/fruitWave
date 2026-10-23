@@ -361,16 +361,29 @@ private struct PlayingView: View {
     let model: AppModel
     var body: some View {
         ZStack(alignment: .top) {
-            SceneKitGameView(renderer: model.renderer).ignoresSafeArea()
+            SceneKitGameView(renderer: model.renderer, onPanSlash: { start, end in
+                model.applyRemoteSlash(from: start, to: end)
+            }).ignoresSafeArea()
             HStack {
                 Metric(title: "分数", value: "\(model.score)")
+                if model.gameMode == .classic {
+                    HStack(spacing: 6) {
+                        ForEach(0..<3) { index in
+                            Image(systemName: index < model.livesRemaining ? "heart.fill" : "heart")
+                                .foregroundStyle(index < model.livesRemaining ? .red : .secondary)
+                                .font(.title2)
+                        }
+                    }
+                    .padding(.horizontal, 16).padding(.vertical, 10)
+                    .background(.ultraThinMaterial, in: Capsule())
+                }
                 Spacer()
                 if model.isHandVisible {
-                    Text("按 ⏯ 暂停").font(.callout).foregroundStyle(.secondary)
+                    Text("挥手或遥控器触控滑动 · 按 ⏯ 暂停").font(.callout).foregroundStyle(.secondary)
                 } else {
-                    Label("正在寻找所选手腕", systemImage: "viewfinder")
+                    Label("支持挥手体感或遥控器触控滑动切水果", systemImage: "hand.draw")
                         .font(.callout.bold())
-                        .foregroundStyle(.orange)
+                        .foregroundStyle(.cyan)
                 }
                 Spacer()
                 Metric(title: "剩余", value: "\(model.secondsRemaining)s")

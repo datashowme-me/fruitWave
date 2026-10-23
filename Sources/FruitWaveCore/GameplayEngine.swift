@@ -45,6 +45,15 @@ public struct HitEvent: Sendable, Equatable {
     public let slashDirection: Vector2
 }
 
+public enum GameMode: String, Sendable, Codable, CaseIterable {
+    /// 3 lives: missing a fruit costs 1 life; slicing a bomb triggers instant game over.
+    case classic
+    /// 90-second time trial: slicing a bomb docks 50 points without ending the round.
+    case arcade
+    /// Relaxed mode: 90 seconds of fruit waves with zero bombs and zero lives lost.
+    case zen
+}
+
 public struct GameplayEngine: Sendable {
     public struct Configuration: Sendable, Equatable {
         public var duration: TimeInterval = 90
@@ -54,6 +63,7 @@ public struct GameplayEngine: Sendable {
         public var bladeRadius = 0.005
         public var maximumSubstep: TimeInterval = 1.0 / 120.0
         public var expirationY = 0.64
+        public var initialLives: Int = 3
         public init() {}
     }
 
@@ -61,18 +71,29 @@ public struct GameplayEngine: Sendable {
     public private(set) var gameTime: TimeInterval = 0
     public private(set) var fruits: [Fruit] = []
     public var configuration: Configuration
+    public var gameMode: GameMode = .arcade
+    public private(set) var livesRemaining = 3
+    public private(set) var fruitsMissed = 0
+    public private(set) var maxCombo = 0
     private var lastTick: TimeInterval?
     private var nextSpawnTime: TimeInterval = 0
     public private(set) var roundID = UUID()
     /// Set when a bomb is sliced; consumed by the host to end the round.
     public private(set) var hitBomb = false
 
-    public init(configuration: Configuration = .init()) { self.configuration = configuration }
+    public init(configuration: Configuration = .init(), gameMode: GameMode = .arcade) {
+        self.configuration = configuration
+        self.gameMode = gameMode
+        self.livesRemaining = configuration.initialLives
+    }
 
     public mutating func start(at monotonicTime: TimeInterval, roundID: UUID = UUID()) {
         self.roundID = roundID
         score = 0; gameTime = 0; fruits.removeAll(); lastTick = monotonicTime; nextSpawnTime = 0
         hitBomb = false
+        livesRemaining = configuration.initialLives
+        fruitsMissed = 0
+        maxCombo = 0
     }
 
     public mutating func resume(at monotonicTime: TimeInterval) { lastTick = monotonicTime }
@@ -87,13 +108,25 @@ public struct GameplayEngine: Sendable {
         self.lastTick = monotonicTime
         gameTime = min(configuration.duration, gameTime + dt)
         if gameTime >= nextSpawnTime, fruits.lazy.filter({ $0.state == .active }).count < configuration.maximumFruitCount {
-            if let fruit = spawn?(gameTime) { fruits.append(fruit) }
+            if let fruit = spawn?(gameTime) {
+                // In Zen mode, filter out bombs completely
+                if gameMode == .zen && fruit.kind == .bomb {
+                    // Skip spawning bomb in zen mode
+                } else {
+                    fruits.append(fruit)
+                }
+            }
             nextSpawnTime = gameTime + configuration.spawnInterval
         }
         // Fruit positions are derived from spawn time so collision and rendering share one timeline.
         for index in fruits.indices where fruits[index].state == .active {
             if fruits[index].position(at: gameTime).y > configuration.expirationY {
                 fruits[index].state = .expired
+                // In classic mode, missed non-bomb fruits deduct a life
+                if gameMode == .classic && fruits[index].kind != .bomb {
+                    fruitsMissed += 1
+                    livesRemaining = max(0, livesRemaining - 1)
+                }
             }
         }
     }
@@ -116,16 +149,25 @@ public struct GameplayEngine: Sendable {
                 // Bombs detonate instead of scoring.
                 if fruits[index].kind == .bomb {
                     hitBomb = true
+                    if gameMode == .arcade {
+                        score = max(0, score - 50)
+                    }
                 } else {
                     score += configuration.pointsPerFruit
                 }
             }
         }
+        if hits.count > maxCombo { maxCombo = hits.count }
         hits.sort { $0.contactTime == $1.contactTime ? $0.fruitID.uuidString < $1.fruitID.uuidString : $0.contactTime < $1.contactTime }
         return hits
     }
 
-    public var isFinished: Bool { gameTime >= configuration.duration }
+    public var isFinished: Bool {
+        if gameMode == .classic {
+            return livesRemaining <= 0 || hitBomb
+        }
+        return gameTime >= configuration.duration
+    }
 
     private func contact(slash: SlashSegment, fruit: Fruit, gameTimeRange: ClosedRange<TimeInterval>) -> (time: TimeInterval, position: Vector2)? {
         let duration = max(slash.endTime - slash.startTime, 0.000_1)

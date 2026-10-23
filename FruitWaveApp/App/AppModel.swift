@@ -14,6 +14,8 @@ final class AppModel {
     private(set) var statusMessage = "连接 iPhone 后开始"
     private(set) var isDemoMode = false
     var selectedHand: HandSide = .right
+    var gameMode: GameMode = .arcade { didSet { gameplay.gameMode = gameMode } }
+    var livesRemaining: Int { gameplay.livesRemaining }
     var soundEnabled = true { didSet { renderer.soundEnabled = soundEnabled } }
     var reduceMotion = false { didSet { renderer.reduceMotion = reduceMotion } }
     var showDevicePicker = false
@@ -191,6 +193,48 @@ final class AppModel {
         statusMessage = "动画演示：自动挥砍"
         if isAutomatedDemoVerification { print("DEMO_VERIFY started") }
         startGame()
+    }
+
+    /// Handles Siri Remote Clickpad pan gesture slashes from the sofa
+    func applyRemoteSlash(from startPoint: CGPoint, to endPoint: CGPoint) {
+        guard state == .playing else { return }
+        let now = CACurrentMediaTime()
+        let normStart = Vector2(x: Double(startPoint.x / 1920.0), y: Double(startPoint.y / 1080.0))
+        let normEnd = Vector2(x: Double(endPoint.x / 1920.0), y: Double(endPoint.y / 1080.0))
+        let dt = 0.016
+        let speed = (normEnd - normStart).length / dt
+
+        let slash = SlashSegment(
+            sessionID: UUID(),
+            roundID: currentRoundID,
+            playerSessionID: activePlayerID,
+            mappingVersion: 1,
+            startTime: now - dt,
+            endTime: now,
+            startPosition: normStart,
+            endPosition: normEnd,
+            speed: speed
+        )
+
+        currentHandPosition = normEnd
+        currentHandSampleTime = now
+
+        let startGameTime = max(0, gameplay.gameTime - dt)
+        let hits = gameplay.apply(slash, gameTimeRange: startGameTime...gameplay.gameTime)
+        if !hits.isEmpty {
+            for hit in hits {
+                renderer.stage.handleHit(hit)
+            }
+            score = gameplay.score
+            if gameplay.hitBomb, !bombExploding {
+                bombExploding = true
+                Task { @MainActor [weak self] in
+                    try? await Task.sleep(nanoseconds: 900_000_000)
+                    self?.coordinator.finish()
+                    self?.bombExploding = false
+                }
+            }
+        }
     }
 
     func handleAppBecameInactive() {
