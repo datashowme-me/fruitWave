@@ -1,0 +1,6 @@
+{
+  "name": "FruitWave Web",
+  "description": "体感切水果游戏与原型开发套件 (FruitWave)，支持摄像头手势体感挥砍与鼠标/触摸，精准还原物理曲线、果汁飞溅与连击音效。",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
