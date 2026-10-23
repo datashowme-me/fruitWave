@@ -1,0 +1,40 @@
+{
+  "fruit": "mango",
+  "source_kind": "google_doc_docx_export",
+  "source_id_or_url": "https://docs.google.com/document/d/1tzqIUol1BEAEpyYdKFmQUmWwURed_3voLYmmjdvpZaA",
+  "source_title": "Apple TV 体感切水果｜Codex 与 Claude 开发任务书 v1.0",
+  "source_revision": "AHj4eMSBFqyUvXobDuLRyBpkCUJ2grbbT5bvx5F4cQV8NbDQS_W11xD6NAU9mj65ybmf98OXnmVWdqMOX3wlug-jE01yNfCA97T_oH0HZnE",
+  "source_modified_time": "2026-10-19T07:33:49.063Z",
+  "extracted_image": "mango_reference.png",
+  "extracted_source": "ArtSource/PRD-v1.0/FruitReferences/mango/whole.png",
+  "sha256": "41be45f31d1fb330b21b9397626c42f80c8c9a9b91de40a8b0fd5953c4f78e2c",
+  "supplemental_images": [
+    {
+      "path": "mango_reference_cut.png",
+      "source": "ArtSource/PRD-v1.0/FruitReferences/mango/cut.png",
+      "sha256": "dc1aacee7bbcec914600f26352de768cf85ef2703e8e8ceb80455956581a699c",
+      "role": "cut"
+    }
+  ],
+  "derived_assets": [
+    {
+      "path": "mango_skin_basecolor.png",
+      "method": "per-row mirrored-longitude cylinder remap with mango-family classification, de-lighting blend"
+    },
+    {
+      "path": "mango_flesh_basecolor.png",
+      "method": "mango-flesh centroid disk remap, specular rejection, de-lighting blend"
+    }
+  ],
+  "observed_features": [
+    "oval mango with stem nub, black background",
+    "skin orange #e9651d/#dda824, lit #fad948, dark #8b690d, small red blush #881513",
+    "cut face: orange flesh #f2ab1b/#e66a18/#fac727/#fbd84d with flat dark pit #755109"
+  ],
+  "inferred_features": [
+    "unseen back mirrored from the front half",
+    "the blade slices through the pit: both halves show the flat pit oval",
+    "pit oval size from the 10% #755109 share of the cut palette"
+  ],
+  "inspection_method": "pixel-level programmatic measurement (no vision model available in the generating environment); human-eye verification required on device"
+}

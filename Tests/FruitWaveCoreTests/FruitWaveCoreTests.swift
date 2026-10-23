@@ -194,7 +194,8 @@ import Testing
         .orange, .banana, .kiwi, .peach,
         .mango, .lemon, .grape, .dragonFruit,
         .pear, .cherry, .blueberry, .plum,
-        .pomegranate, .coconut, .cantaloupe, .persimmon
+        .pomegranate, .coconut, .cantaloupe, .persimmon,
+        .bomb
     ]))
 }
 

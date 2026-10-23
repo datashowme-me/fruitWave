@@ -1,0 +1,41 @@
+{
+  "fruit": "blueberry",
+  "source_kind": "google_doc_docx_export",
+  "source_id_or_url": "https://docs.google.com/document/d/1tzqIUol1BEAEpyYdKFmQUmWwURed_3voLYmmjdvpZaA",
+  "source_title": "Apple TV 体感切水果｜Codex 与 Claude 开发任务书 v1.0",
+  "source_revision": "AHj4eMSBFqyUvXobDuLRyBpkCUJ2grbbT5bvx5F4cQV8NbDQS_W11xD6NAU9mj65ybmf98OXnmVWdqMOX3wlug-jE01yNfCA97T_oH0HZnE",
+  "source_modified_time": "2026-10-19T07:33:49.063Z",
+  "extracted_image": "blueberry_reference.png",
+  "extracted_source": "ArtSource/PRD-v1.0/FruitReferences/blueberry/whole.png",
+  "sha256": "d7fbfc81669b29b4dab5d6607c95b92f2a2ac8522e420ae5d0648da070c45fb9",
+  "supplemental_images": [
+    {
+      "path": "blueberry_reference_cut.png",
+      "source": "ArtSource/PRD-v1.0/FruitReferences/blueberry/cut.png",
+      "sha256": "bf5a1b68571dbadfcafb7e20f18a62ffa8440b4060bb980f10bfcfd275fdf6c0",
+      "role": "cut"
+    }
+  ],
+  "derived_assets": [
+    {
+      "path": "blueberry_skin_basecolor.png",
+      "method": "per-row mirrored-longitude cylinder remap with blueberry-family classification, de-lighting blend"
+    },
+    {
+      "path": "blueberry_flesh_basecolor.png",
+      "method": "blueberry-flesh centroid disk remap, specular rejection, de-lighting blend"
+    }
+  ],
+  "observed_features": [
+    "near-square bare berry, black background",
+    "skin dusty blue #243467/#3f588b/#5f819f with pale bloom #93b3c6",
+    "no stem or leaf in the reference",
+    "cut face: pale lavender flesh #ccb2cd/#6b6e8c, no pit"
+  ],
+  "inferred_features": [
+    "unseen back mirrored from the front half",
+    "bloom powder from the 12.8% pale palette share",
+    "no crown/calyx: not visible in the pixel profile"
+  ],
+  "inspection_method": "pixel-level programmatic measurement (no vision model available in the generating environment); human-eye verification required on device"
+}

@@ -1,0 +1,41 @@
+{
+  "fruit": "pear",
+  "source_kind": "google_doc_docx_export",
+  "source_id_or_url": "https://docs.google.com/document/d/1tzqIUol1BEAEpyYdKFmQUmWwURed_3voLYmmjdvpZaA",
+  "source_title": "Apple TV 体感切水果｜Codex 与 Claude 开发任务书 v1.0",
+  "source_revision": "AHj4eMSBFqyUvXobDuLRyBpkCUJ2grbbT5bvx5F4cQV8NbDQS_W11xD6NAU9mj65ybmf98OXnmVWdqMOX3wlug-jE01yNfCA97T_oH0HZnE",
+  "source_modified_time": "2026-10-19T07:33:49.063Z",
+  "extracted_image": "pear_reference.png",
+  "extracted_source": "ArtSource/PRD-v1.0/FruitReferences/pear/whole.png",
+  "sha256": "a486eafd5b36d97e718b38f72826c77d7672ab1700fdc84feeb2c0792ff25c9d",
+  "supplemental_images": [
+    {
+      "path": "pear_reference_cut.png",
+      "source": "ArtSource/PRD-v1.0/FruitReferences/pear/cut.png",
+      "sha256": "a47a5ecc4734a2bfe146700445b763bb5090987abce2a6bbe616b193ac5d9020",
+      "role": "cut"
+    }
+  ],
+  "derived_assets": [
+    {
+      "path": "pear_skin_basecolor.png",
+      "method": "per-row mirrored-longitude cylinder remap with pear-family classification, de-lighting blend"
+    },
+    {
+      "path": "pear_flesh_basecolor.png",
+      "method": "pear-flesh centroid disk remap, specular rejection, de-lighting blend"
+    }
+  ],
+  "observed_features": [
+    "near-square pear, black background",
+    "skin yellow-green #bbb421/#ebec61 with deep #717711/#90880f/#534d09",
+    "no distinct leaf-green family: stem carries no leaf",
+    "cut face: cream flesh #f5e9ca/#e6d770/#f1e88b with dark #61550f seed zone"
+  ],
+  "inferred_features": [
+    "unseen back mirrored from the front half",
+    "seed chamber ring and dark core from the 6.2% #61550f share of the cut palette",
+    "speckled lenticels are below palette resolution and come from the skin texture"
+  ],
+  "inspection_method": "pixel-level programmatic measurement (no vision model available in the generating environment); human-eye verification required on device"
+}

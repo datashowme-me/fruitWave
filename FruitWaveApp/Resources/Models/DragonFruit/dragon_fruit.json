@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "fruit": "dragon_fruit",
+  "referenceManifest": "dragon_fruit_reference.json",
+  "referenceSkin": "dragon_fruit_reference.png",
+  "referenceCutFace": "dragon_fruit_reference_cut.png",
+  "derivedSkinAlbedo": "dragon_fruit_skin_basecolor.png",
+  "derivedFleshAlbedo": "dragon_fruit_flesh_basecolor.png",
+  "modelingBasis": "PRD v1.0 extracted reference images; unseen back and 3D interior inferred",
+  "units": "meters",
+  "wholeEntity": "dragon_fruit_whole",
+  "leftHalfEntity": "dragon_fruit_half_left",
+  "rightHalfEntity": "dragon_fruit_half_right",
+  "cutPlane": {
+    "normal": [
+      1,
+      0,
+      0
+    ],
+    "distance": 0
+  },
+  "pivot": [
+    0,
+    0,
+    0
+  ],
+  "runtimeStrategy": "swap-whole-for-authored-halves",
+  "integrationStatus": "acceptance-lab-only; gameplay spawn/split still uses FruitVisualData 2D lathe",
+  "collision": {
+    "shape": "sphere",
+    "radius": 0.66
+  },
+  "massKilograms": 0.3,
+  "juiceColorSRGB": [
+    0.95,
+    0.9,
+    0.85
+  ],
+  "materialNotes": {
+    "skin": "roughness 0.35, specular IOR level 0.40 (waxy peel)",
+    "flesh": "roughness 0.30, specular IOR level 0.60 (wet cut face)",
+    "scales": "green #93b240, roughness 0.45",
+    "seeds": "near-black, roughness 0.30"
+  },
+  "cutFaceStructure": {
+    "seedRings": [
+      [
+        0.12,
+        10
+      ],
+      [
+        0.24,
+        12
+      ],
+      [
+        0.36,
+        14
+      ],
+      [
+        0.48,
+        16
+      ]
+    ],
+    "seedScale": [
+      0.006,
+      0.006,
+      0.012
+    ]
+  }
+}

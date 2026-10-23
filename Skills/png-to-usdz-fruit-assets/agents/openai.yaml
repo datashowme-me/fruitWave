@@ -1,0 +1,4 @@
+interface:
+  display_name: "PNG to USDZ Fruit Assets"
+  short_description: "Ground PRD fruit art and build cuttable tvOS assets"
+  default_prompt: "Use $png-to-usdz-fruit-assets to extract the approved fruit reference from the PRD and build validated whole and sliced USDZ deliverables."

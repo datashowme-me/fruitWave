@@ -1,0 +1,41 @@
+{
+  "fruit": "coconut",
+  "source_kind": "google_doc_docx_export",
+  "source_id_or_url": "https://docs.google.com/document/d/1tzqIUol1BEAEpyYdKFmQUmWwURed_3voLYmmjdvpZaA",
+  "source_title": "Apple TV 体感切水果｜Codex 与 Claude 开发任务书 v1.0",
+  "source_revision": "AHj4eMSBFqyUvXobDuLRyBpkCUJ2grbbT5bvx5F4cQV8NbDQS_W11xD6NAU9mj65ybmf98OXnmVWdqMOX3wlug-jE01yNfCA97T_oH0HZnE",
+  "source_modified_time": "2026-10-19T07:33:49.063Z",
+  "extracted_image": "coconut_reference.png",
+  "extracted_source": "ArtSource/PRD-v1.0/FruitReferences/coconut/whole.png",
+  "sha256": "5d51ae29158a05bc55e5ba821e330d8f7c62364053c03f55ae2009367ad79be4",
+  "supplemental_images": [
+    {
+      "path": "coconut_reference_cut.png",
+      "source": "ArtSource/PRD-v1.0/FruitReferences/coconut/cut.png",
+      "sha256": "d96c2cd28f4cab1e89aa127998ee485d67769490ea61c25241f95c7bb13ab4e9",
+      "role": "cut"
+    }
+  ],
+  "derived_assets": [
+    {
+      "path": "coconut_skin_basecolor.png",
+      "method": "per-row mirrored-longitude cylinder remap with coconut-family classification, de-lighting blend"
+    },
+    {
+      "path": "coconut_flesh_basecolor.png",
+      "method": "coconut-meat centroid disk remap, specular rejection, de-lighting blend"
+    }
+  ],
+  "observed_features": [
+    "near-square bare coconut, black background",
+    "dry brown husk #b06937/#8f4a21/#dd9959 with deep shadows #5d240b",
+    "no stem in the reference",
+    "cut face: white meat #e9e0d8, brown shell ring #c39a77/#783615, dark hollow"
+  ],
+  "inferred_features": [
+    "unseen back mirrored from the front half",
+    "meat thickness (0.30-0.74) from the white share of the cut palette",
+    "the three germination eyes are below palette resolution and omitted"
+  ],
+  "inspection_method": "pixel-level programmatic measurement (no vision model available in the generating environment); human-eye verification required on device"
+}

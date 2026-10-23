@@ -1,0 +1,40 @@
+{
+  "fruit": "cantaloupe",
+  "source_kind": "google_doc_docx_export",
+  "source_id_or_url": "https://docs.google.com/document/d/1tzqIUol1BEAEpyYdKFmQUmWwURed_3voLYmmjdvpZaA",
+  "source_title": "Apple TV 体感切水果｜Codex 与 Claude 开发任务书 v1.0",
+  "source_revision": "AHj4eMSBFqyUvXobDuLRyBpkCUJ2grbbT5bvx5F4cQV8NbDQS_W11xD6NAU9mj65ybmf98OXnmVWdqMOX3wlug-jE01yNfCA97T_oH0HZnE",
+  "source_modified_time": "2026-10-19T07:33:49.063Z",
+  "extracted_image": "cantaloupe_reference.png",
+  "extracted_source": "ArtSource/PRD-v1.0/FruitReferences/cantaloupe/whole.png",
+  "sha256": "8e968acbcae7d846f16e2ff4b4c48be2ea5d44f066920d84acc608b9287f128a",
+  "supplemental_images": [
+    {
+      "path": "cantaloupe_reference_cut.png",
+      "source": "ArtSource/PRD-v1.0/FruitReferences/cantaloupe/cut.png",
+      "sha256": "958bcc6577898674104eea948fb8f4d24ad17c392a9300dd594003f2d77c5c10",
+      "role": "cut"
+    }
+  ],
+  "derived_assets": [
+    {
+      "path": "cantaloupe_skin_basecolor.png",
+      "method": "per-row mirrored-longitude cylinder remap with cantaloupe-family classification, de-lighting blend"
+    },
+    {
+      "path": "cantaloupe_flesh_basecolor.png",
+      "method": "cantaloupe-flesh centroid disk remap, specular rejection, de-lighting blend"
+    }
+  ],
+  "observed_features": [
+    "near-square cantaloupe with stem, black background",
+    "netted tan skin #a98242/#ca954e/#deaf69 with bright ridges #f5d191",
+    "cut face: orange flesh #e8a846/#f68d24/#f0c277"
+  ],
+  "inferred_features": [
+    "unseen back mirrored from the front half",
+    "netting from the bright ridge family; lobe depth from the palette contrast",
+    "seed cavity size (0.26) and 8 seeds from typical cantaloupe structure"
+  ],
+  "inspection_method": "pixel-level programmatic measurement (no vision model available in the generating environment); human-eye verification required on device"
+}

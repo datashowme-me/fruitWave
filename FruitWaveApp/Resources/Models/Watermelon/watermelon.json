@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "fruit": "watermelon",
+  "referenceManifest": "watermelon_reference.json",
+  "referenceSkin": "watermelon_reference.png",
+  "referenceCutFace": "watermelon_reference_cut.png",
+  "derivedSkinAlbedo": "watermelon_skin_basecolor.png",
+  "derivedFleshAlbedo": "watermelon_flesh_basecolor.png",
+  "modelingBasis": "PRD v1.0 extracted reference images; unseen back and 3D interior inferred",
+  "units": "meters",
+  "wholeEntity": "watermelon_whole",
+  "leftHalfEntity": "watermelon_half_left",
+  "rightHalfEntity": "watermelon_half_right",
+  "cutPlane": {
+    "normal": [
+      1,
+      0,
+      0
+    ],
+    "distance": 0
+  },
+  "pivot": [
+    0,
+    0,
+    0
+  ],
+  "runtimeStrategy": "swap-whole-for-authored-halves",
+  "integrationStatus": "acceptance-lab-only; gameplay spawn/split still uses FruitVisualData 2D lathe",
+  "collision": {
+    "shape": "sphere",
+    "radius": 1.22
+  },
+  "massKilograms": 5.0,
+  "juiceColorSRGB": [
+    0.9,
+    0.25,
+    0.2
+  ],
+  "materialNotes": {
+    "skin": "roughness 0.34, specular IOR level 0.28 (striped rind)",
+    "flesh": "roughness 0.24, specular IOR level 0.80 (wet cut face)",
+    "rind": "#c7cc73, roughness 0.36",
+    "seeds": "near-black, roughness 0.30"
+  },
+  "cutFaceStructure": {
+    "seedsPerHalf": 8,
+    "rindRing": [
+      1.08,
+      1.16
+    ]
+  }
+}

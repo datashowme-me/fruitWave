@@ -1,0 +1,41 @@
+{
+  "fruit": "dragon_fruit",
+  "source_kind": "google_doc_docx_export",
+  "source_id_or_url": "https://docs.google.com/document/d/1tzqIUol1BEAEpyYdKFmQUmWwURed_3voLYmmjdvpZaA",
+  "source_title": "Apple TV 体感切水果｜Codex 与 Claude 开发任务书 v1.0",
+  "source_revision": "AHj4eMSBFqyUvXobDuLRyBpkCUJ2grbbT5bvx5F4cQV8NbDQS_W11xD6NAU9mj65ybmf98OXnmVWdqMOX3wlug-jE01yNfCA97T_oH0HZnE",
+  "source_modified_time": "2026-10-19T07:33:49.063Z",
+  "extracted_image": "dragon_fruit_reference.png",
+  "extracted_source": "ArtSource/PRD-v1.0/FruitReferences/dragon_fruit/whole.png",
+  "sha256": "b903699598a0c2aaca9367ff57b3d5fbf8672aae526de5762b95186896f3ee10",
+  "supplemental_images": [
+    {
+      "path": "dragon_fruit_reference_cut.png",
+      "source": "ArtSource/PRD-v1.0/FruitReferences/dragon_fruit/cut.png",
+      "sha256": "0b302a6c7482804abf1cb63fcd18a3106d9bbecb6f9b35933ad7bc3403f1dee0",
+      "role": "cut"
+    }
+  ],
+  "derived_assets": [
+    {
+      "path": "dragon_fruit_skin_basecolor.png",
+      "method": "per-row mirrored-longitude cylinder remap with dragon-fruit-family classification, de-lighting blend"
+    },
+    {
+      "path": "dragon_fruit_flesh_basecolor.png",
+      "method": "dragon-fruit-flesh centroid disk remap, specular rejection, de-lighting blend"
+    }
+  ],
+  "observed_features": [
+    "egg-shaped dragon fruit with scale flaps, black background",
+    "skin magenta #ef255b/#9d0220/#92242d, green scale tips #cbb155, brown flap shadows #bb6f53",
+    "cut face: white flesh #d5c0ac (largest cut family) with magenta skin rim",
+    "the tiny black seeds are below the measured palette resolution"
+  ],
+  "inferred_features": [
+    "unseen back mirrored from the front half",
+    "flap layout (4 columns x 5 rows) from the green/brown palette shares",
+    "seed ring counts (10/12/14/16) from dragon fruit structure; not measurable in the photo"
+  ],
+  "inspection_method": "pixel-level programmatic measurement (no vision model available in the generating environment); human-eye verification required on device"
+}

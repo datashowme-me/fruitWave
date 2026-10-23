@@ -150,6 +150,12 @@ enum FruitVisualData {
                                 .leaf(position: SIMD3(0.25, 0.92, 0), rotation: SIMD3(0, 0, 0.7),
                                       scale: SIMD3(0.45, 0.16, 0.05), color: RGB(r: 0.16, g: 0.52, b: 0.20)),
                             ], spinAxis: .y, slicesIntoHalves: true)
+        case .bomb:
+            // Classic cartoon bomb: glossy black body, lit fuse. The fuse and
+            // its spark are built in FruitStage3D's assembleBody.
+            FruitVisualSpec(kind: kind, rind: RGB(r: 0.10, g: 0.10, b: 0.13), flesh: RGB(r: 0.95, g: 0.55, b: 0.15),
+                            roughness: 0.30, profile: circleProfile(), attachments: [],
+                            spinAxis: .y, slicesIntoHalves: false)
         }
     }
 

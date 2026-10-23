@@ -1,0 +1,41 @@
+{
+  "fruit": "plum",
+  "source_kind": "google_doc_docx_export",
+  "source_id_or_url": "https://docs.google.com/document/d/1tzqIUol1BEAEpyYdKFmQUmWwURed_3voLYmmjdvpZaA",
+  "source_title": "Apple TV 体感切水果｜Codex 与 Claude 开发任务书 v1.0",
+  "source_revision": "AHj4eMSBFqyUvXobDuLRyBpkCUJ2grbbT5bvx5F4cQV8NbDQS_W11xD6NAU9mj65ybmf98OXnmVWdqMOX3wlug-jE01yNfCA97T_oH0HZnE",
+  "source_modified_time": "2026-10-19T07:33:49.063Z",
+  "extracted_image": "plum_reference.png",
+  "extracted_source": "ArtSource/PRD-v1.0/FruitReferences/plum/whole.png",
+  "sha256": "0d73e70e5758a5d1ff5e4f55d557242a9d3080fd0ff5ed0a963ddf2f1bb4bd3e",
+  "supplemental_images": [
+    {
+      "path": "plum_reference_cut.png",
+      "source": "ArtSource/PRD-v1.0/FruitReferences/plum/cut.png",
+      "sha256": "bd86c7c64ffcddd1cf14f47367069387380697dc070d8116e0780f6afddf3a56",
+      "role": "cut"
+    }
+  ],
+  "derived_assets": [
+    {
+      "path": "plum_skin_basecolor.png",
+      "method": "per-row mirrored-longitude cylinder remap with plum-family classification, de-lighting blend"
+    },
+    {
+      "path": "plum_flesh_basecolor.png",
+      "method": "plum-flesh centroid disk remap, specular rejection, de-lighting blend"
+    }
+  ],
+  "observed_features": [
+    "near-square plum with stem-end dip, black background",
+    "skin deep purple #794b7c/#661f4a with dusty bloom #9c9085 (matte)",
+    "no green family: short stem, no leaf",
+    "cut face: yellow-orange flesh #be8a47/#ecbe53/#fcd45d, dark pit"
+  ],
+  "inferred_features": [
+    "unseen back mirrored from the front half",
+    "bloom strength from the 10% #9c9085 palette share",
+    "pit stays in one half (right) with a cavity impression on the other"
+  ],
+  "inspection_method": "pixel-level programmatic measurement (no vision model available in the generating environment); human-eye verification required on device"
+}

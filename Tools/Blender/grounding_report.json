@@ -1,0 +1,3642 @@
+{
+  "apple": {
+    "cut": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/apple/cut.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Apple/apple_reference_cut.png",
+      "profile": {
+        "opaque_pct": 40.5,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 98.5,
+          "top_pct": 1.8,
+          "bottom_pct": 99.9,
+          "width_pct": 98.5,
+          "height_pct": 98.1,
+          "aspect_w_h": 1.004
+        },
+        "palette": [
+          {
+            "pct": 57.3,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 12.4,
+            "rgb": [
+              229,
+              37,
+              33
+            ]
+          },
+          {
+            "pct": 8.5,
+            "rgb": [
+              246,
+              223,
+              181
+            ]
+          },
+          {
+            "pct": 7.4,
+            "rgb": [
+              127,
+              26,
+              19
+            ]
+          },
+          {
+            "pct": 6.8,
+            "rgb": [
+              206,
+              160,
+              101
+            ]
+          },
+          {
+            "pct": 4.8,
+            "rgb": [
+              251,
+              241,
+              211
+            ]
+          },
+          {
+            "pct": 1.5,
+            "rgb": [
+              105,
+              0,
+              1
+            ]
+          },
+          {
+            "pct": 1.3,
+            "rgb": [
+              0,
+              0,
+              2
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 11.24,
+        "dark_pct_of_bbox": 60.95
+      }
+    },
+    "whole": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/apple/whole.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Apple/apple_reference.png",
+      "profile": {
+        "opaque_pct": 41.46,
+        "bbox": {
+          "left_pct": 2.6,
+          "right_pct": 98.8,
+          "top_pct": 1.5,
+          "bottom_pct": 99.9,
+          "width_pct": 96.2,
+          "height_pct": 98.4,
+          "aspect_w_h": 0.977
+        },
+        "palette": [
+          {
+            "pct": 58.8,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 8.5,
+            "rgb": [
+              229,
+              9,
+              13
+            ]
+          },
+          {
+            "pct": 7.3,
+            "rgb": [
+              135,
+              0,
+              2
+            ]
+          },
+          {
+            "pct": 6.1,
+            "rgb": [
+              184,
+              4,
+              5
+            ]
+          },
+          {
+            "pct": 5.9,
+            "rgb": [
+              206,
+              42,
+              34
+            ]
+          },
+          {
+            "pct": 4.8,
+            "rgb": [
+              188,
+              100,
+              52
+            ]
+          },
+          {
+            "pct": 4.5,
+            "rgb": [
+              127,
+              5,
+              7
+            ]
+          },
+          {
+            "pct": 4.1,
+            "rgb": [
+              206,
+              175,
+              119
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 0.94,
+        "dark_pct_of_bbox": 66.99
+      }
+    }
+  },
+  "banana": {
+    "cut": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/banana/cut.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Banana/banana_reference_cut.png",
+      "profile": {
+        "opaque_pct": 32.1,
+        "bbox": {
+          "left_pct": 2.6,
+          "right_pct": 98.5,
+          "top_pct": 1.4,
+          "bottom_pct": 99.9,
+          "width_pct": 95.9,
+          "height_pct": 98.6,
+          "aspect_w_h": 0.972
+        },
+        "palette": [
+          {
+            "pct": 65.5,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 7.3,
+            "rgb": [
+              214,
+              161,
+              27
+            ]
+          },
+          {
+            "pct": 6.1,
+            "rgb": [
+              241,
+              180,
+              27
+            ]
+          },
+          {
+            "pct": 6.0,
+            "rgb": [
+              252,
+              237,
+              180
+            ]
+          },
+          {
+            "pct": 5.4,
+            "rgb": [
+              248,
+              211,
+              85
+            ]
+          },
+          {
+            "pct": 4.7,
+            "rgb": [
+              253,
+              230,
+              99
+            ]
+          },
+          {
+            "pct": 3.1,
+            "rgb": [
+              135,
+              91,
+              12
+            ]
+          },
+          {
+            "pct": 1.9,
+            "rgb": [
+              14,
+              0,
+              0
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 11.47,
+        "dark_pct_of_bbox": 61.07
+      }
+    },
+    "whole": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/banana/whole.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Banana/banana_reference.png",
+      "profile": {
+        "opaque_pct": 34.11,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 96.6,
+          "top_pct": 2.2,
+          "bottom_pct": 99.9,
+          "width_pct": 96.6,
+          "height_pct": 97.7,
+          "aspect_w_h": 0.989
+        },
+        "palette": [
+          {
+            "pct": 63.8,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 9.1,
+            "rgb": [
+              207,
+              150,
+              18
+            ]
+          },
+          {
+            "pct": 7.2,
+            "rgb": [
+              246,
+              196,
+              33
+            ]
+          },
+          {
+            "pct": 6.4,
+            "rgb": [
+              253,
+              222,
+              65
+            ]
+          },
+          {
+            "pct": 5.5,
+            "rgb": [
+              234,
+              169,
+              14
+            ]
+          },
+          {
+            "pct": 4.0,
+            "rgb": [
+              253,
+              235,
+              132
+            ]
+          },
+          {
+            "pct": 2.4,
+            "rgb": [
+              148,
+              96,
+              9
+            ]
+          },
+          {
+            "pct": 1.7,
+            "rgb": [
+              12,
+              0,
+              0
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 7.74,
+        "dark_pct_of_bbox": 59.17
+      }
+    }
+  },
+  "blueberry": {
+    "cut": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/blueberry/cut.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Blueberry/blueberry_reference_cut.png",
+      "profile": {
+        "opaque_pct": 35.19,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 97.5,
+          "top_pct": 0.0,
+          "bottom_pct": 99.9,
+          "width_pct": 97.5,
+          "height_pct": 99.9,
+          "aspect_w_h": 0.976
+        },
+        "palette": [
+          {
+            "pct": 62.3,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 8.8,
+            "rgb": [
+              84,
+              62,
+              114
+            ]
+          },
+          {
+            "pct": 8.4,
+            "rgb": [
+              25,
+              36,
+              73
+            ]
+          },
+          {
+            "pct": 7.5,
+            "rgb": [
+              107,
+              110,
+              140
+            ]
+          },
+          {
+            "pct": 6.2,
+            "rgb": [
+              204,
+              178,
+              205
+            ]
+          },
+          {
+            "pct": 4.4,
+            "rgb": [
+              121,
+              154,
+              148
+            ]
+          },
+          {
+            "pct": 1.8,
+            "rgb": [
+              16,
+              0,
+              16
+            ]
+          },
+          {
+            "pct": 0.6,
+            "rgb": [
+              0,
+              0,
+              9
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 0.42,
+        "dark_pct_of_bbox": 66.99
+      }
+    },
+    "whole": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/blueberry/whole.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Blueberry/blueberry_reference.png",
+      "profile": {
+        "opaque_pct": 55.31,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 98.8,
+          "top_pct": 1.4,
+          "bottom_pct": 99.9,
+          "width_pct": 98.8,
+          "height_pct": 98.6,
+          "aspect_w_h": 1.002
+        },
+        "palette": [
+          {
+            "pct": 42.6,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 12.8,
+            "rgb": [
+              147,
+              179,
+              198
+            ]
+          },
+          {
+            "pct": 11.8,
+            "rgb": [
+              36,
+              52,
+              103
+            ]
+          },
+          {
+            "pct": 11.5,
+            "rgb": [
+              95,
+              129,
+              159
+            ]
+          },
+          {
+            "pct": 11.4,
+            "rgb": [
+              63,
+              88,
+              139
+            ]
+          },
+          {
+            "pct": 8.1,
+            "rgb": [
+              14,
+              21,
+              52
+            ]
+          },
+          {
+            "pct": 1.0,
+            "rgb": [
+              0,
+              0,
+              10
+            ]
+          },
+          {
+            "pct": 0.7,
+            "rgb": [
+              1,
+              0,
+              0
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 0.72,
+        "dark_pct_of_bbox": 50.35
+      }
+    }
+  },
+  "cantaloupe": {
+    "cut": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/cantaloupe/cut.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Cantaloupe/cantaloupe_reference_cut.png",
+      "profile": {
+        "opaque_pct": 50.54,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 98.8,
+          "top_pct": 2.2,
+          "bottom_pct": 96.4,
+          "width_pct": 98.8,
+          "height_pct": 94.2,
+          "aspect_w_h": 1.049
+        },
+        "palette": [
+          {
+            "pct": 46.0,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 13.9,
+            "rgb": [
+              232,
+              168,
+              70
+            ]
+          },
+          {
+            "pct": 13.2,
+            "rgb": [
+              246,
+              141,
+              36
+            ]
+          },
+          {
+            "pct": 12.3,
+            "rgb": [
+              168,
+              128,
+              65
+            ]
+          },
+          {
+            "pct": 11.2,
+            "rgb": [
+              240,
+              194,
+              119
+            ]
+          },
+          {
+            "pct": 1.9,
+            "rgb": [
+              67,
+              38,
+              11
+            ]
+          },
+          {
+            "pct": 1.3,
+            "rgb": [
+              0,
+              1,
+              0
+            ]
+          },
+          {
+            "pct": 0.2,
+            "rgb": [
+              0,
+              0,
+              1
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 1.57,
+        "dark_pct_of_bbox": 40.97
+      }
+    },
+    "whole": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/cantaloupe/whole.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Cantaloupe/cantaloupe_reference.png",
+      "profile": {
+        "opaque_pct": 60.22,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 98.8,
+          "top_pct": 4.4,
+          "bottom_pct": 97.2,
+          "width_pct": 98.8,
+          "height_pct": 92.8,
+          "aspect_w_h": 1.064
+        },
+        "palette": [
+          {
+            "pct": 37.6,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 14.6,
+            "rgb": [
+              169,
+              130,
+              66
+            ]
+          },
+          {
+            "pct": 14.4,
+            "rgb": [
+              222,
+              175,
+              105
+            ]
+          },
+          {
+            "pct": 12.3,
+            "rgb": [
+              202,
+              149,
+              78
+            ]
+          },
+          {
+            "pct": 11.5,
+            "rgb": [
+              245,
+              209,
+              145
+            ]
+          },
+          {
+            "pct": 8.1,
+            "rgb": [
+              119,
+              83,
+              32
+            ]
+          },
+          {
+            "pct": 1.4,
+            "rgb": [
+              14,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 0.2,
+            "rgb": [
+              0,
+              0,
+              1
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 4.98,
+        "dark_pct_of_bbox": 30.94
+      }
+    }
+  },
+  "cherry": {
+    "cut": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/cherry/cut.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Cherry/cherry_reference_cut.png",
+      "profile": {
+        "opaque_pct": 31.61,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 98.8,
+          "top_pct": 1.8,
+          "bottom_pct": 99.9,
+          "width_pct": 98.8,
+          "height_pct": 98.1,
+          "aspect_w_h": 1.007
+        },
+        "palette": [
+          {
+            "pct": 68.0,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 7.6,
+            "rgb": [
+              197,
+              19,
+              25
+            ]
+          },
+          {
+            "pct": 6.5,
+            "rgb": [
+              237,
+              62,
+              62
+            ]
+          },
+          {
+            "pct": 4.8,
+            "rgb": [
+              87,
+              14,
+              15
+            ]
+          },
+          {
+            "pct": 4.6,
+            "rgb": [
+              149,
+              60,
+              51
+            ]
+          },
+          {
+            "pct": 3.2,
+            "rgb": [
+              203,
+              150,
+              89
+            ]
+          },
+          {
+            "pct": 2.9,
+            "rgb": [
+              201,
+              100,
+              75
+            ]
+          },
+          {
+            "pct": 2.5,
+            "rgb": [
+              86,
+              0,
+              1
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 0.13,
+        "dark_pct_of_bbox": 73.34
+      }
+    },
+    "whole": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/cherry/whole.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Cherry/cherry_reference.png",
+      "profile": {
+        "opaque_pct": 35.6,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 97.7,
+          "top_pct": 1.7,
+          "bottom_pct": 98.0,
+          "width_pct": 97.7,
+          "height_pct": 96.3,
+          "aspect_w_h": 1.014
+        },
+        "palette": [
+          {
+            "pct": 64.0,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 7.4,
+            "rgb": [
+              178,
+              6,
+              12
+            ]
+          },
+          {
+            "pct": 6.0,
+            "rgb": [
+              100,
+              7,
+              11
+            ]
+          },
+          {
+            "pct": 5.2,
+            "rgb": [
+              223,
+              10,
+              14
+            ]
+          },
+          {
+            "pct": 5.0,
+            "rgb": [
+              184,
+              57,
+              55
+            ]
+          },
+          {
+            "pct": 4.5,
+            "rgb": [
+              181,
+              115,
+              75
+            ]
+          },
+          {
+            "pct": 4.0,
+            "rgb": [
+              216,
+              187,
+              134
+            ]
+          },
+          {
+            "pct": 3.9,
+            "rgb": [
+              115,
+              0,
+              3
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 0.78,
+        "dark_pct_of_bbox": 73.01
+      }
+    }
+  },
+  "coconut": {
+    "cut": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/coconut/cut.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Coconut/coconut_reference_cut.png",
+      "profile": {
+        "opaque_pct": 53.15,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 97.8,
+          "top_pct": 0.0,
+          "bottom_pct": 98.5,
+          "width_pct": 97.8,
+          "height_pct": 98.5,
+          "aspect_w_h": 0.994
+        },
+        "palette": [
+          {
+            "pct": 44.4,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 12.1,
+            "rgb": [
+              233,
+              224,
+              216
+            ]
+          },
+          {
+            "pct": 11.4,
+            "rgb": [
+              195,
+              154,
+              119
+            ]
+          },
+          {
+            "pct": 11.4,
+            "rgb": [
+              120,
+              54,
+              21
+            ]
+          },
+          {
+            "pct": 8.1,
+            "rgb": [
+              183,
+              101,
+              49
+            ]
+          },
+          {
+            "pct": 7.9,
+            "rgb": [
+              162,
+              74,
+              27
+            ]
+          },
+          {
+            "pct": 4.1,
+            "rgb": [
+              71,
+              19,
+              4
+            ]
+          },
+          {
+            "pct": 0.6,
+            "rgb": [
+              0,
+              0,
+              1
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 8.82,
+        "dark_pct_of_bbox": 45.66
+      }
+    },
+    "whole": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/coconut/whole.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Coconut/coconut_reference.png",
+      "profile": {
+        "opaque_pct": 65.32,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 99.1,
+          "top_pct": 0.7,
+          "bottom_pct": 99.9,
+          "width_pct": 99.1,
+          "height_pct": 99.2,
+          "aspect_w_h": 0.999
+        },
+        "palette": [
+          {
+            "pct": 31.6,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 14.3,
+            "rgb": [
+              176,
+              105,
+              55
+            ]
+          },
+          {
+            "pct": 13.1,
+            "rgb": [
+              93,
+              36,
+              11
+            ]
+          },
+          {
+            "pct": 12.8,
+            "rgb": [
+              143,
+              74,
+              33
+            ]
+          },
+          {
+            "pct": 11.1,
+            "rgb": [
+              221,
+              153,
+              89
+            ]
+          },
+          {
+            "pct": 11.0,
+            "rgb": [
+              107,
+              52,
+              22
+            ]
+          },
+          {
+            "pct": 5.0,
+            "rgb": [
+              54,
+              21,
+              7
+            ]
+          },
+          {
+            "pct": 1.1,
+            "rgb": [
+              0,
+              2,
+              0
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 0.26,
+        "dark_pct_of_bbox": 42.45
+      }
+    }
+  },
+  "dragon_fruit": {
+    "cut": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/dragon_fruit/cut.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/DragonFruit/dragon_fruit_reference_cut.png",
+      "profile": {
+        "opaque_pct": 50.94,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 98.8,
+          "top_pct": 0.7,
+          "bottom_pct": 99.9,
+          "width_pct": 98.8,
+          "height_pct": 99.2,
+          "aspect_w_h": 0.996
+        },
+        "palette": [
+          {
+            "pct": 45.7,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 14.3,
+            "rgb": [
+              213,
+              192,
+              172
+            ]
+          },
+          {
+            "pct": 14.1,
+            "rgb": [
+              230,
+              48,
+              103
+            ]
+          },
+          {
+            "pct": 9.7,
+            "rgb": [
+              181,
+              136,
+              98
+            ]
+          },
+          {
+            "pct": 9.3,
+            "rgb": [
+              130,
+              41,
+              41
+            ]
+          },
+          {
+            "pct": 4.5,
+            "rgb": [
+              122,
+              2,
+              26
+            ]
+          },
+          {
+            "pct": 1.7,
+            "rgb": [
+              0,
+              3,
+              0
+            ]
+          },
+          {
+            "pct": 0.7,
+            "rgb": [
+              0,
+              0,
+              3
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 1.46,
+        "dark_pct_of_bbox": 50.2
+      }
+    },
+    "whole": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/dragon_fruit/whole.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/DragonFruit/dragon_fruit_reference.png",
+      "profile": {
+        "opaque_pct": 55.23,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 98.5,
+          "top_pct": 2.5,
+          "bottom_pct": 99.9,
+          "width_pct": 98.5,
+          "height_pct": 97.4,
+          "aspect_w_h": 1.011
+        },
+        "palette": [
+          {
+            "pct": 41.9,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 15.9,
+            "rgb": [
+              239,
+              37,
+              91
+            ]
+          },
+          {
+            "pct": 11.4,
+            "rgb": [
+              203,
+              177,
+              85
+            ]
+          },
+          {
+            "pct": 10.2,
+            "rgb": [
+              157,
+              2,
+              32
+            ]
+          },
+          {
+            "pct": 10.1,
+            "rgb": [
+              187,
+              111,
+              83
+            ]
+          },
+          {
+            "pct": 7.9,
+            "rgb": [
+              146,
+              36,
+              45
+            ]
+          },
+          {
+            "pct": 2.4,
+            "rgb": [
+              0,
+              2,
+              0
+            ]
+          },
+          {
+            "pct": 0.2,
+            "rgb": [
+              0,
+              0,
+              1
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 1.12,
+        "dark_pct_of_bbox": 46.15
+      }
+    }
+  },
+  "grape": {
+    "cut": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/grape/cut.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Grape/grape_reference_cut.png",
+      "profile": {
+        "opaque_pct": 45.2,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 98.2,
+          "top_pct": 1.6,
+          "bottom_pct": 99.9,
+          "width_pct": 98.2,
+          "height_pct": 98.3,
+          "aspect_w_h": 0.998
+        },
+        "palette": [
+          {
+            "pct": 52.2,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 11.6,
+            "rgb": [
+              125,
+              28,
+              83
+            ]
+          },
+          {
+            "pct": 11.1,
+            "rgb": [
+              141,
+              78,
+              114
+            ]
+          },
+          {
+            "pct": 10.2,
+            "rgb": [
+              67,
+              15,
+              44
+            ]
+          },
+          {
+            "pct": 6.3,
+            "rgb": [
+              210,
+              202,
+              124
+            ]
+          },
+          {
+            "pct": 5.8,
+            "rgb": [
+              177,
+              146,
+              109
+            ]
+          },
+          {
+            "pct": 2.2,
+            "rgb": [
+              40,
+              0,
+              14
+            ]
+          },
+          {
+            "pct": 0.5,
+            "rgb": [
+              0,
+              0,
+              3
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 1.18,
+        "dark_pct_of_bbox": 63.62
+      }
+    },
+    "whole": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/grape/whole.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Grape/grape_reference.png",
+      "profile": {
+        "opaque_pct": 54.69,
+        "bbox": {
+          "left_pct": 4.4,
+          "right_pct": 98.3,
+          "top_pct": 2.6,
+          "bottom_pct": 97.4,
+          "width_pct": 93.9,
+          "height_pct": 94.8,
+          "aspect_w_h": 0.991
+        },
+        "palette": [
+          {
+            "pct": 43.2,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 14.2,
+            "rgb": [
+              75,
+              27,
+              71
+            ]
+          },
+          {
+            "pct": 11.9,
+            "rgb": [
+              132,
+              92,
+              125
+            ]
+          },
+          {
+            "pct": 11.3,
+            "rgb": [
+              127,
+              42,
+              115
+            ]
+          },
+          {
+            "pct": 10.5,
+            "rgb": [
+              169,
+              164,
+              105
+            ]
+          },
+          {
+            "pct": 7.6,
+            "rgb": [
+              63,
+              6,
+              41
+            ]
+          },
+          {
+            "pct": 0.7,
+            "rgb": [
+              0,
+              5,
+              0
+            ]
+          },
+          {
+            "pct": 0.6,
+            "rgb": [
+              0,
+              0,
+              11
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 1.13,
+        "dark_pct_of_bbox": 48.17
+      }
+    }
+  },
+  "kiwi": {
+    "cut": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/kiwi/cut.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Kiwi/kiwi_reference_cut.png",
+      "profile": {
+        "opaque_pct": 45.16,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 97.7,
+          "top_pct": 7.1,
+          "bottom_pct": 99.9,
+          "width_pct": 97.7,
+          "height_pct": 92.8,
+          "aspect_w_h": 1.052
+        },
+        "palette": [
+          {
+            "pct": 52.0,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 9.4,
+            "rgb": [
+              181,
+              157,
+              46
+            ]
+          },
+          {
+            "pct": 8.4,
+            "rgb": [
+              135,
+              100,
+              32
+            ]
+          },
+          {
+            "pct": 8.2,
+            "rgb": [
+              102,
+              52,
+              14
+            ]
+          },
+          {
+            "pct": 7.6,
+            "rgb": [
+              188,
+              190,
+              49
+            ]
+          },
+          {
+            "pct": 6.5,
+            "rgb": [
+              186,
+              110,
+              42
+            ]
+          },
+          {
+            "pct": 6.4,
+            "rgb": [
+              209,
+              216,
+              85
+            ]
+          },
+          {
+            "pct": 1.5,
+            "rgb": [
+              15,
+              0,
+              0
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 1.4,
+        "dark_pct_of_bbox": 44.78
+      }
+    },
+    "whole": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/kiwi/whole.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Kiwi/kiwi_reference.png",
+      "profile": {
+        "opaque_pct": 57.94,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 97.5,
+          "top_pct": 1.7,
+          "bottom_pct": 99.9,
+          "width_pct": 97.5,
+          "height_pct": 98.2,
+          "aspect_w_h": 0.993
+        },
+        "palette": [
+          {
+            "pct": 40.3,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 13.9,
+            "rgb": [
+              108,
+              58,
+              16
+            ]
+          },
+          {
+            "pct": 11.8,
+            "rgb": [
+              149,
+              85,
+              28
+            ]
+          },
+          {
+            "pct": 10.7,
+            "rgb": [
+              191,
+              125,
+              50
+            ]
+          },
+          {
+            "pct": 9.7,
+            "rgb": [
+              221,
+              155,
+              69
+            ]
+          },
+          {
+            "pct": 7.9,
+            "rgb": [
+              78,
+              35,
+              6
+            ]
+          },
+          {
+            "pct": 4.8,
+            "rgb": [
+              237,
+              186,
+              114
+            ]
+          },
+          {
+            "pct": 0.9,
+            "rgb": [
+              0,
+              1,
+              0
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 0.84,
+        "dark_pct_of_bbox": 39.25
+      }
+    }
+  },
+  "lemon": {
+    "cut": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/lemon/cut.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Lemon/lemon_reference_cut.png",
+      "profile": {
+        "opaque_pct": 43.65,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 98.5,
+          "top_pct": 1.5,
+          "bottom_pct": 96.4,
+          "width_pct": 98.5,
+          "height_pct": 94.9,
+          "aspect_w_h": 1.038
+        },
+        "palette": [
+          {
+            "pct": 53.4,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 9.8,
+            "rgb": [
+              241,
+              205,
+              75
+            ]
+          },
+          {
+            "pct": 8.9,
+            "rgb": [
+              233,
+              182,
+              29
+            ]
+          },
+          {
+            "pct": 7.9,
+            "rgb": [
+              190,
+              158,
+              26
+            ]
+          },
+          {
+            "pct": 6.5,
+            "rgb": [
+              247,
+              230,
+              164
+            ]
+          },
+          {
+            "pct": 5.7,
+            "rgb": [
+              251,
+              227,
+              64
+            ]
+          },
+          {
+            "pct": 5.7,
+            "rgb": [
+              127,
+              96,
+              10
+            ]
+          },
+          {
+            "pct": 2.1,
+            "rgb": [
+              10,
+              0,
+              0
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 10.85,
+        "dark_pct_of_bbox": 48.98
+      }
+    },
+    "whole": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/lemon/whole.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Lemon/lemon_reference.png",
+      "profile": {
+        "opaque_pct": 47.78,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 98.6,
+          "top_pct": 1.8,
+          "bottom_pct": 99.9,
+          "width_pct": 98.6,
+          "height_pct": 98.2,
+          "aspect_w_h": 1.005
+        },
+        "palette": [
+          {
+            "pct": 50.5,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 14.0,
+            "rgb": [
+              217,
+              148,
+              8
+            ]
+          },
+          {
+            "pct": 10.3,
+            "rgb": [
+              252,
+              222,
+              18
+            ]
+          },
+          {
+            "pct": 7.9,
+            "rgb": [
+              232,
+              182,
+              20
+            ]
+          },
+          {
+            "pct": 5.9,
+            "rgb": [
+              119,
+              96,
+              6
+            ]
+          },
+          {
+            "pct": 5.1,
+            "rgb": [
+              252,
+              239,
+              95
+            ]
+          },
+          {
+            "pct": 4.9,
+            "rgb": [
+              182,
+              140,
+              14
+            ]
+          },
+          {
+            "pct": 1.5,
+            "rgb": [
+              21,
+              0,
+              0
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 8.78,
+        "dark_pct_of_bbox": 48.6
+      }
+    }
+  },
+  "mango": {
+    "cut": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/mango/cut.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Mango/mango_reference_cut.png",
+      "profile": {
+        "opaque_pct": 49.76,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 98.3,
+          "top_pct": 1.4,
+          "bottom_pct": 96.4,
+          "width_pct": 98.3,
+          "height_pct": 95.1,
+          "aspect_w_h": 1.034
+        },
+        "palette": [
+          {
+            "pct": 46.6,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 13.8,
+            "rgb": [
+              242,
+              171,
+              27
+            ]
+          },
+          {
+            "pct": 11.4,
+            "rgb": [
+              230,
+              106,
+              24
+            ]
+          },
+          {
+            "pct": 10.0,
+            "rgb": [
+              117,
+              81,
+              9
+            ]
+          },
+          {
+            "pct": 8.0,
+            "rgb": [
+              250,
+              199,
+              39
+            ]
+          },
+          {
+            "pct": 6.0,
+            "rgb": [
+              251,
+              216,
+              77
+            ]
+          },
+          {
+            "pct": 2.1,
+            "rgb": [
+              56,
+              11,
+              6
+            ]
+          },
+          {
+            "pct": 2.1,
+            "rgb": [
+              0,
+              2,
+              0
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 2.34,
+        "dark_pct_of_bbox": 43.98
+      }
+    },
+    "whole": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/mango/whole.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Mango/mango_reference.png",
+      "profile": {
+        "opaque_pct": 53.19,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 98.3,
+          "top_pct": 1.8,
+          "bottom_pct": 99.9,
+          "width_pct": 98.3,
+          "height_pct": 98.1,
+          "aspect_w_h": 1.002
+        },
+        "palette": [
+          {
+            "pct": 44.6,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 17.1,
+            "rgb": [
+              233,
+              101,
+              29
+            ]
+          },
+          {
+            "pct": 13.4,
+            "rgb": [
+              221,
+              168,
+              36
+            ]
+          },
+          {
+            "pct": 11.2,
+            "rgb": [
+              250,
+              217,
+              72
+            ]
+          },
+          {
+            "pct": 9.1,
+            "rgb": [
+              139,
+              105,
+              13
+            ]
+          },
+          {
+            "pct": 2.7,
+            "rgb": [
+              136,
+              21,
+              19
+            ]
+          },
+          {
+            "pct": 1.9,
+            "rgb": [
+              0,
+              2,
+              0
+            ]
+          },
+          {
+            "pct": 0.0,
+            "rgb": [
+              0,
+              0,
+              2
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 5.02,
+        "dark_pct_of_bbox": 43.68
+      }
+    }
+  },
+  "orange": {
+    "cut": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/orange/cut.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Orange/orange_reference_cut.png",
+      "profile": {
+        "opaque_pct": 50.06,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 98.2,
+          "top_pct": 0.0,
+          "bottom_pct": 99.9,
+          "width_pct": 98.2,
+          "height_pct": 99.9,
+          "aspect_w_h": 0.983
+        },
+        "palette": [
+          {
+            "pct": 46.6,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 13.5,
+            "rgb": [
+              246,
+              166,
+              32
+            ]
+          },
+          {
+            "pct": 12.8,
+            "rgb": [
+              250,
+              126,
+              15
+            ]
+          },
+          {
+            "pct": 9.9,
+            "rgb": [
+              163,
+              75,
+              15
+            ]
+          },
+          {
+            "pct": 7.1,
+            "rgb": [
+              248,
+              192,
+              63
+            ]
+          },
+          {
+            "pct": 5.8,
+            "rgb": [
+              251,
+              230,
+              154
+            ]
+          },
+          {
+            "pct": 2.9,
+            "rgb": [
+              76,
+              19,
+              2
+            ]
+          },
+          {
+            "pct": 1.5,
+            "rgb": [
+              0,
+              3,
+              0
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 5.23,
+        "dark_pct_of_bbox": 47.88
+      }
+    },
+    "whole": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/orange/whole.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Orange/orange_reference.png",
+      "profile": {
+        "opaque_pct": 52.48,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 98.3,
+          "top_pct": 1.7,
+          "bottom_pct": 99.9,
+          "width_pct": 98.3,
+          "height_pct": 98.2,
+          "aspect_w_h": 1.001
+        },
+        "palette": [
+          {
+            "pct": 45.6,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 17.7,
+            "rgb": [
+              230,
+              85,
+              8
+            ]
+          },
+          {
+            "pct": 11.4,
+            "rgb": [
+              243,
+              175,
+              49
+            ]
+          },
+          {
+            "pct": 10.0,
+            "rgb": [
+              167,
+              69,
+              7
+            ]
+          },
+          {
+            "pct": 9.5,
+            "rgb": [
+              214,
+              129,
+              15
+            ]
+          },
+          {
+            "pct": 4.1,
+            "rgb": [
+              119,
+              32,
+              3
+            ]
+          },
+          {
+            "pct": 1.7,
+            "rgb": [
+              0,
+              2,
+              0
+            ]
+          },
+          {
+            "pct": 0.0,
+            "rgb": [
+              0,
+              0,
+              2
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 0.8,
+        "dark_pct_of_bbox": 44.16
+      }
+    }
+  },
+  "peach": {
+    "cut": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/peach/cut.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Peach/peach_reference_cut.png",
+      "profile": {
+        "opaque_pct": 48.28,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 97.5,
+          "top_pct": 1.5,
+          "bottom_pct": 99.9,
+          "width_pct": 97.5,
+          "height_pct": 98.4,
+          "aspect_w_h": 0.991
+        },
+        "palette": [
+          {
+            "pct": 48.0,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 14.9,
+            "rgb": [
+              236,
+              88,
+              66
+            ]
+          },
+          {
+            "pct": 13.2,
+            "rgb": [
+              250,
+              218,
+              108
+            ]
+          },
+          {
+            "pct": 13.1,
+            "rgb": [
+              234,
+              172,
+              74
+            ]
+          },
+          {
+            "pct": 7.3,
+            "rgb": [
+              157,
+              73,
+              41
+            ]
+          },
+          {
+            "pct": 2.3,
+            "rgb": [
+              40,
+              8,
+              5
+            ]
+          },
+          {
+            "pct": 1.2,
+            "rgb": [
+              0,
+              3,
+              0
+            ]
+          },
+          {
+            "pct": 0.0,
+            "rgb": [
+              0,
+              0,
+              1
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 7.54,
+        "dark_pct_of_bbox": 46.81
+      }
+    },
+    "whole": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/peach/whole.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Peach/peach_reference.png",
+      "profile": {
+        "opaque_pct": 57.96,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 97.7,
+          "top_pct": 1.7,
+          "bottom_pct": 99.9,
+          "width_pct": 97.7,
+          "height_pct": 98.2,
+          "aspect_w_h": 0.994
+        },
+        "palette": [
+          {
+            "pct": 40.0,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 12.7,
+            "rgb": [
+              238,
+              193,
+              138
+            ]
+          },
+          {
+            "pct": 11.6,
+            "rgb": [
+              238,
+              69,
+              63
+            ]
+          },
+          {
+            "pct": 11.0,
+            "rgb": [
+              242,
+              100,
+              76
+            ]
+          },
+          {
+            "pct": 9.6,
+            "rgb": [
+              190,
+              70,
+              46
+            ]
+          },
+          {
+            "pct": 6.9,
+            "rgb": [
+              210,
+              137,
+              82
+            ]
+          },
+          {
+            "pct": 5.8,
+            "rgb": [
+              164,
+              29,
+              29
+            ]
+          },
+          {
+            "pct": 2.4,
+            "rgb": [
+              0,
+              10,
+              0
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 2.94,
+        "dark_pct_of_bbox": 37.81
+      }
+    }
+  },
+  "pear": {
+    "cut": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/pear/cut.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Pear/pear_reference_cut.png",
+      "profile": {
+        "opaque_pct": 36.66,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 99.0,
+          "top_pct": 1.2,
+          "bottom_pct": 98.3,
+          "width_pct": 99.0,
+          "height_pct": 97.1,
+          "aspect_w_h": 1.019
+        },
+        "palette": [
+          {
+            "pct": 60.3,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 12.3,
+            "rgb": [
+              175,
+              167,
+              29
+            ]
+          },
+          {
+            "pct": 9.2,
+            "rgb": [
+              245,
+              233,
+              202
+            ]
+          },
+          {
+            "pct": 6.2,
+            "rgb": [
+              97,
+              85,
+              15
+            ]
+          },
+          {
+            "pct": 5.7,
+            "rgb": [
+              230,
+              215,
+              112
+            ]
+          },
+          {
+            "pct": 4.2,
+            "rgb": [
+              241,
+              232,
+              139
+            ]
+          },
+          {
+            "pct": 1.9,
+            "rgb": [
+              3,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 0.1,
+            "rgb": [
+              0,
+              0,
+              2
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 14.26,
+        "dark_pct_of_bbox": 59.45
+      }
+    },
+    "whole": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/pear/whole.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Pear/pear_reference.png",
+      "profile": {
+        "opaque_pct": 42.42,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 98.9,
+          "top_pct": 1.6,
+          "bottom_pct": 97.5,
+          "width_pct": 98.9,
+          "height_pct": 95.9,
+          "aspect_w_h": 1.031
+        },
+        "palette": [
+          {
+            "pct": 55.6,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 11.3,
+            "rgb": [
+              187,
+              180,
+              33
+            ]
+          },
+          {
+            "pct": 9.7,
+            "rgb": [
+              235,
+              228,
+              97
+            ]
+          },
+          {
+            "pct": 8.4,
+            "rgb": [
+              113,
+              119,
+              17
+            ]
+          },
+          {
+            "pct": 6.9,
+            "rgb": [
+              144,
+              136,
+              15
+            ]
+          },
+          {
+            "pct": 6.8,
+            "rgb": [
+              83,
+              77,
+              9
+            ]
+          },
+          {
+            "pct": 1.4,
+            "rgb": [
+              1,
+              0,
+              1
+            ]
+          },
+          {
+            "pct": 0.0,
+            "rgb": [
+              0,
+              0,
+              1
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 6.38,
+        "dark_pct_of_bbox": 52.17
+      }
+    }
+  },
+  "persimmon": {
+    "cut": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/persimmon/cut.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Persimmon/persimmon_reference_cut.png",
+      "profile": {
+        "opaque_pct": 46.95,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 99.7,
+          "top_pct": 4.4,
+          "bottom_pct": 99.9,
+          "width_pct": 99.7,
+          "height_pct": 95.5,
+          "aspect_w_h": 1.043
+        },
+        "palette": [
+          {
+            "pct": 49.6,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 14.5,
+            "rgb": [
+              250,
+              96,
+              13
+            ]
+          },
+          {
+            "pct": 12.9,
+            "rgb": [
+              237,
+              146,
+              34
+            ]
+          },
+          {
+            "pct": 7.7,
+            "rgb": [
+              242,
+              167,
+              50
+            ]
+          },
+          {
+            "pct": 6.5,
+            "rgb": [
+              237,
+              190,
+              91
+            ]
+          },
+          {
+            "pct": 6.3,
+            "rgb": [
+              148,
+              68,
+              23
+            ]
+          },
+          {
+            "pct": 2.2,
+            "rgb": [
+              12,
+              1,
+              0
+            ]
+          },
+          {
+            "pct": 0.4,
+            "rgb": [
+              0,
+              1,
+              0
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 0.39,
+        "dark_pct_of_bbox": 46.95
+      }
+    },
+    "whole": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/persimmon/whole.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Persimmon/persimmon_reference.png",
+      "profile": {
+        "opaque_pct": 52.44,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 94.5,
+          "top_pct": 5.5,
+          "bottom_pct": 95.8,
+          "width_pct": 94.5,
+          "height_pct": 90.3,
+          "aspect_w_h": 1.047
+        },
+        "palette": [
+          {
+            "pct": 45.8,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 17.3,
+            "rgb": [
+              239,
+              73,
+              5
+            ]
+          },
+          {
+            "pct": 9.2,
+            "rgb": [
+              177,
+              60,
+              16
+            ]
+          },
+          {
+            "pct": 9.0,
+            "rgb": [
+              215,
+              161,
+              47
+            ]
+          },
+          {
+            "pct": 8.8,
+            "rgb": [
+              217,
+              127,
+              28
+            ]
+          },
+          {
+            "pct": 5.2,
+            "rgb": [
+              226,
+              196,
+              109
+            ]
+          },
+          {
+            "pct": 3.5,
+            "rgb": [
+              111,
+              20,
+              3
+            ]
+          },
+          {
+            "pct": 1.2,
+            "rgb": [
+              0,
+              1,
+              0
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 1.27,
+        "dark_pct_of_bbox": 32.9
+      }
+    }
+  },
+  "pineapple": {
+    "cut": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/pineapple/cut.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Pineapple/pineapple_reference_cut.png",
+      "profile": {
+        "opaque_pct": 44.13,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 98.8,
+          "top_pct": 1.3,
+          "bottom_pct": 98.0,
+          "width_pct": 98.8,
+          "height_pct": 96.7,
+          "aspect_w_h": 1.021
+        },
+        "palette": [
+          {
+            "pct": 51.9,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 8.4,
+            "rgb": [
+              223,
+              179,
+              43
+            ]
+          },
+          {
+            "pct": 8.4,
+            "rgb": [
+              249,
+              215,
+              70
+            ]
+          },
+          {
+            "pct": 7.8,
+            "rgb": [
+              200,
+              117,
+              24
+            ]
+          },
+          {
+            "pct": 7.7,
+            "rgb": [
+              110,
+              107,
+              21
+            ]
+          },
+          {
+            "pct": 6.9,
+            "rgb": [
+              77,
+              50,
+              10
+            ]
+          },
+          {
+            "pct": 6.2,
+            "rgb": [
+              251,
+              230,
+              110
+            ]
+          },
+          {
+            "pct": 2.5,
+            "rgb": [
+              7,
+              0,
+              0
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 8.06,
+        "dark_pct_of_bbox": 51.78
+      }
+    },
+    "whole": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/pineapple/whole.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Pineapple/pineapple_reference.png",
+      "profile": {
+        "opaque_pct": 40.75,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 98.8,
+          "top_pct": 0.0,
+          "bottom_pct": 99.9,
+          "width_pct": 98.8,
+          "height_pct": 99.9,
+          "aspect_w_h": 0.989
+        },
+        "palette": [
+          {
+            "pct": 57.0,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 9.3,
+            "rgb": [
+              54,
+              57,
+              13
+            ]
+          },
+          {
+            "pct": 8.3,
+            "rgb": [
+              208,
+              153,
+              39
+            ]
+          },
+          {
+            "pct": 6.3,
+            "rgb": [
+              177,
+              121,
+              30
+            ]
+          },
+          {
+            "pct": 6.2,
+            "rgb": [
+              146,
+              62,
+              11
+            ]
+          },
+          {
+            "pct": 6.2,
+            "rgb": [
+              175,
+              91,
+              20
+            ]
+          },
+          {
+            "pct": 5.0,
+            "rgb": [
+              226,
+              192,
+              66
+            ]
+          },
+          {
+            "pct": 1.6,
+            "rgb": [
+              12,
+              0,
+              0
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 0.53,
+        "dark_pct_of_bbox": 59.2
+      }
+    }
+  },
+  "plum": {
+    "cut": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/plum/cut.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Plum/plum_reference_cut.png",
+      "profile": {
+        "opaque_pct": 44.94,
+        "bbox": {
+          "left_pct": 3.0,
+          "right_pct": 98.3,
+          "top_pct": 1.7,
+          "bottom_pct": 98.0,
+          "width_pct": 95.4,
+          "height_pct": 96.3,
+          "aspect_w_h": 0.99
+        },
+        "palette": [
+          {
+            "pct": 52.6,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 11.0,
+            "rgb": [
+              136,
+              50,
+              75
+            ]
+          },
+          {
+            "pct": 9.9,
+            "rgb": [
+              56,
+              27,
+              48
+            ]
+          },
+          {
+            "pct": 9.0,
+            "rgb": [
+              190,
+              138,
+              71
+            ]
+          },
+          {
+            "pct": 8.4,
+            "rgb": [
+              236,
+              190,
+              83
+            ]
+          },
+          {
+            "pct": 6.4,
+            "rgb": [
+              252,
+              212,
+              93
+            ]
+          },
+          {
+            "pct": 2.3,
+            "rgb": [
+              45,
+              0,
+              10
+            ]
+          },
+          {
+            "pct": 0.5,
+            "rgb": [
+              0,
+              0,
+              6
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 3.26,
+        "dark_pct_of_bbox": 56.27
+      }
+    },
+    "whole": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/plum/whole.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Plum/plum_reference.png",
+      "profile": {
+        "opaque_pct": 50.27,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 99.1,
+          "top_pct": 0.0,
+          "bottom_pct": 99.9,
+          "width_pct": 99.1,
+          "height_pct": 99.9,
+          "aspect_w_h": 0.992
+        },
+        "palette": [
+          {
+            "pct": 47.6,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 13.4,
+            "rgb": [
+              121,
+              75,
+              124
+            ]
+          },
+          {
+            "pct": 11.1,
+            "rgb": [
+              102,
+              31,
+              74
+            ]
+          },
+          {
+            "pct": 10.3,
+            "rgb": [
+              49,
+              22,
+              52
+            ]
+          },
+          {
+            "pct": 10.1,
+            "rgb": [
+              156,
+              144,
+              133
+            ]
+          },
+          {
+            "pct": 6.1,
+            "rgb": [
+              61,
+              1,
+              18
+            ]
+          },
+          {
+            "pct": 0.7,
+            "rgb": [
+              0,
+              0,
+              11
+            ]
+          },
+          {
+            "pct": 0.6,
+            "rgb": [
+              0,
+              1,
+              0
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 0.77,
+        "dark_pct_of_bbox": 65.42
+      }
+    }
+  },
+  "pomegranate": {
+    "cut": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/pomegranate/cut.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Pomegranate/pomegranate_reference_cut.png",
+      "profile": {
+        "opaque_pct": 49.07,
+        "bbox": {
+          "left_pct": 2.6,
+          "right_pct": 98.6,
+          "top_pct": 1.5,
+          "bottom_pct": 98.6,
+          "width_pct": 95.9,
+          "height_pct": 97.1,
+          "aspect_w_h": 0.988
+        },
+        "palette": [
+          {
+            "pct": 49.7,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 11.5,
+            "rgb": [
+              171,
+              15,
+              24
+            ]
+          },
+          {
+            "pct": 9.3,
+            "rgb": [
+              200,
+              62,
+              64
+            ]
+          },
+          {
+            "pct": 7.6,
+            "rgb": [
+              121,
+              10,
+              15
+            ]
+          },
+          {
+            "pct": 7.0,
+            "rgb": [
+              226,
+              122,
+              110
+            ]
+          },
+          {
+            "pct": 6.6,
+            "rgb": [
+              212,
+              16,
+              27
+            ]
+          },
+          {
+            "pct": 6.1,
+            "rgb": [
+              243,
+              197,
+              173
+            ]
+          },
+          {
+            "pct": 2.3,
+            "rgb": [
+              110,
+              0,
+              1
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 2.03,
+        "dark_pct_of_bbox": 56.92
+      }
+    },
+    "whole": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/pomegranate/whole.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Pomegranate/pomegranate_reference.png",
+      "profile": {
+        "opaque_pct": 56.56,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 98.3,
+          "top_pct": 1.2,
+          "bottom_pct": 99.9,
+          "width_pct": 98.3,
+          "height_pct": 98.7,
+          "aspect_w_h": 0.996
+        },
+        "palette": [
+          {
+            "pct": 42.8,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 13.1,
+            "rgb": [
+              148,
+              5,
+              13
+            ]
+          },
+          {
+            "pct": 10.3,
+            "rgb": [
+              107,
+              4,
+              8
+            ]
+          },
+          {
+            "pct": 10.0,
+            "rgb": [
+              216,
+              77,
+              65
+            ]
+          },
+          {
+            "pct": 8.0,
+            "rgb": [
+              194,
+              8,
+              20
+            ]
+          },
+          {
+            "pct": 7.7,
+            "rgb": [
+              187,
+              36,
+              37
+            ]
+          },
+          {
+            "pct": 5.7,
+            "rgb": [
+              237,
+              141,
+              126
+            ]
+          },
+          {
+            "pct": 2.4,
+            "rgb": [
+              98,
+              0,
+              3
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 0.51,
+        "dark_pct_of_bbox": 64.43
+      }
+    }
+  },
+  "strawberry": {
+    "cut": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/strawberry/cut.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Strawberry/strawberry_reference_cut.png",
+      "profile": {
+        "opaque_pct": 45.22,
+        "bbox": {
+          "left_pct": 2.0,
+          "right_pct": 98.8,
+          "top_pct": 1.8,
+          "bottom_pct": 99.9,
+          "width_pct": 96.8,
+          "height_pct": 98.1,
+          "aspect_w_h": 0.987
+        },
+        "palette": [
+          {
+            "pct": 54.1,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 14.3,
+            "rgb": [
+              236,
+              31,
+              24
+            ]
+          },
+          {
+            "pct": 9.2,
+            "rgb": [
+              249,
+              83,
+              57
+            ]
+          },
+          {
+            "pct": 6.9,
+            "rgb": [
+              139,
+              21,
+              16
+            ]
+          },
+          {
+            "pct": 6.3,
+            "rgb": [
+              251,
+              160,
+              131
+            ]
+          },
+          {
+            "pct": 5.4,
+            "rgb": [
+              128,
+              85,
+              19
+            ]
+          },
+          {
+            "pct": 2.2,
+            "rgb": [
+              164,
+              141,
+              53
+            ]
+          },
+          {
+            "pct": 1.5,
+            "rgb": [
+              92,
+              0,
+              1
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 0.43,
+        "dark_pct_of_bbox": 53.23
+      }
+    },
+    "whole": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/strawberry/whole.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Strawberry/strawberry_reference.png",
+      "profile": {
+        "opaque_pct": 49.71,
+        "bbox": {
+          "left_pct": 6.9,
+          "right_pct": 97.8,
+          "top_pct": 0.7,
+          "bottom_pct": 99.9,
+          "width_pct": 90.9,
+          "height_pct": 99.2,
+          "aspect_w_h": 0.916
+        },
+        "palette": [
+          {
+            "pct": 50.3,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 9.8,
+            "rgb": [
+              204,
+              70,
+              42
+            ]
+          },
+          {
+            "pct": 9.4,
+            "rgb": [
+              229,
+              4,
+              3
+            ]
+          },
+          {
+            "pct": 7.8,
+            "rgb": [
+              235,
+              22,
+              17
+            ]
+          },
+          {
+            "pct": 7.2,
+            "rgb": [
+              157,
+              127,
+              46
+            ]
+          },
+          {
+            "pct": 6.5,
+            "rgb": [
+              163,
+              15,
+              14
+            ]
+          },
+          {
+            "pct": 5.6,
+            "rgb": [
+              184,
+              180,
+              90
+            ]
+          },
+          {
+            "pct": 3.3,
+            "rgb": [
+              162,
+              0,
+              0
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 0.61,
+        "dark_pct_of_bbox": 44.15
+      }
+    }
+  },
+  "watermelon": {
+    "cut": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/watermelon/cut.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Watermelon/watermelon_reference_cut.png",
+      "profile": {
+        "opaque_pct": 50.78,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 98.8,
+          "top_pct": 0.9,
+          "bottom_pct": 99.9,
+          "width_pct": 98.8,
+          "height_pct": 99.0,
+          "aspect_w_h": 0.998
+        },
+        "palette": [
+          {
+            "pct": 46.4,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 15.3,
+            "rgb": [
+              226,
+              54,
+              45
+            ]
+          },
+          {
+            "pct": 14.6,
+            "rgb": [
+              28,
+              55,
+              12
+            ]
+          },
+          {
+            "pct": 10.5,
+            "rgb": [
+              193,
+              195,
+              112
+            ]
+          },
+          {
+            "pct": 8.8,
+            "rgb": [
+              133,
+              111,
+              49
+            ]
+          },
+          {
+            "pct": 2.3,
+            "rgb": [
+              0,
+              8,
+              0
+            ]
+          },
+          {
+            "pct": 1.8,
+            "rgb": [
+              96,
+              9,
+              6
+            ]
+          },
+          {
+            "pct": 0.4,
+            "rgb": [
+              0,
+              0,
+              2
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 3.58,
+        "dark_pct_of_bbox": 53.02
+      }
+    },
+    "whole": {
+      "sha256_verified": true,
+      "source": "ArtSource/PRD-v1.0/FruitReferences/watermelon/whole.png",
+      "pristine_copy": "FruitWaveApp/Resources/Models/Watermelon/watermelon_reference.png",
+      "profile": {
+        "opaque_pct": 63.31,
+        "bbox": {
+          "left_pct": 0.0,
+          "right_pct": 99.8,
+          "top_pct": 0.7,
+          "bottom_pct": 99.9,
+          "width_pct": 99.8,
+          "height_pct": 99.2,
+          "aspect_w_h": 1.006
+        },
+        "palette": [
+          {
+            "pct": 35.0,
+            "rgb": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "pct": 14.0,
+            "rgb": [
+              120,
+              165,
+              41
+            ]
+          },
+          {
+            "pct": 12.8,
+            "rgb": [
+              82,
+              119,
+              25
+            ]
+          },
+          {
+            "pct": 11.1,
+            "rgb": [
+              180,
+              209,
+              84
+            ]
+          },
+          {
+            "pct": 10.8,
+            "rgb": [
+              19,
+              62,
+              14
+            ]
+          },
+          {
+            "pct": 10.1,
+            "rgb": [
+              33,
+              92,
+              20
+            ]
+          },
+          {
+            "pct": 5.5,
+            "rgb": [
+              11,
+              36,
+              7
+            ]
+          },
+          {
+            "pct": 0.7,
+            "rgb": [
+              1,
+              0,
+              0
+            ]
+          }
+        ],
+        "background_rgb": [
+          0,
+          0,
+          0
+        ],
+        "bright_pct_of_bbox": 2.19,
+        "dark_pct_of_bbox": 43.01
+      }
+    }
+  }
+}

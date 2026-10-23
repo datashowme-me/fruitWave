@@ -1,0 +1,41 @@
+{
+  "fruit": "kiwi",
+  "source_kind": "google_doc_docx_export",
+  "source_id_or_url": "https://docs.google.com/document/d/1tzqIUol1BEAEpyYdKFmQUmWwURed_3voLYmmjdvpZaA",
+  "source_title": "Apple TV 体感切水果｜Codex 与 Claude 开发任务书 v1.0",
+  "source_revision": "AHj4eMSBFqyUvXobDuLRyBpkCUJ2grbbT5bvx5F4cQV8NbDQS_W11xD6NAU9mj65ybmf98OXnmVWdqMOX3wlug-jE01yNfCA97T_oH0HZnE",
+  "source_modified_time": "2026-10-19T07:33:49.063Z",
+  "extracted_image": "kiwi_reference.png",
+  "extracted_source": "ArtSource/PRD-v1.0/FruitReferences/kiwi/whole.png",
+  "sha256": "0fb0128bd974bd29e96b3f94fb0e5eb9651c8187b782e8c24a082f12882c707a",
+  "supplemental_images": [
+    {
+      "path": "kiwi_reference_cut.png",
+      "source": "ArtSource/PRD-v1.0/FruitReferences/kiwi/cut.png",
+      "sha256": "33f9de176c1b308281ff76a61aab60e698bfac4c473e713b4c9cd31884f06876",
+      "role": "cut"
+    }
+  ],
+  "derived_assets": [
+    {
+      "path": "kiwi_skin_basecolor.png",
+      "method": "per-row mirrored-longitude cylinder remap with kiwi-family classification, de-lighting blend"
+    },
+    {
+      "path": "kiwi_flesh_basecolor.png",
+      "method": "kiwi-flesh centroid disk remap, specular rejection, de-lighting blend"
+    }
+  ],
+  "observed_features": [
+    "near-square fuzzy kiwi with stem nub, black background",
+    "skin brown #6c3a10/#95551c/#bf7d32 with lit tips #dd9b45/#edba72",
+    "no leaf in the whole palette",
+    "cut face: green flesh #b59d2e/#bcbe31/#d1d855 with pale core"
+  ],
+  "inferred_features": [
+    "unseen back mirrored from the front half",
+    "seed ring count (26) and radius from typical kiwi structure; the black seed dots are below the measured palette resolution",
+    "fuzz from roughness 0.56 (no geometry fuzz)"
+  ],
+  "inspection_method": "pixel-level programmatic measurement (no vision model available in the generating environment); human-eye verification required on device"
+}

@@ -1,0 +1,41 @@
+{
+  "fruit": "watermelon",
+  "source_kind": "google_doc_docx_export",
+  "source_id_or_url": "https://docs.google.com/document/d/1tzqIUol1BEAEpyYdKFmQUmWwURed_3voLYmmjdvpZaA",
+  "source_title": "Apple TV 体感切水果｜Codex 与 Claude 开发任务书 v1.0",
+  "source_revision": "AHj4eMSBFqyUvXobDuLRyBpkCUJ2grbbT5bvx5F4cQV8NbDQS_W11xD6NAU9mj65ybmf98OXnmVWdqMOX3wlug-jE01yNfCA97T_oH0HZnE",
+  "source_modified_time": "2026-10-19T07:33:49.063Z",
+  "extracted_image": "watermelon_reference.png",
+  "extracted_source": "ArtSource/PRD-v1.0/FruitReferences/watermelon/whole.png",
+  "sha256": "651dc41d9e2000cae7f796ec0e15b0de9c6480991707a542de17e477ad1d4eae",
+  "supplemental_images": [
+    {
+      "path": "watermelon_reference_cut.png",
+      "source": "ArtSource/PRD-v1.0/FruitReferences/watermelon/cut.png",
+      "sha256": "2b27f01869d9e2ca30e4667366691d62faecca8d9b96ee53df00d83d1ae2a1d6",
+      "role": "cut"
+    }
+  ],
+  "derived_assets": [
+    {
+      "path": "watermelon_skin_basecolor.png",
+      "method": "per-row mirrored-longitude cylinder remap with dual-green-family classification, de-lighting blend"
+    },
+    {
+      "path": "watermelon_flesh_basecolor.png",
+      "method": "watermelon-flesh centroid disk remap, specular rejection, de-lighting blend"
+    }
+  ],
+  "observed_features": [
+    "near-square watermelon, black background",
+    "striped skin: dark #133e0e/#215c14 and light #78a529/#b4d154 bands",
+    "small stem, no leaf",
+    "cut face: red flesh #e2362d, pale rind ring #c1c370, dark seeds"
+  ],
+  "inferred_features": [
+    "unseen back mirrored from the front half; stripe banding from the photo rows",
+    "seed count (8 per half) and ring radius from typical watermelon structure",
+    "rind thickness from the pale ring share of the cut palette"
+  ],
+  "inspection_method": "pixel-level programmatic measurement (no vision model available in the generating environment); human-eye verification required on device"
+}

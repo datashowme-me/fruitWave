@@ -1,0 +1,40 @@
+{
+  "fruit": "strawberry",
+  "source_kind": "google_doc_docx_export",
+  "source_id_or_url": "https://docs.google.com/document/d/1tzqIUol1BEAEpyYdKFmQUmWwURed_3voLYmmjdvpZaA",
+  "source_title": "Apple TV 体感切水果｜Codex 与 Claude 开发任务书 v1.0",
+  "source_revision": "AHj4eMSBFqyUvXobDuLRyBpkCUJ2grbbT5bvx5F4cQV8NbDQS_W11xD6NAU9mj65ybmf98OXnmVWdqMOX3wlug-jE01yNfCA97T_oH0HZnE",
+  "source_modified_time": "2026-10-19T07:33:49.063Z",
+  "extracted_image": "strawberry_reference.png",
+  "extracted_source": "ArtSource/PRD-v1.0/FruitReferences/strawberry/whole.png",
+  "sha256": "3462de599f40ced9e114b009744bf577f451386d8415228ddd79c60866f697d7",
+  "supplemental_images": [
+    {
+      "path": "strawberry_reference_cut.png",
+      "source": "ArtSource/PRD-v1.0/FruitReferences/strawberry/cut.png",
+      "sha256": "77bf32be9a547a155b91980cb4bd413527915f06f78a24aff45a5e8b0d85561a",
+      "role": "cut"
+    }
+  ],
+  "derived_assets": [
+    {
+      "path": "strawberry_skin_basecolor.png",
+      "method": "per-row mirrored-longitude cylinder remap with strawberry-family classification, de-lighting blend"
+    },
+    {
+      "path": "strawberry_flesh_basecolor.png",
+      "method": "strawberry-flesh centroid disk remap, specular rejection, de-lighting blend"
+    }
+  ],
+  "observed_features": [
+    "heart-shaped berry, near-square bbox, black background",
+    "skin red #cc462a/#e50403/#eb1611 with pale seed dots #b8b45a/#9d7f2e",
+    "cut face: red flesh #ec1f18/#f95339, pale core #fba083, dark seeds #805513"
+  ],
+  "inferred_features": [
+    "unseen back mirrored from the front half",
+    "seed count (28) and spiral placement from typical strawberry surface density",
+    "calyx leaf count (5) from typical strawberry crowns"
+  ],
+  "inspection_method": "pixel-level programmatic measurement (no vision model available in the generating environment); human-eye verification required on device"
+}

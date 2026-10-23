@@ -1,0 +1,48 @@
+{
+  "fruit": "apple",
+  "source_kind": "google_doc_docx_export",
+  "source_id_or_url": "https://docs.google.com/document/d/1tzqIUol1BEAEpyYdKFmQUmWwURed_3voLYmmjdvpZaA",
+  "source_title": "Apple TV 体感切水果｜Codex 与 Claude 开发任务书 v1.0",
+  "source_revision": "AHj4eMSBFqyUvXobDuLRyBpkCUJ2grbbT5bvx5F4cQV8NbDQS_W11xD6NAU9mj65ybmf98OXnmVWdqMOX3wlug-jE01yNfCA97T_oH0HZnE",
+  "source_modified_time": "2026-10-19T07:33:49.063Z",
+  "extracted_image": "apple_reference.png",
+  "extracted_source": "ArtSource/PRD-v1.0/FruitReferences/apple/whole.png",
+  "sha256": "6531de2dc2fb53d09d1cbbf5e9eebd176554c08a8ea44ca7226e54e0705d730a",
+  "supplemental_images": [
+    {
+      "path": "apple_reference_cut.png",
+      "source": "ArtSource/PRD-v1.0/FruitReferences/apple/cut.png",
+      "sha256": "f4802c90f37858dad477339f009963e74240ac26a6f73c6c5f5a2d84901f9520",
+      "role": "cut"
+    }
+  ],
+  "derived_assets": [
+    {
+      "path": "apple_skin_basecolor.png",
+      "method": "Blender Python derivation from PRD whole.png: per-row mirrored-longitude cylinder remap, skin/mark classification, specular de-lighting, nearest-valid-column fill"
+    },
+    {
+      "path": "apple_flesh_basecolor.png",
+      "method": "Blender Python derivation from PRD cut.png: cream-region centroid disk remap, specular rejection, de-lighting blend"
+    }
+  ],
+  "observed_features": [
+    "tallish round apple, widest at mid-height, bottom tapering to a narrow calyx (w/h ≈ 0.89)",
+    "short dark-brown stem (#8e491d) at top center",
+    "large yellow-green leaf (#608718) on the upper right, about 7.5% of the body area",
+    "deep red skin; lit side #c8563a, shadow side #b60e0e",
+    "random mottling with fine lenticels; no directional stripes",
+    "small fragmented specular highlights, top-left; medium waxy gloss",
+    "vertical cut; bright cream flesh #f6dcb7 with strong wet specular patches (≈31% of flesh brighter than 80% luma)",
+    "3-4 dark-brown seeds (#6f2c1d) arranged vertically, slightly right of center",
+    "thin peel ring, ≈2% of cut radius; peel #d5372a"
+  ],
+  "inferred_features": [
+    "unseen back mirrored from the front half",
+    "three-dimensional depth from a front-facing image",
+    "stem recess depth (occluded by the leaf in the reference)",
+    "exact waxiness strength; pixel analysis suggests medium gloss",
+    "cut face camera angle; flesh disk remapped as front-on"
+  ],
+  "inspection_method": "pixel-level programmatic measurement (no vision model available in the generating environment); human-eye verification required on device"
+}

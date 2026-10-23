@@ -47,8 +47,14 @@ final class FruitStage3D: NSObject {
             // Particle system emission rates bake in reduceMotion; rebuild.
             juiceSystems.removeAll()
             juiceCursor.removeAll()
+            chunkSystems.removeAll()
+            sliceTrailSystems.removeAll()
         }
     }
+
+    /// Points per sliced fruit, mirrored from the engine config so the HUD
+    /// popup text stays honest.
+    var pointsPerSlice = 10
 
     // MARK: - Pools
 
@@ -71,6 +77,9 @@ final class FruitStage3D: NSObject {
     private let soundEffects = SoundEffects()
     private var comboCount = 0
     private var lastHitGameTime: TimeInterval?
+    /// Start time of the last swing that got a whoosh — dedupes repeated
+    /// pose samples carrying the same slash segment.
+    private var lastWhooshSlashStart: TimeInterval?
 
     // MARK: - Shared caches (immutable once built)
 
@@ -83,13 +92,144 @@ final class FruitStage3D: NSObject {
     private let grapeBerrySolid: SCNGeometry
     private let grapeBerrySplit: LatheGeometry.SweepResult
     private var juiceSystems: [FruitKind: [SCNParticleSystem]] = [:]
+    private var chunkSystems: [FruitKind: [SCNParticleSystem]] = [:]
     private var juiceCursor: [FruitKind: Int] = [:]
+    /// Juice-drip templates attached to flying slice halves. Copies are
+    /// attached per piece: SceneKit doesn't guarantee that re-adding an
+    /// exhausted system restarts emission.
+    private var sliceTrailSystems: [FruitKind: SCNParticleSystem] = [:]
 
     // Shared attachment geometries; per-node scale/rotation/color via
     // materials. Sizes are in profile units (fruit body radius ≈ 1).
     private let leafGeometry = SCNSphere(radius: 1)
     private let stemGeometry = SCNCylinder(radius: 0.07, height: 0.4)
     private let tipGeometry = SCNSphere(radius: 0.18)
+
+    // MARK: Bomb assets (shared, immutable after init)
+
+    private let bombFuseGeometry = SCNCylinder(radius: 0.09, height: 0.6)
+    /// Expanding white flash sphere; scaled per blast.
+    private let bombFlashGeometry = SCNSphere(radius: 1)
+    /// Fuse spark: small additive crackle looping at the fuse tip.
+    private let bombSpark: SCNParticleSystem = {
+        let system = SCNParticleSystem()
+        system.loops = true
+        system.emissionDuration = 0.08
+        system.birthRate = 40
+        system.particleLifeSpan = 0.28
+        system.particleLifeSpanVariation = 0.12
+        system.particleSize = 3.5
+        system.particleSizeVariation = 2
+        system.particleColor = UIColor(red: 1.0, green: 0.85, blue: 0.35, alpha: 1)
+        system.particleColorVariation = SCNVector4(0.1, 0.1, 0.1, 0)
+        system.blendMode = .additive
+        system.emitterShape = SCNSphere(radius: 0.1)
+        system.particleVelocity = 55
+        system.particleVelocityVariation = 12
+        system.spreadingAngle = 60
+        system.acceleration = SCNVector3(0, -240, 0)
+        return system
+    }()
+    /// One-shot blast: additive fireball plus a gray smoke puff.
+    private let bombBlastSystems: [SCNParticleSystem] = {
+        let fire = SCNParticleSystem()
+        fire.loops = false
+        fire.emissionDuration = 0.10
+        fire.birthRate = 700
+        fire.particleLifeSpan = 0.42
+        fire.particleLifeSpanVariation = 0.15
+        fire.particleSize = 16
+        fire.particleSizeVariation = 10
+        fire.particleColor = UIColor(red: 1.0, green: 0.72, blue: 0.25, alpha: 0.95)
+        fire.particleColorVariation = SCNVector4(0.15, 0.2, 0.05, 0)
+        fire.blendMode = .additive
+        fire.particleVelocity = 320
+        fire.particleVelocityVariation = 90
+        fire.spreadingAngle = 180
+        fire.acceleration = SCNVector3(0, -700, 0)
+        fire.particleAngularVelocity = 8
+        let smoke = SCNParticleSystem()
+        smoke.loops = false
+        smoke.emissionDuration = 0.16
+        smoke.birthRate = 160
+        smoke.particleLifeSpan = 0.8
+        smoke.particleLifeSpanVariation = 0.3
+        smoke.particleSize = 26
+        smoke.particleSizeVariation = 12
+        smoke.particleColor = UIColor(red: 0.25, green: 0.25, blue: 0.28, alpha: 0.7)
+        smoke.particleColorVariation = SCNVector4(0.05, 0.05, 0.05, 0.1)
+        smoke.blendMode = .alpha
+        smoke.particleVelocity = 120
+        smoke.particleVelocityVariation = 40
+        smoke.spreadingAngle = 180
+        smoke.acceleration = SCNVector3(0, 160, 0)
+        return [fire, smoke]
+    }()
+
+    /// Fruit-Ninja-style ambient backdrop: a dark vertical gradient with a
+    /// few soft colored light pools and a corner vignette. Drawn once into a
+    /// 640×360 image (SceneKit upscales it smoothly).
+    private lazy var backgroundImage: CGImage = {
+        let width = 640, height = 360
+        let context = CGContext(
+            data: nil, width: width, height: height, bitsPerComponent: 8, bytesPerRow: 0,
+            space: CGColorSpace(name: CGColorSpace.sRGB)!,
+            bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+        )!
+        let colorSpace = CGColorSpace(name: CGColorSpace.sRGB)!
+        let vertical = CGGradient(
+            colorsSpace: colorSpace,
+            colors: [
+                CGColor(srgbRed: 0.055, green: 0.11, blue: 0.22, alpha: 1),
+                CGColor(srgbRed: 0.075, green: 0.065, blue: 0.18, alpha: 1),
+                CGColor(srgbRed: 0.05, green: 0.03, blue: 0.13, alpha: 1),
+            ] as CFArray,
+            locations: [0, 0.55, 1]
+        )!
+        context.drawLinearGradient(
+            vertical,
+            start: CGPoint(x: CGFloat(width) / 2, y: 0),
+            end: CGPoint(x: CGFloat(width) / 2, y: CGFloat(height)),
+            options: []
+        )
+        // Soft light pools — the ambient depth behind the fruit.
+        let pools: [(x: CGFloat, y: CGFloat, radius: CGFloat, color: CGColor)] = [
+            (170, 120, 240, CGColor(srgbRed: 0.12, green: 0.55, blue: 0.60, alpha: 0.13)),
+            (480, 90, 200, CGColor(srgbRed: 0.80, green: 0.38, blue: 0.14, alpha: 0.09)),
+            (400, 300, 260, CGColor(srgbRed: 0.35, green: 0.18, blue: 0.55, alpha: 0.12)),
+            (90, 290, 210, CGColor(srgbRed: 0.20, green: 0.38, blue: 0.85, alpha: 0.10)),
+        ]
+        for pool in pools {
+            let gradient = CGGradient(
+                colorsSpace: colorSpace,
+                colors: [pool.color, pool.color.copy(alpha: 0)!] as CFArray,
+                locations: [0, 1]
+            )!
+            context.drawRadialGradient(
+                gradient,
+                startCenter: CGPoint(x: pool.x, y: pool.y), startRadius: 0,
+                endCenter: CGPoint(x: pool.x, y: pool.y), endRadius: pool.radius,
+                options: []
+            )
+        }
+        // Vignette: transparent at the center, dark at and beyond the edges.
+        let vignette = CGGradient(
+            colorsSpace: colorSpace,
+            colors: [
+                CGColor(srgbRed: 0, green: 0, blue: 0, alpha: 0),
+                CGColor(srgbRed: 0, green: 0, blue: 0, alpha: 0.42),
+            ] as CFArray,
+            locations: [0, 1]
+        )!
+        context.drawRadialGradient(
+            vignette,
+            startCenter: CGPoint(x: CGFloat(width) / 2, y: CGFloat(height) / 2), startRadius: 0,
+            endCenter: CGPoint(x: CGFloat(width) / 2, y: CGFloat(height) / 2),
+            endRadius: CGFloat(height) * 0.72,
+            options: [.drawsAfterEndLocation]
+        )
+        return context.makeImage()!
+    }()
 
     init(size: CGSize, hud: GameHUDScene) {
         self.size = size
@@ -106,7 +246,7 @@ final class FruitStage3D: NSObject {
     // MARK: - Scene setup
 
     private func configureScene() {
-        scene.background.contents = CGColor(srgbRed: 0.025, green: 0.04, blue: 0.085, alpha: 1)
+        scene.background.contents = backgroundImage
 
         let camera = SCNCamera()
         camera.usesOrthographicProjection = true
@@ -207,7 +347,7 @@ final class FruitStage3D: NSObject {
     func render(_ snapshot: GameRenderer.Snapshot) {
         // Sliced fruit no longer appears in the active snapshot, so animate it
         // before the inactive-node cleanup removes its backing node.
-        for hit in snapshot.hits { animateSlice(id: hit.fruitID, gameTime: snapshot.gameTime) }
+        for hit in snapshot.hits { animateSlice(hit, gameTime: snapshot.gameTime) }
         let activeIDs = Set(snapshot.fruits.filter { $0.state == .active }.map(\.id))
         for (id, node) in fruitNodes where !activeIDs.contains(id) {
             recycleFruit(node); fruitNodes[id] = nil
@@ -218,12 +358,19 @@ final class FruitStage3D: NSObject {
             fruitNodes[fruit.id] = node
         }
         if let hand = snapshot.hand {
-            hud.pushHandSample(scenePoint(hand), now: ProcessInfo.processInfo.systemUptime)
+            let now = ProcessInfo.processInfo.systemUptime
+            hud.pushHandSample(scenePoint(hand), capturedAt: snapshot.handCapturedAt ?? now, now: now)
         } else {
             hud.clearHand()
         }
         if let slash = snapshot.slash {
             hud.drawSlash(from: scenePoint(slash.startPosition), to: scenePoint(slash.endPosition))
+            // A completed swing that sliced nothing whooshes — once per
+            // segment, and only when the blade was actually moving.
+            if snapshot.hits.isEmpty, slash.startTime != lastWhooshSlashStart {
+                lastWhooshSlashStart = slash.startTime
+                if soundEnabled, slash.speed > 1.5 { soundEffects.playWhoosh() }
+            }
         }
     }
 
@@ -337,6 +484,20 @@ final class FruitStage3D: NSObject {
     /// a lathe solid plus attachments.
     private func assembleBody(kind: FruitKind, spec: FruitVisualSpec, scaleNode: SCNNode) {
         switch kind {
+        case .bomb:
+            // Glossy black sphere, tilted gray fuse, spark fizzling at the tip.
+            let bodyNode = SCNNode(geometry: solidGeometry(for: kind))
+            bodyNode.geometry?.materials = [rindMaterial(for: kind)]
+            scaleNode.addChildNode(bodyNode)
+            let fuse = SCNNode(geometry: bombFuseGeometry)
+            fuse.geometry?.materials = [attachmentMaterial(for: RGB(r: 0.55, g: 0.48, b: 0.40))]
+            fuse.position = SCNVector3(0.28, 0.92, 0)
+            fuse.eulerAngles.z = -0.7
+            scaleNode.addChildNode(fuse)
+            let spark = SCNNode()
+            spark.position = SCNVector3(0.52, 1.22, 0)
+            spark.addParticleSystem(bombSpark)
+            scaleNode.addChildNode(spark)
         case .banana:
             // Lathe of the offset ring profile: a curved capsule. The sweep
             // plane is rotated into the screen plane so the arc faces the
@@ -422,18 +583,41 @@ final class FruitStage3D: NSObject {
 
     // MARK: - Slicing
 
-    private func animateSlice(id: UUID, gameTime: TimeInterval) {
-        guard let original = fruitNodes.removeValue(forKey: id) else { return }
+    private func animateSlice(_ hit: HitEvent, gameTime: TimeInterval) {
+        guard let original = fruitNodes.removeValue(forKey: hit.fruitID) else { return }
         let kind = original.kind
         let position = original.position
         let radius = original.radius
+        // Effects (juice, ring, popups) anchor to the actual blade contact
+        // point, not the fruit center — a grazing cut sprays from the edge.
+        let contactPoint = SCNVector3(
+            CGFloat(hit.contactPosition.x) * size.width,
+            CGFloat(hit.contactPosition.y) * size.width,
+            CGFloat(position.z)
+        )
+        // Momentum follows the blade: the upper half flies along the cut
+        // direction, the lower half against it, both with a shared downward
+        // arc.
+        let cut = hit.slashDirection
+        let pushX = CGFloat(cut.x) * 130
+        let pushY = CGFloat(cut.y) * 130
         switch kind {
+        case .bomb:
+            // The bomb detonates: no halves, no juice, no score popup. The
+            // round end itself is handled by AppModel.
+            recycleFruit(original)
+            explode(at: contactPoint)
+            return
         case .banana:
             // No clean halves: the whole banana fades in place while juice
             // bursts from the cut point.
             original.runAction(.fadeOut(duration: 0.30)) { [weak self, weak original] in
-                guard let self, let original else { return }
-                self.recycleFruit(original)
+                // SceneKit runs action completions on its own thread — hop to
+                // the main actor before touching stage state (SIGTRAP otherwise).
+                Task { @MainActor [weak self, weak original] in
+                    guard let self, let original else { return }
+                    self.recycleFruit(original)
+                }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self, weak original] in
                 guard let self, let original, original.parent != nil else { return }
@@ -464,38 +648,42 @@ final class FruitStage3D: NSObject {
             recycleFruit(original)
             guard let sweep = splitSweep(for: kind) else { break }
             let spec = FruitVisualData.spec(for: kind)
-            for direction in [-1.0, 1.0] {
-                // Both halves use the same cached equator-cut dome; the lower
-                // half flips (eulerAngles.x = π) so its face mirrors the
-                // photo texture the way a real cut would. Attachments stay
-                // with the upper half.
-                let isUpper = direction > 0
+            // Both halves reuse the cached equator-cut dome; the lower half
+            // flips (eulerAngles.x = π) so its face mirrors the photo texture
+            // the way a real cut would.
+            for side in [-1.0, 1.0] {
+                let isUpper = side > 0
                 let half = spawnSlicePiece(
                     sweep: sweep, kind: kind,
                     at: SCNVector3(
-                        CGFloat(position.x) + radius * 0.16 * direction,
-                        CGFloat(position.y) + radius * 0.5 * (isUpper ? -1 : 1),
+                        CGFloat(position.x) + radius * 0.3 * CGFloat(cut.x) * side,
+                        CGFloat(position.y) + radius * 0.3 * CGFloat(cut.y) * side
+                            + radius * 0.5 * (isUpper ? -1 : 1),
                         CGFloat(position.z)
                     ),
                     radius: radius, flip: !isUpper, scaleFactor: 1,
                     attachments: isUpper ? spec.attachments : []
                 )
-                finishSlicePiece(half, action: sliceAction(direction: direction))
+                finishSlicePiece(half, action: sliceAction(pushX: pushX, pushY: pushY, side: side))
             }
         }
-        spawnImpactEffects(at: position, kind: kind, radius: radius, gameTime: gameTime)
+        spawnImpactEffects(at: contactPoint, kind: kind, radius: radius, gameTime: gameTime)
+        hud.spawnCutFlash(
+            at: CGPoint(x: CGFloat(contactPoint.x), y: CGFloat(contactPoint.y)),
+            direction: CGPoint(x: CGFloat(cut.x), y: CGFloat(cut.y))
+        )
         // Played after spawnImpactEffects so comboCount reflects this hit.
         if soundEnabled { soundEffects.playSlice(kind: kind, combo: comboCount) }
         Self.logger.info("slice spawned kind=\(kind.rawValue, privacy: .public) combo=\(self.comboCount)")
     }
 
-    private func sliceAction(direction: Double) -> SCNAction {
+    private func sliceAction(pushX: CGFloat, pushY: CGFloat, side: Double) -> SCNAction {
         if reduceMotion {
             .fadeOut(duration: 0.16)
         } else {
             .group([
-                .moveBy(x: 90 * direction, y: -110, z: 0, duration: 0.42),
-                .rotateBy(x: 0.9 * direction, y: 0.7 * direction, z: 1.4 * direction, duration: 0.42),
+                .moveBy(x: pushX * side, y: pushY * side - 110, z: 0, duration: 0.42),
+                .rotateBy(x: 0.9 * side, y: 0.7 * side, z: 1.4 * side, duration: 0.42),
                 .fadeOut(duration: 0.42)
             ])
         }
@@ -533,14 +721,23 @@ final class FruitStage3D: NSObject {
         for attachment in attachments where attachment.position.y > 0 {
             piece.addChildNode(makeAttachment(attachment))
         }
+        // Juice drips off the flying half. A copy per piece guarantees the
+        // emitter restarts even if its template already exhausted once.
+        if let trail = sliceTrailSystem(for: kind).copy() as? SCNParticleSystem {
+            piece.addParticleSystem(trail)
+        }
         scene.rootNode.addChildNode(piece)
         return piece
     }
 
     private func finishSlicePiece(_ piece: SlicePieceNode, action: SCNAction) {
         piece.runAction(action) { [weak self, weak piece] in
-            guard let self, let piece else { return }
-            self.recycleSlicePiece(piece, path: "action")
+            // SceneKit runs action completions on its own thread — hop to
+            // the main actor before touching stage state (SIGTRAP otherwise).
+            Task { @MainActor [weak self, weak piece] in
+                guard let self, let piece else { return }
+                self.recycleSlicePiece(piece, path: "action")
+            }
         }
         // Watchdog: even if the render loop stalls or the action completion
         // never fires on device, the piece is guaranteed to leave the screen
@@ -555,6 +752,7 @@ final class FruitStage3D: NSObject {
         guard !piece.recycled else { return }
         piece.recycled = true
         piece.removeAllActions()
+        piece.removeAllParticleSystems()
         piece.removeFromParentNode()
         if slicePool.count < 16 { slicePool.append(piece) }
         Self.logger.info("slice piece recycled via \(path, privacy: .public)")
@@ -576,6 +774,7 @@ final class FruitStage3D: NSObject {
         }
         self.lastHitGameTime = gameTime
         hud.showCombo(count: comboCount, at: point, radius: radius)
+        hud.showScorePopup(at: point, points: pointsPerSlice)
 
         guard !reduceMotion else { return }
         cameraNode.removeAction(forKey: "impactShake")
@@ -585,6 +784,65 @@ final class FruitStage3D: NSObject {
             .moveBy(x: -14, y: 8, z: 0, duration: 0.03),
             .moveBy(x: 9, y: -4, z: 0, duration: 0.03),
             .move(to: baseCameraPosition, duration: 0.025)
+        ]), forKey: "impactShake")
+    }
+
+    /// The whole bomb show: fireball, smoke, whiteout flash, shockwave ring,
+    /// heavy shake and the boom. The round end itself is AppModel's call,
+    /// delayed just enough for the blast to read before the results screen.
+    private func explode(at position: SCNVector3) {
+        // Fire + smoke, reusing the juice node pool.
+        let node = juiceNodePool.popLast() ?? SCNNode()
+        node.removeAllActions()
+        node.removeFromParentNode()
+        node.position = position
+        scene.rootNode.addChildNode(node)
+        for system in bombBlastSystems { node.addParticleSystem(system) }
+        node.runAction(.wait(duration: 1.1)) { [weak self, weak node] in
+            // SceneKit runs action completions on its own thread — hop to
+            // the main actor before touching stage state (SIGTRAP otherwise).
+            Task { @MainActor [weak self, weak node] in
+                guard let self, let node else { return }
+                self.recycleJuiceNode(node)
+            }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) { [weak self, weak node] in
+            guard let self, let node, node.parent != nil else { return }
+            self.recycleJuiceNode(node)
+        }
+        // Expanding whiteout sphere at the contact point.
+        let flash = SCNNode(geometry: bombFlashGeometry)
+        let flashMaterial = SCNMaterial()
+        flashMaterial.lightingModel = .constant
+        flashMaterial.diffuse.contents = UIColor.white
+        flashMaterial.emission.contents = UIColor.white
+        flashMaterial.blendMode = .add
+        flash.geometry?.materials = [flashMaterial]
+        flash.position = position
+        flash.scale = SCNVector3(26, 26, 26)
+        flash.opacity = 0.95
+        scene.rootNode.addChildNode(flash)
+        flash.runAction(.group([
+            .scale(to: 7, duration: 0.38),
+            .fadeOut(duration: reduceMotion ? 0.20 : 0.38)
+        ])) { [weak flash] in
+            Task { @MainActor [weak flash] in flash?.removeFromParentNode() }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { [weak flash] in
+            flash?.removeFromParentNode()
+        }
+        hud.spawnBombFlash(at: CGPoint(x: CGFloat(position.x), y: CGFloat(position.y)))
+        if soundEnabled { soundEffects.playBoom() }
+        // Heavy shake; skipped under reduceMotion like the impact shake.
+        guard !reduceMotion else { return }
+        cameraNode.removeAction(forKey: "impactShake")
+        cameraNode.position = baseCameraPosition
+        cameraNode.runAction(.sequence([
+            .moveBy(x: 20, y: -12, z: 0, duration: 0.03),
+            .moveBy(x: -30, y: 18, z: 0, duration: 0.04),
+            .moveBy(x: 22, y: -10, z: 0, duration: 0.04),
+            .moveBy(x: -12, y: 8, z: 0, duration: 0.03),
+            .move(to: baseCameraPosition, duration: 0.06)
         ]), forKey: "impactShake")
     }
 
@@ -603,9 +861,15 @@ final class FruitStage3D: NSObject {
         node.position = position
         scene.rootNode.addChildNode(node)
         node.addParticleSystem(systems[index])
+        let chunks = chunkSystems(for: kind)
+        if !chunks.isEmpty { node.addParticleSystem(chunks[index % chunks.count]) }
         node.runAction(.wait(duration: 0.7)) { [weak self, weak node] in
-            guard let self, let node else { return }
-            self.recycleJuiceNode(node)
+            // SceneKit runs action completions on its own thread — hop to
+            // the main actor before touching stage state (SIGTRAP otherwise).
+            Task { @MainActor [weak self, weak node] in
+                guard let self, let node else { return }
+                self.recycleJuiceNode(node)
+            }
         }
         // Watchdog, same rationale as the slice pieces.
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) { [weak self, weak node] in
@@ -621,6 +885,30 @@ final class FruitStage3D: NSObject {
         if juiceNodePool.count < 18, !juiceNodePool.contains(where: { $0 === node }) {
             juiceNodePool.append(node)
         }
+    }
+
+    private func sliceTrailSystem(for kind: FruitKind) -> SCNParticleSystem {
+        if let cached = sliceTrailSystems[kind] { return cached }
+        let spec = FruitVisualData.spec(for: kind)
+        let system = SCNParticleSystem()
+        system.loops = false
+        system.emissionDuration = 0.5
+        system.birthRate = reduceMotion ? 24 : 52
+        system.particleLifeSpan = 0.38
+        system.particleLifeSpanVariation = 0.12
+        system.particleSize = 4.5
+        system.particleSizeVariation = 3
+        system.particleColor = UIColor(
+            red: CGFloat(spec.flesh.r), green: CGFloat(spec.flesh.g),
+            blue: CGFloat(spec.flesh.b), alpha: 0.9
+        )
+        system.blendMode = .alpha
+        system.particleVelocity = 26
+        system.particleVelocityVariation = 14
+        system.spreadingAngle = 120
+        system.acceleration = SCNVector3(0, -850, 0)
+        sliceTrailSystems[kind] = system
+        return system
     }
 
     private func juiceSystems(for kind: FruitKind) -> [SCNParticleSystem] {
@@ -649,11 +937,64 @@ final class FruitStage3D: NSObject {
             system.acceleration = SCNVector3(0, -650, 0)
             system.particleImage = Self.particleImage
             system.blendMode = .alpha
+            // Stretch droplets along their flight path so the burst reads as
+            // flying liquid streaks instead of a cloud of dots.
+            system.stretchFactor = 2.6
             systems.append(system)
         }
         juiceSystems[kind] = systems
         return systems
     }
+
+    /// Tumbling pulp/rind debris — small spinning squares with a harder
+    /// gravity fall, layered on top of the liquid streaks.
+    private func chunkSystems(for kind: FruitKind) -> [SCNParticleSystem] {
+        if let cached = chunkSystems[kind] { return cached }
+        let spec = FruitVisualData.spec(for: kind)
+        var systems: [SCNParticleSystem] = []
+        for _ in 0..<3 {
+            let system = SCNParticleSystem()
+            system.loops = false
+            system.emissionDuration = reduceMotion ? 0.06 : 0.10
+            system.birthRate = reduceMotion ? 24 : 55
+            system.particleLifeSpan = 0.75
+            system.particleLifeSpanVariation = 0.25
+            system.particleSize = 8
+            system.particleSizeVariation = 4
+            // Rind-tinted chunks against flesh-colored streaks: reads as
+            // broken skin and pulp together.
+            system.particleColor = UIColor(
+                red: CGFloat(spec.rind.r), green: CGFloat(spec.rind.g),
+                blue: CGFloat(spec.rind.b), alpha: 1
+            )
+            system.particleColorVariation = SCNVector4(0.2, 0.2, 0.2, 0)
+            system.spreadingAngle = 360
+            system.emittingDirection = SCNVector3(0, 1, 0)
+            system.particleVelocity = 170
+            system.speedFactor = 0.4
+            system.isAffectedByGravity = false
+            system.acceleration = SCNVector3(0, -950, 0)
+            system.particleAngularVelocity = 6
+            system.particleImage = Self.chunkImage
+            system.blendMode = .alpha
+            systems.append(system)
+        }
+        chunkSystems[kind] = systems
+        return systems
+    }
+
+    /// Small sharp square; particleColor tints it per fruit kind.
+    private static let chunkImage: CGImage = {
+        let side = 8
+        let colorSpace = CGColorSpace(name: CGColorSpace.sRGB)!
+        let context = CGContext(
+            data: nil, width: side, height: side, bitsPerComponent: 8, bytesPerRow: 0,
+            space: colorSpace, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+        )!
+        context.setFillColor(CGColor(srgbRed: 1, green: 1, blue: 1, alpha: 1))
+        context.fill(CGRect(x: 1, y: 1, width: side - 2, height: side - 2))
+        return context.makeImage()!
+    }()
 
     /// Soft white disc; particleColor tints it per fruit kind.
     private static let particleImage: CGImage = {

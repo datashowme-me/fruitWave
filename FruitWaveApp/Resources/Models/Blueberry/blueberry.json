@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "fruit": "blueberry",
+  "referenceManifest": "blueberry_reference.json",
+  "referenceSkin": "blueberry_reference.png",
+  "referenceCutFace": "blueberry_reference_cut.png",
+  "derivedSkinAlbedo": "blueberry_skin_basecolor.png",
+  "derivedFleshAlbedo": "blueberry_flesh_basecolor.png",
+  "modelingBasis": "PRD v1.0 extracted reference images; unseen back and 3D interior inferred",
+  "units": "meters",
+  "wholeEntity": "blueberry_whole",
+  "leftHalfEntity": "blueberry_half_left",
+  "rightHalfEntity": "blueberry_half_right",
+  "cutPlane": {
+    "normal": [
+      1,
+      0,
+      0
+    ],
+    "distance": 0
+  },
+  "pivot": [
+    0,
+    0,
+    0
+  ],
+  "runtimeStrategy": "swap-whole-for-authored-halves",
+  "integrationStatus": "acceptance-lab-only; gameplay spawn/split still uses FruitVisualData 2D lathe",
+  "collision": {
+    "shape": "sphere",
+    "radius": 0.55
+  },
+  "massKilograms": 0.01,
+  "juiceColorSRGB": [
+    0.45,
+    0.3,
+    0.6
+  ],
+  "materialNotes": {
+    "skin": "roughness 0.50, specular IOR level 0.18 (dusty bloom)",
+    "flesh": "roughness 0.30, specular IOR level 0.60 (wet cut face)"
+  },
+  "cutFaceStructure": {
+    "pit": "none"
+  }
+}

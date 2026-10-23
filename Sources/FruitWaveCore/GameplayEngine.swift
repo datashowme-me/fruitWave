@@ -6,6 +6,8 @@ public enum FruitKind: String, Sendable, Codable, CaseIterable {
     case mango, lemon, grape, dragonFruit
     case pear, cherry, blueberry, plum
     case pomegranate, coconut, cantaloupe, persimmon
+    /// Not a fruit: slicing it detonates and ends the round with no score.
+    case bomb
 }
 public enum FruitState: String, Sendable, Codable { case active, sliced, expired }
 
@@ -36,6 +38,11 @@ public struct Fruit: Identifiable, Sendable, Equatable {
 public struct HitEvent: Sendable, Equatable {
     public let fruitID: UUID
     public let contactTime: TimeInterval
+    /// Blade contact point in mapped (screen-normalized) space.
+    public let contactPosition: Vector2
+    /// Unit blade direction at contact, same space as fruit positions.
+    /// `.zero` when the segment was effectively stationary.
+    public let slashDirection: Vector2
 }
 
 public struct GameplayEngine: Sendable {
@@ -57,12 +64,15 @@ public struct GameplayEngine: Sendable {
     private var lastTick: TimeInterval?
     private var nextSpawnTime: TimeInterval = 0
     public private(set) var roundID = UUID()
+    /// Set when a bomb is sliced; consumed by the host to end the round.
+    public private(set) var hitBomb = false
 
     public init(configuration: Configuration = .init()) { self.configuration = configuration }
 
     public mutating func start(at monotonicTime: TimeInterval, roundID: UUID = UUID()) {
         self.roundID = roundID
         score = 0; gameTime = 0; fruits.removeAll(); lastTick = monotonicTime; nextSpawnTime = 0
+        hitBomb = false
     }
 
     public mutating func resume(at monotonicTime: TimeInterval) { lastTick = monotonicTime }
@@ -92,21 +102,32 @@ public struct GameplayEngine: Sendable {
     public mutating func apply(_ slash: SlashSegment, gameTimeRange: ClosedRange<TimeInterval>) -> [HitEvent] {
         guard slash.roundID == roundID,
               gameTimeRange.upperBound >= gameTimeRange.lowerBound else { return [] }
+        let direction = (slash.endPosition - slash.startPosition).normalized
         var hits: [HitEvent] = []
         for index in fruits.indices where fruits[index].state == .active {
-            if let contact = contactTime(slash: slash, fruit: fruits[index], gameTimeRange: gameTimeRange) {
+            if let contact = contact(slash: slash, fruit: fruits[index], gameTimeRange: gameTimeRange) {
                 fruits[index].state = .sliced
-                hits.append(.init(fruitID: fruits[index].id, contactTime: contact))
+                hits.append(.init(
+                    fruitID: fruits[index].id,
+                    contactTime: contact.time,
+                    contactPosition: contact.position,
+                    slashDirection: direction
+                ))
+                // Bombs detonate instead of scoring.
+                if fruits[index].kind == .bomb {
+                    hitBomb = true
+                } else {
+                    score += configuration.pointsPerFruit
+                }
             }
         }
         hits.sort { $0.contactTime == $1.contactTime ? $0.fruitID.uuidString < $1.fruitID.uuidString : $0.contactTime < $1.contactTime }
-        score += hits.count * configuration.pointsPerFruit
         return hits
     }
 
     public var isFinished: Bool { gameTime >= configuration.duration }
 
-    private func contactTime(slash: SlashSegment, fruit: Fruit, gameTimeRange: ClosedRange<TimeInterval>) -> TimeInterval? {
+    private func contact(slash: SlashSegment, fruit: Fruit, gameTimeRange: ClosedRange<TimeInterval>) -> (time: TimeInterval, position: Vector2)? {
         let duration = max(slash.endTime - slash.startTime, 0.000_1)
         let gameDuration = gameTimeRange.upperBound - gameTimeRange.lowerBound
         let steps = max(1, Int(ceil(gameDuration / configuration.maximumSubstep)))
@@ -116,7 +137,7 @@ public struct GameplayEngine: Sendable {
             let sampleGameTime = gameTimeRange.lowerBound + gameDuration * fraction
             let fruitCenter = fruit.position(at: sampleGameTime)
             if (hand - fruitCenter).length <= fruit.radius + configuration.bladeRadius {
-                return slash.startTime + duration * fraction
+                return (slash.startTime + duration * fraction, hand)
             }
         }
         return nil

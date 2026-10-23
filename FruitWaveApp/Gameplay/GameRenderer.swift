@@ -13,6 +13,9 @@ final class GameRenderer {
         let gameTime: TimeInterval
         let score: Int
         let hand: Vector2?
+        /// Capture time (monotonic clock) of the frame the hand came from —
+        /// lets the HUD cursor compensate the network+inference pipeline age.
+        let handCapturedAt: TimeInterval?
         let slash: SlashSegment?
         let hits: [HitEvent]
     }
@@ -37,6 +40,13 @@ final class GameRenderer {
     var soundEnabled: Bool {
         get { stage.soundEnabled }
         set { stage.soundEnabled = newValue }
+    }
+
+    /// Points shown per sliced fruit popup; kept in sync with the gameplay
+    /// engine configuration by AppModel.
+    var pointsPerSlice: Int {
+        get { stage.pointsPerSlice }
+        set { stage.pointsPerSlice = newValue }
     }
 
     /// Routes to both layers: the stage (juice rates, slice animation) and

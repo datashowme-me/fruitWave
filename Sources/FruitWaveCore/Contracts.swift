@@ -50,6 +50,28 @@ public struct SlashSegment: Sendable, Equatable {
     public let startPosition: Vector2
     public let endPosition: Vector2
     public let speed: Double
+
+    public init(
+        sessionID: UUID,
+        roundID: UUID,
+        playerSessionID: UUID,
+        mappingVersion: Int,
+        startTime: TimeInterval,
+        endTime: TimeInterval,
+        startPosition: Vector2,
+        endPosition: Vector2,
+        speed: Double
+    ) {
+        self.sessionID = sessionID
+        self.roundID = roundID
+        self.playerSessionID = playerSessionID
+        self.mappingVersion = mappingVersion
+        self.startTime = startTime
+        self.endTime = endTime
+        self.startPosition = startPosition
+        self.endPosition = endPosition
+        self.speed = speed
+    }
 }
 
 public enum GameState: String, Sendable, Codable, CaseIterable {

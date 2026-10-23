@@ -1,0 +1,41 @@
+{
+  "fruit": "persimmon",
+  "source_kind": "google_doc_docx_export",
+  "source_id_or_url": "https://docs.google.com/document/d/1tzqIUol1BEAEpyYdKFmQUmWwURed_3voLYmmjdvpZaA",
+  "source_title": "Apple TV 体感切水果｜Codex 与 Claude 开发任务书 v1.0",
+  "source_revision": "AHj4eMSBFqyUvXobDuLRyBpkCUJ2grbbT5bvx5F4cQV8NbDQS_W11xD6NAU9mj65ybmf98OXnmVWdqMOX3wlug-jE01yNfCA97T_oH0HZnE",
+  "source_modified_time": "2026-10-19T07:33:49.063Z",
+  "extracted_image": "persimmon_reference.png",
+  "extracted_source": "ArtSource/PRD-v1.0/FruitReferences/persimmon/whole.png",
+  "sha256": "ad9cb5690367ad5348da8579c974aaf7f3e2860e4415480066bd5a5acb7773c4",
+  "supplemental_images": [
+    {
+      "path": "persimmon_reference_cut.png",
+      "source": "ArtSource/PRD-v1.0/FruitReferences/persimmon/cut.png",
+      "sha256": "2b987d5571ba5c561e51787c9cf158689e4dce1e3b382feb89c15d89eddf5f03",
+      "role": "cut"
+    }
+  ],
+  "derived_assets": [
+    {
+      "path": "persimmon_skin_basecolor.png",
+      "method": "per-row mirrored-longitude cylinder remap with persimmon-family classification, de-lighting blend"
+    },
+    {
+      "path": "persimmon_flesh_basecolor.png",
+      "method": "persimmon-flesh centroid disk remap, specular rejection, de-lighting blend"
+    }
+  ],
+  "observed_features": [
+    "squat persimmon, black background",
+    "skin bright orange #ef4905/#b13c10/#d97f1c, matte (bright 1.27%)",
+    "1.2% green palette share: the four calyx lobes at the top",
+    "cut face: uniform orange flesh #fa600d/#ed9222/#f2a732/#edbe5b, no pit"
+  ],
+  "inferred_features": [
+    "unseen back mirrored from the front half",
+    "calyx lobe count (4) from persimmon structure; color from the dark #6f1403/green shares",
+    "uniform flesh: the cut palette shows no seed or core family"
+  ],
+  "inspection_method": "pixel-level programmatic measurement (no vision model available in the generating environment); human-eye verification required on device"
+}

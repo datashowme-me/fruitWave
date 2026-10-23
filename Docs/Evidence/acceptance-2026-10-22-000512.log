@@ -1,0 +1,10 @@
+Launched application with com.example.FruitWave bundle identifier.
+/tmp/fw_pull3/evidence_apple.log
+APP_STARTED 2026-10-21 16:05:13 +0000 args=["/var/containers/Bundle/Application/1D55C39D-4FE5-4516-9C3E-40EE106C279C/FruitWave.app/FruitWave"] envKeys=["FW_ASSET_LAB", "FW_SNAPSHOTS"]
+APP_VIEW_APPEARED 2026-10-21 16:05:14 +0000
+ASSET_LAB_STARTED 2026-10-21 16:05:14 +0000
+ASSET_SNAPSHOT evidence_apple_whole.png evidence_apple_whole.png residentMB=215
+ASSET_SNAPSHOT evidence_apple_sliced.png evidence_apple_sliced.png residentMB=215
+ASSET_FPS_SAMPLE updates=594 seconds=12.01 fps=49.5 residentMB=215
+Library/Caches/evidence_apple_sliced.png                                                                          Writable, Readable              339 KB      2026/10/22, 00:05
+Library/Caches/evidence_apple_whole.png                                                                           Writable, Readable              277 KB      2026/10/22, 00:05

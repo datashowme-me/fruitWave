@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "fruit": "pomegranate",
+  "referenceManifest": "pomegranate_reference.json",
+  "referenceSkin": "pomegranate_reference.png",
+  "referenceCutFace": "pomegranate_reference_cut.png",
+  "derivedSkinAlbedo": "pomegranate_skin_basecolor.png",
+  "derivedFleshAlbedo": "pomegranate_flesh_basecolor.png",
+  "modelingBasis": "PRD v1.0 extracted reference images; unseen back and 3D interior inferred",
+  "units": "meters",
+  "wholeEntity": "pomegranate_whole",
+  "leftHalfEntity": "pomegranate_half_left",
+  "rightHalfEntity": "pomegranate_half_right",
+  "cutPlane": {
+    "normal": [
+      1,
+      0,
+      0
+    ],
+    "distance": 0
+  },
+  "pivot": [
+    0,
+    0,
+    0
+  ],
+  "runtimeStrategy": "swap-whole-for-authored-halves",
+  "integrationStatus": "acceptance-lab-only; gameplay spawn/split still uses FruitVisualData 2D lathe",
+  "collision": {
+    "shape": "sphere",
+    "radius": 0.8
+  },
+  "massKilograms": 0.25,
+  "juiceColorSRGB": [
+    0.85,
+    0.15,
+    0.2
+  ],
+  "materialNotes": {
+    "skin": "roughness 0.45, specular IOR level 0.25 (leathery peel)",
+    "pith": "roughness 0.35, specular IOR level 0.50 (wet cut face)",
+    "seeds": "glossy #c73229 arils, roughness 0.25, specular IOR level 0.60",
+    "crown": "dark #520b08 nubs, roughness 0.50"
+  },
+  "cutFaceStructure": {
+    "seedRings": [
+      [
+        0.14,
+        8
+      ],
+      [
+        0.28,
+        12
+      ],
+      [
+        0.42,
+        16
+      ],
+      [
+        0.55,
+        20
+      ],
+      [
+        0.66,
+        24
+      ]
+    ],
+    "seedScale": [
+      0.03,
+      0.04,
+      0.075
+    ]
+  }
+}

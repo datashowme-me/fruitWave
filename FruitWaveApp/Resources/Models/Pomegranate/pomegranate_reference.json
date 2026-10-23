@@ -1,0 +1,40 @@
+{
+  "fruit": "pomegranate",
+  "source_kind": "google_doc_docx_export",
+  "source_id_or_url": "https://docs.google.com/document/d/1tzqIUol1BEAEpyYdKFmQUmWwURed_3voLYmmjdvpZaA",
+  "source_title": "Apple TV 体感切水果｜Codex 与 Claude 开发任务书 v1.0",
+  "source_revision": "AHj4eMSBFqyUvXobDuLRyBpkCUJ2grbbT5bvx5F4cQV8NbDQS_W11xD6NAU9mj65ybmf98OXnmVWdqMOX3wlug-jE01yNfCA97T_oH0HZnE",
+  "source_modified_time": "2026-10-19T07:33:49.063Z",
+  "extracted_image": "pomegranate_reference.png",
+  "extracted_source": "ArtSource/PRD-v1.0/FruitReferences/pomegranate/whole.png",
+  "sha256": "8ef4d39406f3689767f96cbba1d978bbb277a930794863a5b6aeccd536fed2cf",
+  "supplemental_images": [
+    {
+      "path": "pomegranate_reference_cut.png",
+      "source": "ArtSource/PRD-v1.0/FruitReferences/pomegranate/cut.png",
+      "sha256": "39e780d28d08c054f3099752d2c43bd4914b1d3ad969734fabf4ecf7b187094a",
+      "role": "cut"
+    }
+  ],
+  "derived_assets": [
+    {
+      "path": "pomegranate_skin_basecolor.png",
+      "method": "per-row mirrored-longitude cylinder remap with pomegranate-family classification, de-lighting blend"
+    },
+    {
+      "path": "pomegranate_flesh_basecolor.png",
+      "method": "pomegranate-pith centroid disk remap, specular rejection, de-lighting blend"
+    }
+  ],
+  "observed_features": [
+    "near-square pomegranate with calyx crown, black background",
+    "skin deep red #94050d/#6b0408 with lit #d84d41/#c20814, matte (bright 0.51%)",
+    "cut face: packed red seeds #ab0f18/#c83e40/#d4101b/#e27a6e on pale pith #fbc5ad"
+  ],
+  "inferred_features": [
+    "unseen back mirrored from the front half",
+    "seed ring counts (8/12/16/20/24) and the crown nub count from the seed and dark-crown palette shares",
+    "pith is the flesh (slot 1) of the cut face; seeds are overlay geometry"
+  ],
+  "inspection_method": "pixel-level programmatic measurement (no vision model available in the generating environment); human-eye verification required on device"
+}

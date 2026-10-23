@@ -1,0 +1,41 @@
+{
+  "fruit": "banana",
+  "source_kind": "google_doc_docx_export",
+  "source_id_or_url": "https://docs.google.com/document/d/1tzqIUol1BEAEpyYdKFmQUmWwURed_3voLYmmjdvpZaA",
+  "source_title": "Apple TV 体感切水果｜Codex 与 Claude 开发任务书 v1.0",
+  "source_revision": "AHj4eMSBFqyUvXobDuLRyBpkCUJ2grbbT5bvx5F4cQV8NbDQS_W11xD6NAU9mj65ybmf98OXnmVWdqMOX3wlug-jE01yNfCA97T_oH0HZnE",
+  "source_modified_time": "2026-10-19T07:33:49.063Z",
+  "extracted_image": "banana_reference.png",
+  "extracted_source": "ArtSource/PRD-v1.0/FruitReferences/banana/whole.png",
+  "sha256": "a70dcd59aaf875476d9d1912af9965e88ad3aab61582e84d77794e7b7eb0ebb3",
+  "supplemental_images": [
+    {
+      "path": "banana_reference_cut.png",
+      "source": "ArtSource/PRD-v1.0/FruitReferences/banana/cut.png",
+      "sha256": "5c4ed9ee296b6dfc6d539dd8a46cd24958852db6bbcbb4bfed025a104bbddcb5",
+      "role": "cut"
+    }
+  ],
+  "derived_assets": [
+    {
+      "path": "banana_skin_basecolor.png",
+      "method": "per-row mirrored-longitude cylinder remap with banana-family classification, de-lighting blend"
+    },
+    {
+      "path": "banana_flesh_basecolor.png",
+      "method": "banana-cream centroid disk remap, specular rejection, de-lighting blend"
+    }
+  ],
+  "observed_features": [
+    "whole photo fills the frame nearly square: photographed down the fruit's length",
+    "skin yellow #cf9612/#f6c421/#ea9a0e with bright #fdeb84 and dark tip family",
+    "cut face: cream flesh #fcedb4/#fde663/#f8d355, yellow peel, dark brown #875b0c seed line"
+  ],
+  "inferred_features": [
+    "the crescent bend (BEND 0.24 rad/unit) is banana-typical; the photo does not show it",
+    "the cut is authored lengthwise so both halves keep the full arc",
+    "five ridge lobes (lobe_count 5) from banana structure",
+    "seed strip from the dark #875b0c family of the cut palette"
+  ],
+  "inspection_method": "pixel-level programmatic measurement (no vision model available in the generating environment); human-eye verification required on device"
+}

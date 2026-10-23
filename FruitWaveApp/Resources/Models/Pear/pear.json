@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "fruit": "pear",
+  "referenceManifest": "pear_reference.json",
+  "referenceSkin": "pear_reference.png",
+  "referenceCutFace": "pear_reference_cut.png",
+  "derivedSkinAlbedo": "pear_skin_basecolor.png",
+  "derivedFleshAlbedo": "pear_flesh_basecolor.png",
+  "modelingBasis": "PRD v1.0 extracted reference images; unseen back and 3D interior inferred",
+  "units": "meters",
+  "wholeEntity": "pear_whole",
+  "leftHalfEntity": "pear_half_left",
+  "rightHalfEntity": "pear_half_right",
+  "cutPlane": {
+    "normal": [
+      1,
+      0,
+      0
+    ],
+    "distance": 0
+  },
+  "pivot": [
+    0,
+    0,
+    0
+  ],
+  "runtimeStrategy": "swap-whole-for-authored-halves",
+  "integrationStatus": "acceptance-lab-only; gameplay spawn/split still uses FruitVisualData 2D lathe",
+  "collision": {
+    "shape": "sphere",
+    "radius": 0.66
+  },
+  "massKilograms": 0.18,
+  "juiceColorSRGB": [
+    0.9,
+    0.88,
+    0.5
+  ],
+  "materialNotes": {
+    "skin": "roughness 0.46, specular IOR level 0.28 (matte peel)",
+    "flesh": "roughness 0.28, specular IOR level 0.70 (wet cut face)",
+    "core": "#61550f, roughness 0.35",
+    "chamber": "darker cream #e6d4a0, roughness 0.32"
+  },
+  "cutFaceStructure": {
+    "chamberRing": [
+      0.1,
+      0.24
+    ],
+    "coreScale": [
+      0.02,
+      0.16,
+      0.11
+    ]
+  }
+}

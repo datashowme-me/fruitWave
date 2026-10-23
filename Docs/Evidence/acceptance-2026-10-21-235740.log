@@ -1,0 +1,9 @@
+=== acceptance env launch 2026-10-21-235740 ===
+23:57:40  Acquired tunnel connection to device.
+23:57:40  Enabling developer disk image services.
+23:57:40  Acquired usage assertion.
+Launched application with com.example.FruitWave bundle identifier.
+=== waiting 15s for the 3/6/9s snapshot schedule ===
+=== container listing ===
+Documents                                                                                                         Writable, Readable, Directory   64 bytes    2026/10/16, 22:52
+Library/Caches/evidence_apple.log                                                                                 Writable, Readable              222 bytes   2026/10/21, 23:57

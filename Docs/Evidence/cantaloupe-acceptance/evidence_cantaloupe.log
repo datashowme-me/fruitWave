@@ -1,0 +1,7 @@
+APP_STARTED 2026-10-22 02:12:54 +0000 args=["/var/containers/Bundle/Application/9DE05035-1622-485E-9C18-F498B5DA722A/FruitWave.app/FruitWave"] envKeys=["FW_SNAPSHOTS", "FW_FRUIT", "FW_ASSET_LAB"]
+APP_VIEW_APPEARED 2026-10-22 02:12:54 +0000
+ASSET_LAB_STARTED 2026-10-22 02:12:54 +0000
+ASSET_SNAPSHOT evidence_cantaloupe_whole.png evidence_cantaloupe_whole.png residentMB=215
+ASSET_SNAPSHOT evidence_cantaloupe_sliced.png evidence_cantaloupe_sliced.png residentMB=216
+ASSET_FPS_SAMPLE updates=592 seconds=12.01 fps=49.3 residentMB=216
+ASSET_WATCHDOG appState=0 snapshots=2

@@ -16,6 +16,10 @@ public struct Vector2: Sendable, Equatable, Codable {
     public static func / (lhs: Self, rhs: Double) -> Self { .init(x: lhs.x / rhs, y: lhs.y / rhs) }
     public var length: Double { hypot(x, y) }
     public var isFinite: Bool { x.isFinite && y.isFinite }
+    public var normalized: Vector2 {
+        let magnitude = length
+        return magnitude > 0.000_001 ? self / magnitude : .zero
+    }
 
     public func interpolated(to other: Self, fraction: Double) -> Self {
         self + (other - self) * fraction

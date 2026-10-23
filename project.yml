@@ -18,6 +18,13 @@ targets:
         excludes:
           - Resources/Preview Content
           - Resources/Assets.xcassets/AppIcon.brandassets
+          - Resources/Models/**/*.blend
+          - Resources/Models/**/*.blend1
+          - Resources/Models/**/*_preview.png
+          - Resources/Models/**/*_basecolor.png
+          - Resources/Models/**/*_comparison.png
+          - Resources/Models/**/*_reference.json
+          - Resources/Models/**/*_reference*.png
     dependencies:
       - target: FruitWaveCore
     settings:

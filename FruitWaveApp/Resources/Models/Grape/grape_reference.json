@@ -1,0 +1,40 @@
+{
+  "fruit": "grape",
+  "source_kind": "google_doc_docx_export",
+  "source_id_or_url": "https://docs.google.com/document/d/1tzqIUol1BEAEpyYdKFmQUmWwURed_3voLYmmjdvpZaA",
+  "source_title": "Apple TV 体感切水果｜Codex 与 Claude 开发任务书 v1.0",
+  "source_revision": "AHj4eMSBFqyUvXobDuLRyBpkCUJ2grbbT5bvx5F4cQV8NbDQS_W11xD6NAU9mj65ybmf98OXnmVWdqMOX3wlug-jE01yNfCA97T_oH0HZnE",
+  "source_modified_time": "2026-10-19T07:33:49.063Z",
+  "extracted_image": "grape_reference.png",
+  "extracted_source": "ArtSource/PRD-v1.0/FruitReferences/grape/whole.png",
+  "sha256": "5feff15f300a54f958ebf45eb9b90546221d945dd3a9899363f54f42a14e307f",
+  "supplemental_images": [
+    {
+      "path": "grape_reference_cut.png",
+      "source": "ArtSource/PRD-v1.0/FruitReferences/grape/cut.png",
+      "sha256": "a6f28ea73a6bbbfd333c65d99de246477f1f4b0170cad795d259ad6d04070abf",
+      "role": "cut"
+    }
+  ],
+  "derived_assets": [
+    {
+      "path": "grape_skin_basecolor.png",
+      "method": "per-row mirrored-longitude cylinder remap with grape-family classification, de-lighting blend"
+    },
+    {
+      "path": "grape_flesh_basecolor.png",
+      "method": "grape-flesh centroid disk remap, specular rejection, de-lighting blend"
+    }
+  ],
+  "observed_features": [
+    "near-square bare grape berry, black background",
+    "skin purple #4b1b47/#7f2a73 with bloom #845c7d (thin translucent bloom)",
+    "no stem or leaf in the reference",
+    "cut face: purple flesh #7d1c53/#8d4e72 with pale seed dots #d2ca7c"
+  ],
+  "inferred_features": [
+    "unseen back mirrored from the front half",
+    "two seeds per half from the pale dot share of the cut palette"
+  ],
+  "inspection_method": "pixel-level programmatic measurement (no vision model available in the generating environment); human-eye verification required on device"
+}

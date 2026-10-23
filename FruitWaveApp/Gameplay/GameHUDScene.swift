@@ -15,9 +15,16 @@ final class GameHUDScene: SKScene {
     private let trailLayer = SKNode()
     private let effectsLayer = SKNode()
     private let comboLabel = SKLabelNode(fontNamed: "AvenirNext-Heavy")
-    // The newest hand samples in scene space, used to interpolate the cursor
+    // The newest hand samples in scene space, used to extrapolate the cursor
     // at the 60 Hz scene rate instead of the ~30 Hz pose-sample rate.
-    private var handSamples: [(time: TimeInterval, point: CGPoint)] = []
+    private struct HandSample {
+        let point: CGPoint
+        /// Capture time on the phone (monotonic clock, shared with the TV) —
+        /// stable even when network delivery jitters, so velocity estimates
+        /// from it don't jump.
+        let capturedAt: TimeInterval
+    }
+    private var handSamples: [HandSample] = []
 
     override init(size: CGSize = CGSize(width: 1920, height: 1080)) {
         super.init(size: size)
@@ -56,17 +63,18 @@ final class GameHUDScene: SKScene {
 
     // MARK: - Hand cursor
 
-    func pushHandSample(_ point: CGPoint, now: TimeInterval) {
+    func pushHandSample(_ point: CGPoint, capturedAt: TimeInterval, now: TimeInterval) {
         handNode.isHidden = false
+        let sample = HandSample(point: point, capturedAt: capturedAt)
         if let last = handSamples.last {
             if last.point != point {
-                handSamples = [(time: last.time, point: last.point), (time: now, point: point)]
+                handSamples = [last, sample]
             } else {
                 // Stationary hand: stop extrapolating and hold in place.
-                handSamples = [(time: now, point: point)]
+                handSamples = [sample]
             }
         } else {
-            handSamples = [(time: now, point: point)]
+            handSamples = [sample]
         }
     }
 
@@ -75,23 +83,30 @@ final class GameHUDScene: SKScene {
         handSamples.removeAll()
     }
 
-    /// Places the hand cursor between the two newest samples and extrapolates
-    /// a short distance ahead of the newest one, so the cursor follows the
-    /// real hand instead of trailing the pose pipeline by a sample.
+    /// Extrapolates the newest sample forward by the age of the pose pipeline
+    /// (capture on the phone → network → Vision → render). Velocity is
+    /// measured on capture times, so network jitter doesn't inject jumps;
+    /// the look-ahead is capped to bound error when the hand reverses.
     func updateCursor(at now: TimeInterval) {
         guard !handNode.isHidden, let latest = handSamples.last else { return }
-        guard handSamples.count > 1 else { handNode.position = latest.point; return }
-        let previous = handSamples[0]
-        let interval = latest.time - previous.time
-        guard interval > 0 else { handNode.position = latest.point; return }
-        let elapsed = min(0.045, max(0, now - latest.time))
+        guard handSamples.count > 1, let previous = handSamples.first else {
+            handNode.position = latest.point
+            return
+        }
+        let interval = latest.capturedAt - previous.capturedAt
+        guard interval > 0, interval < 0.25 else {
+            handNode.position = latest.point
+            return
+        }
         let velocity = CGPoint(
             x: (latest.point.x - previous.point.x) / CGFloat(interval),
             y: (latest.point.y - previous.point.y) / CGFloat(interval)
         )
+        let age = now - latest.capturedAt
+        let ahead = min(max(age, 0), 0.11)
         handNode.position = CGPoint(
-            x: latest.point.x + velocity.x * CGFloat(elapsed),
-            y: latest.point.y + velocity.y * CGFloat(elapsed)
+            x: latest.point.x + velocity.x * CGFloat(ahead),
+            y: latest.point.y + velocity.y * CGFloat(ahead)
         )
     }
 
@@ -123,6 +138,42 @@ final class GameHUDScene: SKScene {
         if trailPool.count < 32, !trailPool.contains(where: { $0 === node }) { trailPool.append(node) }
     }
 
+    // MARK: - Cut flash
+
+    private var cutFlashPool: [SKShapeNode] = []
+
+    /// One-frame white blade flash along the cut direction at the contact
+    /// point — the "impact moment" of every slice.
+    func spawnCutFlash(at point: CGPoint, direction: CGPoint) {
+        let length = hypot(direction.x, direction.y)
+        let dx = length > 0.000_1 ? direction.x / length : 1
+        let dy = length > 0.000_1 ? direction.y / length : 0
+        let node = cutFlashPool.popLast() ?? SKShapeNode()
+        node.removeAllActions()
+        node.path = nil
+        let path = CGMutablePath()
+        path.move(to: CGPoint(x: point.x - dx * 46, y: point.y - dy * 46))
+        path.addLine(to: CGPoint(x: point.x + dx * 46, y: point.y + dy * 46))
+        node.path = path
+        node.strokeColor = .white
+        node.lineWidth = 9
+        node.lineCap = .round
+        node.glowWidth = 22
+        node.blendMode = .add
+        node.alpha = 1
+        effectsLayer.addChild(node)
+        node.run(.fadeOut(withDuration: reduceMotion ? 0.07 : 0.13)) { [weak self, weak node] in
+            guard let self, let node, node.parent != nil else { return }
+            self.recycleCutFlash(node)
+        }
+    }
+
+    private func recycleCutFlash(_ node: SKShapeNode) {
+        node.removeFromParent()
+        node.path = nil
+        if cutFlashPool.count < 8, !cutFlashPool.contains(where: { $0 === node }) { cutFlashPool.append(node) }
+    }
+
     // MARK: - Impact ring and combo label
 
     func spawnRing(at position: CGPoint, kind: FruitKind, radius: CGFloat) {
@@ -146,20 +197,99 @@ final class GameHUDScene: SKScene {
         ])) { [weak ring] in ring?.removeFromParent() }
     }
 
+    /// Combo announcement (2+ chain). The per-hit "+N" score popup is a
+    /// separate pooled label so a multi-fruit slash shows one per fruit.
     func showCombo(count: Int, at position: CGPoint, radius: CGFloat) {
+        guard count >= 2 else { return }
         comboLabel.removeAllActions()
         comboLabel.isHidden = false
         comboLabel.alpha = 1
         comboLabel.setScale(0.65)
         comboLabel.position = CGPoint(x: position.x, y: min(size.height - 80, position.y + radius * 1.35))
-        comboLabel.text = count >= 2 ? "\(count) 连击！" : "+10"
-        comboLabel.fontColor = count >= 3 ? .systemYellow : .white
+        comboLabel.text = "\(count) 连击！"
+        comboLabel.fontColor = count >= 5 ? .systemOrange : (count >= 3 ? .systemYellow : .white)
         comboLabel.run(.sequence([
             .group([.scale(to: 1.15, duration: 0.10), .moveBy(x: 0, y: 18, duration: 0.10)]),
             .wait(forDuration: 0.22),
             .group([.fadeOut(withDuration: 0.18), .moveBy(x: 0, y: 34, duration: 0.18)]),
             .hide()
         ]))
+        if count >= 3 { pulseCombo() }
+    }
+
+    private var scorePopupPool: [SKLabelNode] = []
+
+    /// Per-fruit "+N" popup floating up from the blade contact point.
+    func showScorePopup(at point: CGPoint, points: Int) {
+        let label = scorePopupPool.popLast() ?? SKLabelNode(fontNamed: "AvenirNext-Heavy")
+        label.removeAllActions()
+        label.isHidden = false
+        label.alpha = 1
+        label.setScale(0.7)
+        label.position = point
+        label.text = "+\(points)"
+        label.fontSize = 36
+        label.fontColor = .white
+        label.verticalAlignmentMode = .center
+        label.horizontalAlignmentMode = .center
+        effectsLayer.addChild(label)
+        label.run(.sequence([
+            .group([.scale(to: 1.12, duration: 0.09), .moveBy(x: 0, y: 24, duration: 0.09)]),
+            .group([.fadeOut(withDuration: 0.30), .moveBy(x: 0, y: 62, duration: 0.30)])
+        ])) { [weak self, weak label] in
+            guard let self, let label, label.parent != nil else { return }
+            self.recyclePopup(label)
+        }
+    }
+
+    private func recyclePopup(_ label: SKLabelNode) {
+        label.removeFromParent()
+        if scorePopupPool.count < 6, !scorePopupPool.contains(where: { $0 === label }) {
+            scorePopupPool.append(label)
+        }
+    }
+
+    /// Bomb shockwave: a filled additive disc slamming outward from the blast
+    /// point plus the full-screen combo pulse.
+    func spawnBombFlash(at point: CGPoint) {
+        let ring = SKShapeNode(circleOfRadius: 46)
+        ring.position = point
+        ring.fillColor = .white
+        ring.strokeColor = .clear
+        ring.glowWidth = reduceMotion ? 0 : 26
+        ring.blendMode = .add
+        ring.alpha = 0.85
+        effectsLayer.addChild(ring)
+        ring.run(.group([
+            .scale(to: 7, duration: reduceMotion ? 0.22 : 0.38),
+            .fadeOut(withDuration: reduceMotion ? 0.22 : 0.38)
+        ])) { [weak ring] in ring?.removeFromParent() }
+        pulseCombo()
+    }
+
+    private var pulseNodes: [SKShapeNode] = []
+
+    /// Full-screen additive flash on 3+ combos — the screen itself reacts.
+    private func pulseCombo() {
+        let node = pulseNodes.popLast() ?? SKShapeNode(rectOf: CGSize(width: 1920, height: 1080))
+        node.removeAllActions()
+        node.fillColor = .white
+        node.strokeColor = .clear
+        node.blendMode = .add
+        node.alpha = reduceMotion ? 0.06 : 0.11
+        node.position = CGPoint(x: 960, y: 540)
+        effectsLayer.addChild(node)
+        node.run(.fadeOut(withDuration: reduceMotion ? 0.18 : 0.30)) { [weak self, weak node] in
+            guard let self, let node, node.parent != nil else { return }
+            self.recyclePulse(node)
+        }
+    }
+
+    private func recyclePulse(_ node: SKShapeNode) {
+        node.removeFromParent()
+        if pulseNodes.count < 2, !pulseNodes.contains(where: { $0 === node }) {
+            pulseNodes.append(node)
+        }
     }
 
     /// Clears trails and hides the combo label. Combo *counting* lives in the

@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "fruit": "coconut",
+  "referenceManifest": "coconut_reference.json",
+  "referenceSkin": "coconut_reference.png",
+  "referenceCutFace": "coconut_reference_cut.png",
+  "derivedSkinAlbedo": "coconut_skin_basecolor.png",
+  "derivedFleshAlbedo": "coconut_flesh_basecolor.png",
+  "modelingBasis": "PRD v1.0 extracted reference images; unseen back and 3D interior inferred",
+  "units": "meters",
+  "wholeEntity": "coconut_whole",
+  "leftHalfEntity": "coconut_half_left",
+  "rightHalfEntity": "coconut_half_right",
+  "cutPlane": {
+    "normal": [
+      1,
+      0,
+      0
+    ],
+    "distance": 0
+  },
+  "pivot": [
+    0,
+    0,
+    0
+  ],
+  "runtimeStrategy": "swap-whole-for-authored-halves",
+  "integrationStatus": "acceptance-lab-only; gameplay spawn/split still uses FruitVisualData 2D lathe",
+  "collision": {
+    "shape": "sphere",
+    "radius": 0.86
+  },
+  "massKilograms": 0.6,
+  "juiceColorSRGB": [
+    0.95,
+    0.92,
+    0.88
+  ],
+  "materialNotes": {
+    "skin": "roughness 0.62, specular IOR level 0.12 (dry fibrous husk)",
+    "flesh": "roughness 0.30, specular IOR level 0.55 (meat)",
+    "shell": "#7f3d1a, roughness 0.40",
+    "hollow": "near-black, roughness 0.60"
+  },
+  "cutFaceStructure": {
+    "meatRing": [
+      0.3,
+      0.74
+    ],
+    "hollowRadius": 0.3
+  }
+}

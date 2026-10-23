@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "fruit": "strawberry",
+  "referenceManifest": "strawberry_reference.json",
+  "referenceSkin": "strawberry_reference.png",
+  "referenceCutFace": "strawberry_reference_cut.png",
+  "derivedSkinAlbedo": "strawberry_skin_basecolor.png",
+  "derivedFleshAlbedo": "strawberry_flesh_basecolor.png",
+  "modelingBasis": "PRD v1.0 extracted reference images; unseen back and 3D interior inferred",
+  "units": "meters",
+  "wholeEntity": "strawberry_whole",
+  "leftHalfEntity": "strawberry_half_left",
+  "rightHalfEntity": "strawberry_half_right",
+  "cutPlane": {
+    "normal": [
+      1,
+      0,
+      0
+    ],
+    "distance": 0
+  },
+  "pivot": [
+    0,
+    0,
+    0
+  ],
+  "runtimeStrategy": "swap-whole-for-authored-halves",
+  "integrationStatus": "acceptance-lab-only; gameplay spawn/split still uses FruitVisualData 2D lathe",
+  "collision": {
+    "shape": "sphere",
+    "radius": 0.7
+  },
+  "massKilograms": 0.03,
+  "juiceColorSRGB": [
+    0.9,
+    0.2,
+    0.15
+  ],
+  "materialNotes": {
+    "skin": "roughness 0.30, specular IOR level 0.35",
+    "flesh": "roughness 0.26, specular IOR level 0.75 (wet cut face)",
+    "core": "#fba083 pale zone",
+    "seeds": "#b8b45a, roughness 0.35",
+    "calyx": "#4d6b24, roughness 0.45"
+  },
+  "cutFaceStructure": {
+    "surfaceSeeds": 28,
+    "coreRadius": 0.18
+  }
+}

@@ -1,0 +1,107 @@
+=== deploy 2026-10-22-000351 ===
+Gathering device information…
+Current device information:
+• identifier: CC71D430-6B29-5E60-9267-DB8417387ED2
+• tags: 
+▿ hardwareProperties:
+    • cpuType: arm64e (type: 16777228, subtype: 2)
+    • deviceType: appleTV
+    • ecid: 7363816476409886
+    • hardwareModel: J255AP
+    • internalStorageCapacity: 64000000000
+    • isProductionFused: true
+    • marketingName: Apple TV 4K (3rd generation)
+    • platform: tvOS
+    • productType: AppleTV14,1
+    • reality: physical
+    • serialNumber: L4T9JH7WDJ
+    ▿ supportedCPUTypes:
+        • arm64e (type: 16777228, subtype: 2)
+        • arm64 (type: 16777228, subtype: 0)
+    • supportedDeviceFamilies: [3]
+    • thinningProductType: AppleTV14,1
+    • udid: 00008110-001A295A2144801E
+▿ deviceProperties:
+    • bootState: booted
+    • ddiServicesAvailable: true
+    • developerModeStatus: enabled
+    • hasInternalOSBuild: false
+    • name: 客厅
+    • osBuildUpdate: 24J361
+    • osVersionNumber: 27.0
+    • rootFileSystemIsWritable: false
+    • screenViewingURL: devices://device/open?id=CC71D430-6B29-5E60-9267-DB8417387ED2
+    • bootedFromSnapshot: true
+    • bootedSnapshotName: com.apple.os.update-5FE63C235B7A7A09EEF842A4AE1EA6CFE745C3D842046B7717AA633B4CB7F7D3C3FC411AEC20CC4F585C8EDA536C89C6
+    • supportsCheckedAllocations: false
+▿ connectionProperties:
+    • authenticationType: manualPairing
+    • isMobileDeviceOnly: false
+    • lastConnectionDate: 2026-10-21 16:03:00 +0000
+    ▿ localHostnames:
+        • keting.coredevice.local
+        • CC71D430-6B29-5E60-9267-DB8417387ED2.coredevice.local
+        • 00008110-001A295A2144801E.coredevice.local
+    ▿ potentialHostnames:
+        • keting.coredevice.local
+        • CC71D430-6B29-5E60-9267-DB8417387ED2.coredevice.local
+        • 00008110-001A295A2144801E.coredevice.local
+    • pairingState: paired
+    • transportType: localNetwork
+    • tunnelTransportProtocol: tcp
+    • tunnelIPAddress: fdde:a3ce:ab21::1
+    • tunnelState: connected
+▿ capabilities:
+    • Acquire Usage Assertion (com.apple.coredevice.feature.acquireusageassertion)
+    • Application Control (com.apple.coredevice.feature.applicationcontrol)
+    • Capture Sysdiagnose (com.apple.coredevice.feature.capturesysdiagnose)
+    • Create Service Connection (com.apple.dt.serviceconnection.create)
+    • Create Service Socket (com.apple.dt.servicesocket.create)
+    • Disable Developer Disk Image Services (com.apple.coredevice.feature.disableddiservices)
+    • Disconnect from Device (com.apple.coredevice.feature.disconnectdevice)
+    • Fetch Application Icons (com.apple.coredevice.feature.fetchappicons)
+    • Fetch AuthListing Identifiers (com.apple.coredevice.feature.getauthlistingidentifiers)
+    • Fetch Developer Disk Image Services Metadata (com.apple.coredevice.feature.fetchddimetadata)
+    • Fetch Extended Device Info (com.apple.coredevice.feature.getdeviceinfo)
+    • Get Display Information (com.apple.coredevice.feature.getdisplayinfo)
+    • Get Lock State (com.apple.coredevice.feature.getlockstate)
+    • Install Application (com.apple.coredevice.feature.installapp)
+    • Install Root (com.apple.coredevice.feature.installroot)
+    • Launch Application (com.apple.coredevice.feature.launchapplication)
+    • List Files (com.apple.coredevice.feature.listFiles)
+    • List Roots (com.apple.coredevice.feature.listroots)
+    • Modify Tags (com.apple.coredevice.feature.tags)
+    • Modify credentials for default users for a device (com.apple.coredevice.feature.default.user.credentials)
+    • Monitor Process for Termination (com.apple.coredevice.feature.monitorprocesstermination)
+    • Post Darwin Notification (com.apple.dt.customer.postdarwinnotification)
+    • Process Control (com.apple.coredevice.feature.processcontrol)
+    • Query MobileGestalt (com.apple.coredevice.feature.querymobilegestalt)
+    • Reboot Device (com.apple.coredevice.feature.rebootdevice)
+    • Send Memory Warning to Process (com.apple.coredevice.feature.sendmemorywarningtoprocess)
+    • Send Signal to Process (com.apple.coredevice.feature.sendsignaltoprocess)
+    • Service Hub Profile (com.apple.dt.profile)
+    • Spawn Executable (com.apple.coredevice.feature.spawnexecutable)
+    • Stream Application List (com.apple.coredevice.feature.streamapplist)
+    • Stream Process List (com.apple.coredevice.feature.streamprocesslist)
+    • Transfer Files (com.apple.coredevice.feature.transferFiles)
+    • Uninstall Application (com.apple.coredevice.feature.uninstallapp)
+    • Uninstall Root (com.apple.coredevice.feature.uninstallroot)
+    • Unpair Device (com.apple.coredevice.feature.unpairdevice)
+    • View Device Screen (com.apple.coredevice.feature.viewdevicescreen)
+• visibilityClass: default
+=== install ===
+00:03:51  Acquired tunnel connection to device.
+00:03:51  Enabling developer disk image services.
+00:03:51  Acquired usage assertion.
+App installed:
+• bundleID: com.example.FruitWave
+• installationURL: file:///private/var/containers/Bundle/Application/1D55C39D-4FE5-4516-9C3E-40EE106C279C/FruitWave.app/
+• launchServicesIdentifier: unknown
+• databaseUUID: 38A729F6-BD62-4EA6-B585-26AEC5AF01C0
+• databaseSequenceNumber: 1080
+• options: 
+=== launch ===
+00:03:52  Acquired tunnel connection to device.
+00:03:52  Enabling developer disk image services.
+00:03:52  Acquired usage assertion.
+Launched application with com.example.FruitWave bundle identifier.

@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "fruit": "persimmon",
+  "referenceManifest": "persimmon_reference.json",
+  "referenceSkin": "persimmon_reference.png",
+  "referenceCutFace": "persimmon_reference_cut.png",
+  "derivedSkinAlbedo": "persimmon_skin_basecolor.png",
+  "derivedFleshAlbedo": "persimmon_flesh_basecolor.png",
+  "modelingBasis": "PRD v1.0 extracted reference images; unseen back and 3D interior inferred",
+  "units": "meters",
+  "wholeEntity": "persimmon_whole",
+  "leftHalfEntity": "persimmon_half_left",
+  "rightHalfEntity": "persimmon_half_right",
+  "cutPlane": {
+    "normal": [
+      1,
+      0,
+      0
+    ],
+    "distance": 0
+  },
+  "pivot": [
+    0,
+    0,
+    0
+  ],
+  "runtimeStrategy": "swap-whole-for-authored-halves",
+  "integrationStatus": "acceptance-lab-only; gameplay spawn/split still uses FruitVisualData 2D lathe",
+  "collision": {
+    "shape": "sphere",
+    "radius": 0.74
+  },
+  "massKilograms": 0.25,
+  "juiceColorSRGB": [
+    1.0,
+    0.55,
+    0.15
+  ],
+  "materialNotes": {
+    "skin": "roughness 0.50, specular IOR level 0.20 (matte peel)",
+    "flesh": "roughness 0.30, specular IOR level 0.65 (wet cut face)",
+    "calyx": "dark olive #40501a, roughness 0.55"
+  },
+  "cutFaceStructure": {
+    "flesh": "uniform"
+  }
+}

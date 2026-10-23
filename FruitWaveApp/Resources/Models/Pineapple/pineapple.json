@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "fruit": "pineapple",
+  "referenceManifest": "pineapple_reference.json",
+  "referenceSkin": "pineapple_reference.png",
+  "referenceCutFace": "pineapple_reference_cut.png",
+  "derivedSkinAlbedo": "pineapple_skin_basecolor.png",
+  "derivedFleshAlbedo": "pineapple_flesh_basecolor.png",
+  "modelingBasis": "PRD v1.0 extracted reference images; unseen back and 3D interior inferred",
+  "units": "meters",
+  "wholeEntity": "pineapple_whole",
+  "leftHalfEntity": "pineapple_half_left",
+  "rightHalfEntity": "pineapple_half_right",
+  "cutPlane": {
+    "normal": [
+      1,
+      0,
+      0
+    ],
+    "distance": 0
+  },
+  "pivot": [
+    0,
+    0,
+    0
+  ],
+  "runtimeStrategy": "swap-whole-for-authored-halves",
+  "integrationStatus": "acceptance-lab-only; gameplay spawn/split still uses FruitVisualData 2D lathe",
+  "collision": {
+    "shape": "sphere",
+    "radius": 0.78
+  },
+  "massKilograms": 1.2,
+  "juiceColorSRGB": [
+    0.95,
+    0.85,
+    0.45
+  ],
+  "materialNotes": {
+    "skin": "roughness 0.55, specular IOR level 0.16 (matte peel)",
+    "flesh": "roughness 0.30, specular IOR level 0.65 (wet cut face)",
+    "core": "pale #fbe66e, roughness 0.30",
+    "rind": "#b26b17 ring, roughness 0.40",
+    "crown": "green #385015, roughness 0.55"
+  },
+  "cutFaceStructure": {
+    "coreRadius": 0.16,
+    "rindRing": [
+      0.62,
+      0.72
+    ]
+  }
+}

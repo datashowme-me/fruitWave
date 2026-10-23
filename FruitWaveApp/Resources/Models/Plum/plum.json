@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "fruit": "plum",
+  "referenceManifest": "plum_reference.json",
+  "referenceSkin": "plum_reference.png",
+  "referenceCutFace": "plum_reference_cut.png",
+  "derivedSkinAlbedo": "plum_skin_basecolor.png",
+  "derivedFleshAlbedo": "plum_flesh_basecolor.png",
+  "modelingBasis": "PRD v1.0 extracted reference images; unseen back and 3D interior inferred",
+  "units": "meters",
+  "wholeEntity": "plum_whole",
+  "leftHalfEntity": "plum_half_left",
+  "rightHalfEntity": "plum_half_right",
+  "cutPlane": {
+    "normal": [
+      1,
+      0,
+      0
+    ],
+    "distance": 0
+  },
+  "pivot": [
+    0,
+    0,
+    0
+  ],
+  "runtimeStrategy": "swap-whole-for-authored-halves",
+  "integrationStatus": "acceptance-lab-only; gameplay spawn/split still uses FruitVisualData 2D lathe",
+  "collision": {
+    "shape": "sphere",
+    "radius": 0.82
+  },
+  "massKilograms": 0.08,
+  "juiceColorSRGB": [
+    0.75,
+    0.45,
+    0.2
+  ],
+  "materialNotes": {
+    "skin": "roughness 0.42, specular IOR level 0.22 (dusty bloom)",
+    "flesh": "roughness 0.26, specular IOR level 0.80 (wet cut face)",
+    "pit": "#401a26, roughness 0.32",
+    "stem": "#523810, roughness 0.55"
+  },
+  "cutFaceStructure": {
+    "pitHalf": "right",
+    "pitScale": [
+      0.1,
+      0.12,
+      0.14
+    ],
+    "cavityHalf": "left"
+  }
+}

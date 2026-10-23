@@ -15,18 +15,36 @@ struct RootView: View {
         }
         .tint(.green)
         .continuityDevicePicker(
-            isPresented: Binding(get: { model.showDevicePicker }, set: { model.showDevicePicker = $0 }),
+            isPresented: Binding(
+                get: { model.showDevicePicker },
+                set: { model.setDevicePickerPresented($0) }
+            ),
             onDidConnect: model.connect
         )
         .onPlayPauseCommand {
             if model.state == .playing { model.pause() }
             else if model.state == .paused { model.resume() }
         }
-        .onAppear { model.reduceMotion = reduceMotion }
+        .onAppear {
+            model.reduceMotion = reduceMotion
+            model.handleInitialLaunchArguments()
+        }
         .onChange(of: reduceMotion) { _, value in model.reduceMotion = value }
         .onChange(of: scenePhase) { _, phase in
-            if phase == .active { model.handleAppBecameActive() }
-            else { model.handleAppBecameInactive() }
+            switch phase {
+            case .active:
+                model.handleAppBecameActive()
+            case .background:
+                model.handleAppBecameInactive()
+            case .inactive:
+                // The system Continuity Camera picker temporarily makes the
+                // scene inactive while QR pairing completes. Treating that as
+                // background stops the capture session just as the iPhone is
+                // handed back to the app, leaving the picker stuck.
+                break
+            @unknown default:
+                break
+            }
         }
     }
 
@@ -47,9 +65,14 @@ struct RootView: View {
 private struct ConnectionView: View {
     let model: AppModel
     @State private var showHelp = false
+    // Also opened via env FW_ASSET_LAB=1: devicectl consumes dash-prefixed
+    // launch arguments, so device acceptance automation uses the env route.
+    // FW_FRUIT=<slug> selects which fruit the lab reviews (default apple).
+    @State private var showAssetLab = ProcessInfo.processInfo.arguments.contains("--apple-asset-lab")
+        || ProcessInfo.processInfo.environment["FW_ASSET_LAB"] == "1"
     @FocusState private var focusedControl: Control?
 
-    private enum Control: Hashable { case sound, help, connect }
+    private enum Control: Hashable { case sound, help, assetLab, demo, connect }
 
     var body: some View {
         HStack(spacing: 90) {
@@ -72,6 +95,12 @@ private struct ConnectionView: View {
                 .accessibilityValue(model.soundEnabled ? "已开启" : "已关闭")
                 Button("玩法与安全说明") { showHelp = true }
                     .focused($focusedControl, equals: .help)
+                if #available(tvOS 26.0, *) {
+                    Button("验收水果 3D 效果") { showAssetLab = true }
+                        .focused($focusedControl, equals: .assetLab)
+                }
+                Button("直接看动画演示") { model.startAnimationDemo() }
+                    .focused($focusedControl, equals: .demo)
                 Button("连接 iPhone") { model.requestConnection() }
                     .buttonStyle(.borderedProminent).controlSize(.large)
                     .focused($focusedControl, equals: .connect)
@@ -83,6 +112,11 @@ private struct ConnectionView: View {
         .defaultFocus($focusedControl, .connect)
         .sheet(isPresented: $showHelp) {
             HelpView { showHelp = false }
+        }
+        .fullScreenCover(isPresented: $showAssetLab) {
+            if #available(tvOS 26.0, *) {
+                FruitAssetLabView { showAssetLab = false }
+            }
         }
     }
 
@@ -368,10 +402,12 @@ private struct PauseView: View {
             Text("已暂停").font(.system(size: 64, weight: .black, design: .rounded))
             Text(model.statusMessage).font(.title3).foregroundStyle(.secondary).multilineTextAlignment(.center)
             HStack(spacing: 20) {
-                Button("退出") { showExitConfirmation = true }
+                Button(model.isDemoMode ? "退出演示" : "退出") { showExitConfirmation = true }
                     .focused($focusedControl, equals: .exit)
-                Button("返回定位") { model.recalibrate() }
-                    .focused($focusedControl, equals: .recalibrate)
+                if !model.isDemoMode {
+                    Button("返回定位") { model.recalibrate() }
+                        .focused($focusedControl, equals: .recalibrate)
+                }
                 Button("重开") { model.restart() }
                     .focused($focusedControl, equals: .restart)
                 Button { model.soundEnabled.toggle() } label: {
@@ -386,11 +422,11 @@ private struct PauseView: View {
         }
         .defaultFocus($focusedControl, .resume)
         .onExitCommand { model.resume() }
-        .alert("退出并断开 iPhone？", isPresented: $showExitConfirmation) {
+        .alert(model.isDemoMode ? "退出动画演示？" : "退出并断开 iPhone？", isPresented: $showExitConfirmation) {
             Button("取消", role: .cancel) {}
             Button("退出", role: .destructive) { model.exitToConnection() }
         } message: {
-            Text("当前游戏进度将结束，之后需要重新连接。")
+            Text(model.isDemoMode ? "将返回开始页面。" : "当前游戏进度将结束，之后需要重新连接。")
         }
     }
 }
@@ -408,10 +444,12 @@ private struct ResultsView: View {
             Text("\(model.score)").font(.system(size: 150, weight: .black, design: .rounded)).foregroundStyle(.green)
             Text("最高分  \(model.highScore)").font(.title2).foregroundStyle(.secondary)
             HStack(spacing: 24) {
-                Button("退出") { showExitConfirmation = true }
+                Button(model.isDemoMode ? "退出演示" : "退出") { showExitConfirmation = true }
                     .focused($focusedControl, equals: .exit)
-                Button("换人玩") { model.changePlayer() }
-                    .focused($focusedControl, equals: .changePlayer)
+                if !model.isDemoMode {
+                    Button("换人玩") { model.changePlayer() }
+                        .focused($focusedControl, equals: .changePlayer)
+                }
                 Button("再来一局") { model.restart() }
                     .buttonStyle(.borderedProminent)
                     .focused($focusedControl, equals: .restart)
@@ -419,11 +457,11 @@ private struct ResultsView: View {
         }
         .defaultFocus($focusedControl, .restart)
         .onExitCommand { showExitConfirmation = true }
-        .alert("退出并断开 iPhone？", isPresented: $showExitConfirmation) {
+        .alert(model.isDemoMode ? "退出动画演示？" : "退出并断开 iPhone？", isPresented: $showExitConfirmation) {
             Button("取消", role: .cancel) {}
             Button("退出", role: .destructive) { model.exitToConnection() }
         } message: {
-            Text("退出后需要重新连接 iPhone。")
+            Text(model.isDemoMode ? "将返回开始页面。" : "退出后需要重新连接 iPhone。")
         }
     }
 }

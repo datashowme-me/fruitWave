@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "fruit": "orange",
+  "referenceManifest": "orange_reference.json",
+  "referenceSkin": "orange_reference.png",
+  "referenceCutFace": "orange_reference_cut.png",
+  "derivedSkinAlbedo": "orange_skin_basecolor.png",
+  "derivedFleshAlbedo": "orange_flesh_basecolor.png",
+  "modelingBasis": "PRD v1.0 extracted reference images; unseen back and 3D interior inferred",
+  "units": "meters",
+  "wholeEntity": "orange_whole",
+  "leftHalfEntity": "orange_half_left",
+  "rightHalfEntity": "orange_half_right",
+  "cutPlane": {
+    "normal": [
+      1,
+      0,
+      0
+    ],
+    "distance": 0
+  },
+  "pivot": [
+    0,
+    0,
+    0
+  ],
+  "runtimeStrategy": "swap-whole-for-authored-halves",
+  "integrationStatus": "acceptance-lab-only; gameplay spawn/split still uses FruitVisualData 2D lathe",
+  "collision": {
+    "shape": "sphere",
+    "radius": 0.85
+  },
+  "massKilograms": 0.15,
+  "juiceColorSRGB": [
+    1.0,
+    0.62,
+    0.1
+  ],
+  "materialNotes": {
+    "skin": "roughness 0.30, specular IOR level 0.48 (pebbled waxy peel)",
+    "flesh": "roughness 0.24, specular IOR level 0.85 (wet segment face)",
+    "pith": "#fae699, roughness 0.38",
+    "stem": "#6b4d1f, roughness 0.60"
+  },
+  "cutFaceStructure": {
+    "segments": 9,
+    "pithRing": [
+      0.78,
+      0.88
+    ],
+    "wedgeRadii": [
+      0.1,
+      0.75
+    ]
+  }
+}

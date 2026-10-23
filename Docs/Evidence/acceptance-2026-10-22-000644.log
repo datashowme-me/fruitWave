@@ -1,0 +1,21 @@
+=== deploy (gated instrumentation build) ===
+00:06:50  Enabling developer disk image services.
+00:06:50  Acquired usage assertion.
+Launched application with com.example.FruitWave bundle identifier.
+evidence: Docs/Evidence/deploy-2026-10-22-000649.log
+=== env acceptance launch ===
+00:06:51  Acquired tunnel connection to device.
+00:06:51  Enabling developer disk image services.
+00:06:51  Acquired usage assertion.
+Launched application with com.example.FruitWave bundle identifier.
+=== waiting 16s ===
+/tmp/fw_pull4/evidence_apple.log
+/tmp/fw_pull4/evidence_apple_whole.png
+/tmp/fw_pull4/evidence_apple_sliced.png
+=== evidence log ===
+APP_STARTED 2026-10-21 16:06:51 +0000 args=["/var/containers/Bundle/Application/F9DB81B5-CAF5-48A1-98D2-B8DD14FBB754/FruitWave.app/FruitWave"] envKeys=["FW_ASSET_LAB", "FW_SNAPSHOTS"]
+APP_VIEW_APPEARED 2026-10-21 16:06:51 +0000
+ASSET_LAB_STARTED 2026-10-21 16:06:51 +0000
+=== pixel analysis ===
+{"image": "device-whole-final", "size": [1920, 1080], "sampled_pixels": 518400, "skin_pct": 4.22, "skin_mean_rgb": [201, 68, 52], "skin_bbox_pct": [40.7, 35.6, 59.4, 70.2], "skin_p95_lum": 163.7, "flesh_pct": 0.09, "flesh_mean_rgb": [247, 193, 175], "dark_background_pct": 95.58, "bright_flesh_pct_of_skin": 0.0}
+{"image": "device-sliced-final", "size": [1920, 1080], "sampled_pixels": 518400, "skin_pct": 5.35, "skin_mean_rgb": [178, 51, 45], "skin_bbox_pct": [31.2, 36.7, 66.6, 71.9], "skin_p95_lum": 153.7, "flesh_pct": 1.69, "flesh_mean_rgb": [240, 218, 184], "dark_background_pct": 92.59, "bright_flesh_pct_of_skin": 0.0}

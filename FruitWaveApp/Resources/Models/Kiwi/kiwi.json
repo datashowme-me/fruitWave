@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "fruit": "kiwi",
+  "referenceManifest": "kiwi_reference.json",
+  "referenceSkin": "kiwi_reference.png",
+  "referenceCutFace": "kiwi_reference_cut.png",
+  "derivedSkinAlbedo": "kiwi_skin_basecolor.png",
+  "derivedFleshAlbedo": "kiwi_flesh_basecolor.png",
+  "modelingBasis": "PRD v1.0 extracted reference images; unseen back and 3D interior inferred",
+  "units": "meters",
+  "wholeEntity": "kiwi_whole",
+  "leftHalfEntity": "kiwi_half_left",
+  "rightHalfEntity": "kiwi_half_right",
+  "cutPlane": {
+    "normal": [
+      1,
+      0,
+      0
+    ],
+    "distance": 0
+  },
+  "pivot": [
+    0,
+    0,
+    0
+  ],
+  "runtimeStrategy": "swap-whole-for-authored-halves",
+  "integrationStatus": "acceptance-lab-only; gameplay spawn/split still uses FruitVisualData 2D lathe",
+  "collision": {
+    "shape": "sphere",
+    "radius": 0.75
+  },
+  "massKilograms": 0.1,
+  "juiceColorSRGB": [
+    0.6,
+    0.85,
+    0.25
+  ],
+  "materialNotes": {
+    "skin": "roughness 0.56, specular IOR level 0.16 (fuzzy)",
+    "flesh": "roughness 0.28, specular IOR level 0.65 (wet cut face)",
+    "center": "pale #ebebd1",
+    "seeds": "near-black, roughness 0.30"
+  },
+  "cutFaceStructure": {
+    "seedsPerHalf": 26,
+    "coreScale": [
+      0.02,
+      0.16,
+      0.16
+    ]
+  }
+}

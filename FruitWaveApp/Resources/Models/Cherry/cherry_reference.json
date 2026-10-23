@@ -1,0 +1,41 @@
+{
+  "fruit": "cherry",
+  "source_kind": "google_doc_docx_export",
+  "source_id_or_url": "https://docs.google.com/document/d/1tzqIUol1BEAEpyYdKFmQUmWwURed_3voLYmmjdvpZaA",
+  "source_title": "Apple TV 体感切水果｜Codex 与 Claude 开发任务书 v1.0",
+  "source_revision": "AHj4eMSBFqyUvXobDuLRyBpkCUJ2grbbT5bvx5F4cQV8NbDQS_W11xD6NAU9mj65ybmf98OXnmVWdqMOX3wlug-jE01yNfCA97T_oH0HZnE",
+  "source_modified_time": "2026-10-19T07:33:49.063Z",
+  "extracted_image": "cherry_reference.png",
+  "extracted_source": "ArtSource/PRD-v1.0/FruitReferences/cherry/whole.png",
+  "sha256": "f32b5187cc4af2cdeb7702a3a6e3f5424dc61b2f67a107eceab239df42562485",
+  "supplemental_images": [
+    {
+      "path": "cherry_reference_cut.png",
+      "source": "ArtSource/PRD-v1.0/FruitReferences/cherry/cut.png",
+      "sha256": "2ba9953e3551c1b66a51a8622a16d75ca0c9ad2cd28adc0c955f6d127d2ecb45",
+      "role": "cut"
+    }
+  ],
+  "derived_assets": [
+    {
+      "path": "cherry_skin_basecolor.png",
+      "method": "per-row mirrored-longitude cylinder remap with cherry-family classification, de-lighting blend"
+    },
+    {
+      "path": "cherry_flesh_basecolor.png",
+      "method": "cherry-flesh centroid disk remap, specular rejection, de-lighting blend"
+    }
+  ],
+  "observed_features": [
+    "near-square cherry with stem-end dimple, black background",
+    "skin families #b2060c, #df0a0e with deep shadows #64070b; matte (bright 0.8%)",
+    "no green family: single thin stem, no leaf",
+    "cut face: red flesh #c51319/#ed3e3e with tan pit #cb9659"
+  ],
+  "inferred_features": [
+    "unseen back mirrored from the front half",
+    "stem length and dimple depth from silhouette",
+    "pit stays in one half (right) with a cavity impression on the other"
+  ],
+  "inspection_method": "pixel-level programmatic measurement (no vision model available in the generating environment); human-eye verification required on device"
+}

@@ -1,0 +1,41 @@
+{
+  "fruit": "peach",
+  "source_kind": "google_doc_docx_export",
+  "source_id_or_url": "https://docs.google.com/document/d/1tzqIUol1BEAEpyYdKFmQUmWwURed_3voLYmmjdvpZaA",
+  "source_title": "Apple TV 体感切水果｜Codex 与 Claude 开发任务书 v1.0",
+  "source_revision": "AHj4eMSBFqyUvXobDuLRyBpkCUJ2grbbT5bvx5F4cQV8NbDQS_W11xD6NAU9mj65ybmf98OXnmVWdqMOX3wlug-jE01yNfCA97T_oH0HZnE",
+  "source_modified_time": "2026-10-19T07:33:49.063Z",
+  "extracted_image": "peach_reference.png",
+  "extracted_source": "ArtSource/PRD-v1.0/FruitReferences/peach/whole.png",
+  "sha256": "db6f07b4c02ec12c806b17af192d2aec2cb98111f4a3e5175433ddfb3b50873a",
+  "supplemental_images": [
+    {
+      "path": "peach_reference_cut.png",
+      "source": "ArtSource/PRD-v1.0/FruitReferences/peach/cut.png",
+      "sha256": "4f5898620aab16692c8abefc121a9c45740c31dd8ded1a9d2768b0af6d184ad1",
+      "role": "cut"
+    }
+  ],
+  "derived_assets": [
+    {
+      "path": "peach_skin_basecolor.png",
+      "method": "per-row mirrored-longitude cylinder remap with wide blush-family classification, de-lighting blend"
+    },
+    {
+      "path": "peach_flesh_basecolor.png",
+      "method": "peach-flesh centroid disk remap, specular rejection, de-lighting blend"
+    }
+  ],
+  "observed_features": [
+    "near-square peach with stem-end dip, black background",
+    "blush gradient skin: red #ee453f/#f2644c and yellow #eec18a/#d28952 families",
+    "matte fuzzy peel (bright 2.9%), no leaf",
+    "cut face: yellow flesh #fada6c/#eaac4a with red zone #ec5842 around the pit"
+  ],
+  "inferred_features": [
+    "unseen back mirrored from the front half; blush side placement from the photo rows",
+    "peach crease not modelled (not measurable in the pixel profile)",
+    "pit stays in one half (right) with a cavity impression on the other"
+  ],
+  "inspection_method": "pixel-level programmatic measurement (no vision model available in the generating environment); human-eye verification required on device"
+}

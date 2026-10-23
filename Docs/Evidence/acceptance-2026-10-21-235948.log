@@ -1,0 +1,19 @@
+=== reinstall (kills running app) 2026-10-21-235948 ===
+23:59:49  Acquired tunnel connection to device.
+23:59:49  Enabling developer disk image services.
+23:59:49  Acquired usage assertion.
+App installed:
+• bundleID: com.example.FruitWave
+• installationURL: file:///private/var/containers/Bundle/Application/4042310F-1E8C-4712-8FA3-D317AC633EFE/FruitWave.app/
+• launchServicesIdentifier: unknown
+• databaseUUID: 38A729F6-BD62-4EA6-B585-26AEC5AF01C0
+• databaseSequenceNumber: 1072
+• options: 
+=== env launch -e FW_ASSET_LAB=1 FW_SNAPSHOTS=1 ===
+23:59:51  Acquired tunnel connection to device.
+23:59:51  Enabling developer disk image services.
+23:59:51  Acquired usage assertion.
+Launched application with com.example.FruitWave bundle identifier.
+=== waiting 16s for 3/6/9s snapshots + 12s fps sample ===
+=== container listing ===
+Library/Caches/evidence_apple.log                                                                                 Writable, Readable              255 bytes   2026/10/21, 23:59

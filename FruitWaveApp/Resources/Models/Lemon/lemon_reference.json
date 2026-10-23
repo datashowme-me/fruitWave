@@ -1,0 +1,43 @@
+{
+  "fruit": "lemon",
+  "source_kind": "google_doc_docx_export",
+  "source_id_or_url": "https://docs.google.com/document/d/1tzqIUol1BEAEpyYdKFmQUmWwURed_3voLYmmjdvpZaA",
+  "source_title": "Apple TV 体感切水果｜Codex 与 Claude 开发任务书 v1.0",
+  "source_revision": "AHj4eMSBFqyUvXobDuLRyBpkCUJ2grbbT5bvx5F4cQV8NbDQS_W11xD6NAU9mj65ybmf98OXnmVWdqMOX3wlug-jE01yNfCA97T_oH0HZnE",
+  "source_modified_time": "2026-10-19T07:33:49.063Z",
+  "extracted_image": "lemon_reference.png",
+  "extracted_source": "ArtSource/PRD-v1.0/FruitReferences/lemon/whole.png",
+  "sha256": "383623e2cf4b5af5fe74ab8f87fc51c83066e62300f6bbd028e7fe0f1940bf19",
+  "supplemental_images": [
+    {
+      "path": "lemon_reference_cut.png",
+      "source": "ArtSource/PRD-v1.0/FruitReferences/lemon/cut.png",
+      "sha256": "0a115615cfa8ac5c8340cbd4b6c3eb0051fcc3d0620862675e679f9fc759dd9d",
+      "role": "cut"
+    }
+  ],
+  "derived_assets": [
+    {
+      "path": "lemon_skin_basecolor.png",
+      "method": "per-row mirrored-longitude cylinder remap with lemon-family classification, de-lighting blend"
+    },
+    {
+      "path": "lemon_flesh_basecolor.png",
+      "method": "lemon-flesh centroid disk remap, specular rejection, de-lighting blend"
+    }
+  ],
+  "observed_features": [
+    "near-square lemon filling the frame (bbox 98.6 x 98.2), black background",
+    "skin families #d99408, #e8b614, #fcde12 with deep shadows #776006",
+    "strong specular gloss #fcef5f (8.8% bright vs orange 0.8%: shinier peel)",
+    "no green family in the whole palette: stem nub only, no leaf",
+    "cut face: flesh #f1cd4b/#e9b61d wedges separated by pale pith #f7e6a4"
+  ],
+  "inferred_features": [
+    "unseen back mirrored from the front half",
+    "elongation and end nubs from lemon convention; the reference bbox is near square so both stay modest",
+    "segment count (8), wedge radii and pith thickness from typical lemon structure",
+    "no seeds: none visible in the measured cut palette"
+  ],
+  "inspection_method": "pixel-level programmatic measurement (no vision model available in the generating environment); human-eye verification required on device"
+}

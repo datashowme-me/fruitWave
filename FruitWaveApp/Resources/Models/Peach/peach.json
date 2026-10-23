@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "fruit": "peach",
+  "referenceManifest": "peach_reference.json",
+  "referenceSkin": "peach_reference.png",
+  "referenceCutFace": "peach_reference_cut.png",
+  "derivedSkinAlbedo": "peach_skin_basecolor.png",
+  "derivedFleshAlbedo": "peach_flesh_basecolor.png",
+  "modelingBasis": "PRD v1.0 extracted reference images; unseen back and 3D interior inferred",
+  "units": "meters",
+  "wholeEntity": "peach_whole",
+  "leftHalfEntity": "peach_half_left",
+  "rightHalfEntity": "peach_half_right",
+  "cutPlane": {
+    "normal": [
+      1,
+      0,
+      0
+    ],
+    "distance": 0
+  },
+  "pivot": [
+    0,
+    0,
+    0
+  ],
+  "runtimeStrategy": "swap-whole-for-authored-halves",
+  "integrationStatus": "acceptance-lab-only; gameplay spawn/split still uses FruitVisualData 2D lathe",
+  "collision": {
+    "shape": "sphere",
+    "radius": 0.9
+  },
+  "massKilograms": 0.15,
+  "juiceColorSRGB": [
+    1.0,
+    0.8,
+    0.4
+  ],
+  "materialNotes": {
+    "skin": "roughness 0.52, specular IOR level 0.18 (fuzzy matte peel)",
+    "flesh": "roughness 0.30, specular IOR level 0.70 (wet cut face)",
+    "redZone": "#ec5842 around pit",
+    "pit": "#4d1408, roughness 0.35"
+  },
+  "cutFaceStructure": {
+    "pitHalf": "right",
+    "pitScale": [
+      0.09,
+      0.11,
+      0.13
+    ],
+    "cavityHalf": "left",
+    "redZoneRadius": 0.3
+  }
+}

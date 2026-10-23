@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "referenceManifest": "apple_reference.json",
+  "referenceSkin": "apple_reference.png",
+  "referenceCutFace": "apple_reference_cut.png",
+  "derivedSkinAlbedo": "apple_skin_basecolor.png",
+  "derivedFleshAlbedo": "apple_flesh_basecolor.png",
+  "modelingBasis": "PRD v1.0 extracted reference images; unseen back and 3D interior inferred",
+  "units": "meters",
+  "wholeEntity": "apple_whole",
+  "leftHalfEntity": "apple_half_left",
+  "rightHalfEntity": "apple_half_right",
+  "cutPlane": {
+    "normal": [
+      1,
+      0,
+      0
+    ],
+    "distance": 0
+  },
+  "pivot": [
+    0,
+    0,
+    0
+  ],
+  "collision": {
+    "shape": "sphere",
+    "radius": 1.05
+  },
+  "massKilograms": 0.18,
+  "juiceColorSRGB": [
+    0.94,
+    0.79,
+    0.36
+  ],
+  "runtimeStrategy": "swap-whole-for-authored-halves",
+  "materialNotes": {
+    "skin": "roughness 0.28, specular IOR level 0.55 (waxy sheen; clearcoat is not exported to USDZ)",
+    "flesh": "roughness 0.18, specular IOR level 0.90 (wet cut face)",
+    "stem": "#8e491d, roughness 0.60",
+    "leaf": "#608718, roughness 0.42",
+    "seed": "#6f2c1d, roughness 0.32"
+  },
+  "integrationStatus": "acceptance-lab-only; gameplay spawn/split still uses FruitVisualData 2D lathe"
+}

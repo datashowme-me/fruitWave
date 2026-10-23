@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "fruit": "grape",
+  "referenceManifest": "grape_reference.json",
+  "referenceSkin": "grape_reference.png",
+  "referenceCutFace": "grape_reference_cut.png",
+  "derivedSkinAlbedo": "grape_skin_basecolor.png",
+  "derivedFleshAlbedo": "grape_flesh_basecolor.png",
+  "modelingBasis": "PRD v1.0 extracted reference images; unseen back and 3D interior inferred",
+  "units": "meters",
+  "wholeEntity": "grape_whole",
+  "leftHalfEntity": "grape_half_left",
+  "rightHalfEntity": "grape_half_right",
+  "cutPlane": {
+    "normal": [
+      1,
+      0,
+      0
+    ],
+    "distance": 0
+  },
+  "pivot": [
+    0,
+    0,
+    0
+  ],
+  "runtimeStrategy": "swap-whole-for-authored-halves",
+  "integrationStatus": "acceptance-lab-only; gameplay spawn/split still uses FruitVisualData 2D lathe",
+  "collision": {
+    "shape": "sphere",
+    "radius": 0.62
+  },
+  "massKilograms": 0.01,
+  "juiceColorSRGB": [
+    0.55,
+    0.25,
+    0.55
+  ],
+  "materialNotes": {
+    "skin": "roughness 0.30, specular IOR level 0.30 (thin bloom)",
+    "flesh": "roughness 0.26, specular IOR level 0.75 (wet cut face)",
+    "seeds": "#ccc275, roughness 0.35"
+  },
+  "cutFaceStructure": {
+    "seedsPerHalf": 2
+  }
+}

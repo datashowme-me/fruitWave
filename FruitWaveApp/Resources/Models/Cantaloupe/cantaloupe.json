@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "fruit": "cantaloupe",
+  "referenceManifest": "cantaloupe_reference.json",
+  "referenceSkin": "cantaloupe_reference.png",
+  "referenceCutFace": "cantaloupe_reference_cut.png",
+  "derivedSkinAlbedo": "cantaloupe_skin_basecolor.png",
+  "derivedFleshAlbedo": "cantaloupe_flesh_basecolor.png",
+  "modelingBasis": "PRD v1.0 extracted reference images; unseen back and 3D interior inferred",
+  "units": "meters",
+  "wholeEntity": "cantaloupe_whole",
+  "leftHalfEntity": "cantaloupe_half_left",
+  "rightHalfEntity": "cantaloupe_half_right",
+  "cutPlane": {
+    "normal": [
+      1,
+      0,
+      0
+    ],
+    "distance": 0
+  },
+  "pivot": [
+    0,
+    0,
+    0
+  ],
+  "runtimeStrategy": "swap-whole-for-authored-halves",
+  "integrationStatus": "acceptance-lab-only; gameplay spawn/split still uses FruitVisualData 2D lathe",
+  "collision": {
+    "shape": "sphere",
+    "radius": 1.05
+  },
+  "massKilograms": 1.2,
+  "juiceColorSRGB": [
+    1.0,
+    0.65,
+    0.25
+  ],
+  "materialNotes": {
+    "skin": "roughness 0.46, specular IOR level 0.20 (netted rind)",
+    "flesh": "roughness 0.26, specular IOR level 0.75 (wet cut face)",
+    "cavity": "pale #f2d18c seed bed",
+    "seeds": "#e0c77a, roughness 0.35"
+  },
+  "cutFaceStructure": {
+    "cavityRadius": 0.26,
+    "seedsPerHalf": 8
+  }
+}

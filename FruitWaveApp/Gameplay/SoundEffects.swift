@@ -12,6 +12,10 @@ final class SoundEffects {
     private let ripPlayer = AVAudioPlayerNode()
     /// 连击彩头:玻璃脆响/钟声
     private let chimePlayer = AVAudioPlayerNode()
+    /// 炸弹爆轰(纯合成,低频轰+噪声尾)
+    private let boomPlayer = AVAudioPlayerNode()
+    /// 挥空风声(纯合成,高通噪声扫过)
+    private let whooshPlayer = AVAudioPlayerNode()
 
     /// Kenney CC0 采样,按文件名前缀分组(impactSoft_medium = 轻果多汁
     /// 软撞击,impactSoft_heavy = 西瓜/菠萝等大果,玻璃/钟 = 连击彩头)。
@@ -20,22 +24,35 @@ final class SoundEffects {
     /// 采样缺失时的程序合成兜底(与旧版一致的完整切音)
     private let proceduralBuffers: [AVAudioPCMBuffer]
     private let ripBuffers: [AVAudioPCMBuffer]
+    /// 爆炸:低频轰击 + 噪声尾,单缓冲复用
+    private let boomBuffer: AVAudioPCMBuffer?
+    /// 风声:两变体轮换,防重复感
+    private let whooshBuffers: [AVAudioPCMBuffer]
+    private var whooshCursor = 0
 
     init() {
         let format = AVAudioFormat(standardFormatWithSampleRate: 48_000, channels: 2)
         proceduralBuffers = Self.makeSliceBuffers(format: format, variantCount: 6)
         ripBuffers = Self.makeRipBuffers(format: format, variantCount: 3)
+        boomBuffer = Self.makeBoomBuffer(format: format)
+        whooshBuffers = Self.makeWhooshBuffers(format: format, variantCount: 2)
         engine.attach(player)
         engine.attach(ripPlayer)
         engine.attach(chimePlayer)
+        engine.attach(boomPlayer)
+        engine.attach(whooshPlayer)
         if let format {
             engine.connect(player, to: engine.mainMixerNode, format: format)
             engine.connect(ripPlayer, to: engine.mainMixerNode, format: format)
             engine.connect(chimePlayer, to: engine.mainMixerNode, format: format)
+            engine.connect(boomPlayer, to: engine.mainMixerNode, format: format)
+            engine.connect(whooshPlayer, to: engine.mainMixerNode, format: format)
         }
         player.volume = 0.9
         ripPlayer.volume = 0.35
         chimePlayer.volume = 0.55
+        boomPlayer.volume = 1.0
+        whooshPlayer.volume = 0.5
         loadSamples()
         engine.prepare()
         // When the Apple TV's audio route appears or changes (TV/AVR waking
@@ -119,6 +136,24 @@ final class SoundEffects {
         }
     }
 
+    /// Bomb detonation. Interrupts whatever the body player is doing — the
+    /// boom owns the moment.
+    func playBoom() {
+        guard ensureAudioReady(), let boomBuffer else { return }
+        boomPlayer.scheduleBuffer(boomBuffer, at: nil, options: .interrupts)
+        boomPlayer.play()
+    }
+
+    /// Whoosh for a swing that sliced nothing. Queued (not interrupting) so a
+    /// rapid sequence of missed swings still reads as one continuous gust.
+    func playWhoosh() {
+        guard ensureAudioReady(), !whooshBuffers.isEmpty else { return }
+        let buffer = whooshBuffers[whooshCursor % whooshBuffers.count]
+        whooshCursor += 1
+        whooshPlayer.scheduleBuffer(buffer, at: nil, options: [])
+        whooshPlayer.play()
+    }
+
     private func sliceBuffersEmpty() -> Bool {
         let body = bodyBanks["impactSoft_medium"] ?? []
         let heavy = bodyBanks["impactSoft_heavy"] ?? []
@@ -182,6 +217,65 @@ final class SoundEffects {
             }
         }
         spawnBuffers[pitchOffset] = buffer
+        return buffer
+    }
+
+    /// 风声:0.22s。一阶高通后的噪声,包络先升后降,变体间错开滤波系数
+    /// 让连续挥空听起来像不同气流的扫过。
+    private static func makeWhooshBuffers(format: AVAudioFormat?, variantCount: Int) -> [AVAudioPCMBuffer] {
+        guard let format else { return [] }
+        let frameCount = AVAudioFrameCount(format.sampleRate * 0.22)
+        var buffers: [AVAudioPCMBuffer] = []
+        for variant in 0..<variantCount {
+            guard let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: frameCount),
+                  let channels = buffer.floatChannelData else { continue }
+            buffer.frameLength = frameCount
+            var noiseState: UInt64 = 0x5EED_00F &+ UInt64(variant) &* 0xD1CE_0001
+            var low: Float = 0
+            let cutoff = 0.12 + 0.05 * Double(variant)
+            for index in 0..<Int(frameCount) {
+                let progress = Double(index) / Double(frameCount)
+                noiseState = noiseState &* 6_364_136_223_846_793_005 &+ 1
+                let noise = Float(Double(Int64(bitPattern: noiseState) >> 40) / Double(1 << 23))
+                low += Float(cutoff) * (noise - low)
+                let high = noise - low
+                let envelope = Float(pow(sin(.pi * progress), 0.7))
+                let sample = high * envelope * 0.85
+                for channel in 0..<Int(format.channelCount) {
+                    channels[channel][index] = channel == 0 ? sample : sample * 0.88
+                }
+            }
+            buffers.append(buffer)
+        }
+        return buffers
+    }
+
+    /// 爆炸:0.9s。低频正弦轰击(60Hz→28Hz)打底 + 一阶低通过的噪声爆发,
+    /// 双声道略微错开音量防相位感。
+    private static func makeBoomBuffer(format: AVAudioFormat?) -> AVAudioPCMBuffer? {
+        guard let format else { return nil }
+        let frameCount = AVAudioFrameCount(format.sampleRate * 0.9)
+        guard let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: frameCount),
+              let channels = buffer.floatChannelData else { return nil }
+        buffer.frameLength = frameCount
+        var thumpPhase = 0.0
+        var noiseState: UInt64 = 0xB00_0000_0000_0001
+        var lowpass: Float = 0
+        for index in 0..<Int(frameCount) {
+            let progress = Double(index) / Double(frameCount)
+            let frequency = 60 - 32 * progress
+            thumpPhase += 2 * .pi * frequency / format.sampleRate
+            noiseState = noiseState &* 6_364_136_223_846_793_005 &+ 1
+            let noise = Float(Double(Int64(bitPattern: noiseState) >> 40) / Double(1 << 23))
+            lowpass += 0.16 * (noise - lowpass)
+            let attack = min(1, progress / 0.015)
+            let thump = Float(sin(thumpPhase)) * Float(exp(-3.2 * progress)) * 0.75
+            let rumble = lowpass * Float(exp(-4.0 * progress)) * 0.7
+            let sample = (thump + rumble) * Float(attack)
+            for channel in 0..<Int(format.channelCount) {
+                channels[channel][index] = channel == 0 ? sample : sample * 0.94
+            }
+        }
         return buffer
     }
 
@@ -283,7 +377,7 @@ final class SoundEffects {
     /// console. Caches is used because Documents writes fail silently on
     /// tvOS.
     private func logAudio(_ message: String) {
-        Self.logger.debug("\(message, privacy: .public)")
+        Self.logger.info("\(message, privacy: .public)")
         #if DEBUG
         let url = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
             .appendingPathComponent("fruitwave-audio-log.txt")

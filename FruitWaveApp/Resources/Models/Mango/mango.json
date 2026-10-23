@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "fruit": "mango",
+  "referenceManifest": "mango_reference.json",
+  "referenceSkin": "mango_reference.png",
+  "referenceCutFace": "mango_reference_cut.png",
+  "derivedSkinAlbedo": "mango_skin_basecolor.png",
+  "derivedFleshAlbedo": "mango_flesh_basecolor.png",
+  "modelingBasis": "PRD v1.0 extracted reference images; unseen back and 3D interior inferred",
+  "units": "meters",
+  "wholeEntity": "mango_whole",
+  "leftHalfEntity": "mango_half_left",
+  "rightHalfEntity": "mango_half_right",
+  "cutPlane": {
+    "normal": [
+      1,
+      0,
+      0
+    ],
+    "distance": 0
+  },
+  "pivot": [
+    0,
+    0,
+    0
+  ],
+  "runtimeStrategy": "swap-whole-for-authored-halves",
+  "integrationStatus": "acceptance-lab-only; gameplay spawn/split still uses FruitVisualData 2D lathe",
+  "collision": {
+    "shape": "sphere",
+    "radius": 0.66
+  },
+  "massKilograms": 0.3,
+  "juiceColorSRGB": [
+    1.0,
+    0.75,
+    0.25
+  ],
+  "materialNotes": {
+    "skin": "roughness 0.35, specular IOR level 0.30 (waxy peel)",
+    "flesh": "roughness 0.28, specular IOR level 0.70 (wet cut face)",
+    "pit": "flat #755109 oval, roughness 0.45"
+  },
+  "cutFaceStructure": {
+    "pit": "flat oval on both halves",
+    "pitScale": [
+      0.022,
+      0.2,
+      0.3
+    ]
+  }
+}
